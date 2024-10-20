@@ -1,12 +1,18 @@
 package com.ipc2.revistas.digitales.api.modelos.usuarios;
 
+
 public class Usuario {
+    
+
+
    private String nombreUsuario;
    private String contrasena;
    private String texto;
    private String fotoPerfil;
    private Rol rol;
    private String fechaCreacion;
+   
+   
 
 
    //Constructor para registrar a un usuario
@@ -18,6 +24,11 @@ public class Usuario {
          this.rol = rol;
     }
 
+    public Usuario() {
+    }
+    
+    
+  
     //Constructor para recuperar a un usuario de la base de datos
     public Usuario(String nombreUsuario, String contrasena, String texto, String fotoPerfil, Rol rol, String fechaCreacion) {
         this.nombreUsuario = nombreUsuario;
@@ -80,8 +91,5 @@ public class Usuario {
     public void setFotoPerfil(String fotoPerfil) {
         this.fotoPerfil = fotoPerfil;
     }
-
-    public Object getPassword() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+    
 }

@@ -15,7 +15,7 @@ public class Seguridad {
     public String encriptarContrasena(String contrasena) {
         return passwordEncoder.encode(contrasena); // Encripta la contraseña con BCrypt
     }
-
+    
     /**
      * Verifica si la contrasena ingresada coincide con el hash almacenado
      * @param contrasena Contraseña original

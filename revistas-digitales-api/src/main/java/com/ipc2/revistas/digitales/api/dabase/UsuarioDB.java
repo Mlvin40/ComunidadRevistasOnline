@@ -8,6 +8,8 @@ package com.ipc2.revistas.digitales.api.dabase;
  *
  * @author melvin
  */
+import com.ipc2.revistas.digitales.api.modelos.usuarios.Rol;
+import com.ipc2.revistas.digitales.api.modelos.usuarios.Seguridad;
 import com.ipc2.revistas.digitales.api.modelos.usuarios.Usuario;
 
 import java.sql.Connection;
@@ -18,7 +20,7 @@ import java.sql.SQLException;
 public class UsuarioDB {
 
     private Connection connection;
-
+    
     public UsuarioDB() {
         try {
             this.connection = DataSourceDBSingleton.getInstance().getConnection();
@@ -120,6 +122,6 @@ public class UsuarioDB {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
+        
     }
 }

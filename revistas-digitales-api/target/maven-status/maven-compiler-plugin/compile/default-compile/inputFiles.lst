@@ -1,2 +1,14 @@
-/home/melvin/NetBeansProjects/revistas-digitales-api/src/main/java/com/ipc2/revistas/digitales/api/resources/JakartaEE10Resource.java
-/home/melvin/NetBeansProjects/revistas-digitales-api/src/main/java/com/ipc2/revistas/digitales/api/JakartaRestConfiguration.java
+/home/melvin/Escritorio/Proyecto Final IPC2/RevistasOnline/revistas-digitales-api/src/main/java/com/ipc2/revistas/digitales/api/modelos/usuarios/Usuario.java
+/home/melvin/Escritorio/Proyecto Final IPC2/RevistasOnline/revistas-digitales-api/src/main/java/com/ipc2/revistas/digitales/api/modelos/usuarios/Anunciante.java
+/home/melvin/Escritorio/Proyecto Final IPC2/RevistasOnline/revistas-digitales-api/src/main/java/com/ipc2/revistas/digitales/api/modelos/usuarios/Seguridad.java
+/home/melvin/Escritorio/Proyecto Final IPC2/RevistasOnline/revistas-digitales-api/src/main/java/com/ipc2/revistas/digitales/api/dabase/DataSourceDBSingleton.java
+/home/melvin/Escritorio/Proyecto Final IPC2/RevistasOnline/revistas-digitales-api/src/main/java/com/ipc2/revistas/digitales/api/dabase/CarteraDB.java
+/home/melvin/Escritorio/Proyecto Final IPC2/RevistasOnline/revistas-digitales-api/src/main/java/com/ipc2/revistas/digitales/api/modelos/usuarios/Rol.java
+/home/melvin/Escritorio/Proyecto Final IPC2/RevistasOnline/revistas-digitales-api/src/main/java/com/ipc2/revistas/digitales/api/JakartaRestConfiguration.java
+/home/melvin/Escritorio/Proyecto Final IPC2/RevistasOnline/revistas-digitales-api/src/main/java/com/ipc2/revistas/digitales/api/servicios/usuarioDAO.java
+/home/melvin/Escritorio/Proyecto Final IPC2/RevistasOnline/revistas-digitales-api/src/main/java/com/ipc2/revistas/digitales/api/modelos/usuarios/Administrador.java
+/home/melvin/Escritorio/Proyecto Final IPC2/RevistasOnline/revistas-digitales-api/src/main/java/com/ipc2/revistas/digitales/api/modelos/usuarios/Suscriptor.java
+/home/melvin/Escritorio/Proyecto Final IPC2/RevistasOnline/revistas-digitales-api/src/main/java/com/ipc2/revistas/digitales/api/servicios/UsuarioService.java
+/home/melvin/Escritorio/Proyecto Final IPC2/RevistasOnline/revistas-digitales-api/src/main/java/com/ipc2/revistas/digitales/api/modelos/usuarios/Editor.java
+/home/melvin/Escritorio/Proyecto Final IPC2/RevistasOnline/revistas-digitales-api/src/main/java/com/ipc2/revistas/digitales/api/controladores/UsuarioController.java
+/home/melvin/Escritorio/Proyecto Final IPC2/RevistasOnline/revistas-digitales-api/src/main/java/com/ipc2/revistas/digitales/api/dabase/UsuarioDB.java

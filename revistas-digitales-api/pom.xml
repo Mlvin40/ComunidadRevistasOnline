@@ -53,6 +53,8 @@
             <artifactId>jersey-hk2</artifactId>
             <version>3.1.1</version>
         </dependency>
+        
+        
 
         <!-- support for using Jackson (JSON) with Jersey -->
         <dependency>
@@ -88,6 +90,8 @@
             <version>3.1.9</version>
             <type>jar</type>
         </dependency>
+        
+        
     </dependencies>
 
     <build>
