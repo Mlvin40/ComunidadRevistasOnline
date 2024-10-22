@@ -25,7 +25,7 @@ public class UsuarioService {
 
     public void registrarUsuario(Usuario usuario) throws SQLException {
 
-        boolean esAnunciante = false;
+        boolean agregarCartera = false;
 
         switch (usuario.getRol().toString()) {
             case "SUSCRIPTOR":
@@ -33,11 +33,13 @@ public class UsuarioService {
                 break;
             case "EDITOR":
                 usuario = new Editor(usuario.getNombreUsuario(), usuario.getContrasena());
+                agregarCartera = true;
+                
                 break;
             case "ANUNCIANTE":
                 usuario = new Anunciante(usuario.getNombreUsuario(), usuario.getContrasena());
-                esAnunciante = true;
-
+                agregarCartera = true;
+              
                 break;
             case "ADMINISTRADOR":
                 usuario = new Administrador(usuario.getNombreUsuario(), usuario.getContrasena());
@@ -48,21 +50,14 @@ public class UsuarioService {
         }
 
         if (usuarioDB.registrarUsuario(usuario)) {
-            if (esAnunciante) {
+            if (agregarCartera) {
                 carteraDB.crearCartera(usuario);
             }
         }
-        
     }
-   
-    public Usuario autenticarUsuario(String username, String password) throws SQLException {
-        Usuario usuario = usuarioDAO.buscarUsuarioPorUsername(username);
-        /*if (usuario != null && usuario.getPassword().equals(password)) {
-            return usuario; // Aquí puedes devolver un token JWT
-        }
-        return null;
-    }*/
-        return null;
+     
+ 
+    public Usuario autenticarUsuario(String nombreUsuario, String contrasena) {
+       return usuarioDB.iniciarSesion(nombreUsuario, contrasena);
     }
-
 }

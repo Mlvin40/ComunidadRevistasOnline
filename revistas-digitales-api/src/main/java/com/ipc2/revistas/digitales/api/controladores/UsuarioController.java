@@ -6,7 +6,7 @@ package com.ipc2.revistas.digitales.api.controladores;
 
 import com.ipc2.revistas.digitales.api.modelos.usuarios.Usuario;
 import com.ipc2.revistas.digitales.api.servicios.UsuarioService;
-import jakarta.inject.Inject;
+import com.ipc2.revistas.digitales.api.util.GeneradorToken;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
@@ -14,6 +14,8 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  *
@@ -23,6 +25,7 @@ import java.sql.SQLException;
 public class UsuarioController {
 
     private UsuarioService usuarioService;
+    private static final String SECRET_KEY = "clave_usr_revistas_online"; // Cambia esto a algo seguro
 
     public UsuarioController() {
         this.usuarioService = new UsuarioService(); // Instanciación manual
@@ -31,20 +34,30 @@ public class UsuarioController {
     @POST
     @Path("/registro")
     @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.TEXT_PLAIN)
+    @Produces(MediaType.APPLICATION_JSON)
     public Response registrarUsuario(Usuario usuario) {
         // Validación básica de los datos recibidos
         if (usuario.getNombreUsuario() == null || usuario.getNombreUsuario().isEmpty()
                 || usuario.getContrasena() == null || usuario.getContrasena().isEmpty()
                 || usuario.getRol() == null) {
-            return Response.status(Response.Status.BAD_REQUEST).entity("Todos los campos son obligatorios").build();
+            // Devuelve un error en formato JSON
+            Map<String, String> response = new HashMap<>();
+            response.put("error", "Todos los campos son obligatorios");
+            return Response.status(Response.Status.BAD_REQUEST).entity(response).build();
         }
 
         try {
             usuarioService.registrarUsuario(usuario); // Registrar el usuario en la base de datos
-            return Response.ok("Usuario registrado exitosamente").build();
+
+            // Devuelve una respuesta de éxito en formato JSON
+            Map<String, String> response = new HashMap<>();
+            response.put("message", "Usuario registrado exitosamente");
+            return Response.ok(response).build();
         } catch (SQLException e) {
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("Error al registrar el usuario DESDE EL BE").build();
+            // Devuelve un error en formato JSON
+            Map<String, String> response = new HashMap<>();
+            response.put("error", "Error al registrar el usuario desde el BE");
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(response).build();
         }
     }
 
@@ -53,35 +66,22 @@ public class UsuarioController {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response loginUsuario(Usuario usuario) {
-        // Validación básica de los datos recibidos
-        if (usuario.getNombreUsuario() == null || usuario.getContrasena() == null) {
-            return Response.status(Response.Status.BAD_REQUEST).entity("Nombre de usuario y contraseña son obligatorios").build();
-        }
 
-        try {
-            Usuario authenticatedUser = usuarioService.autenticarUsuario(usuario.getNombreUsuario(), usuario.getContrasena());
-            if (authenticatedUser != null) {
-                // Aquí es donde puedes generar un token JWT
-                String jwtToken = generateJWT(authenticatedUser);
-                return Response.ok("{\"token\": \"" + jwtToken + "\"}").build();
-            } else {
-                return Response.status(Response.Status.UNAUTHORIZED).entity("Credenciales inválidas").build();
-            }
-        } catch (SQLException e) {
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("Error en el servidor").build();
+        Usuario usuarioAutenticado = usuarioService.autenticarUsuario(usuario.getNombreUsuario(), usuario.getContrasena());
+        
+        if (usuarioAutenticado != null) {
+            // Crear JWT
+            GeneradorToken generadorToken = new GeneradorToken();
+            String token = generadorToken.crearTokenJWT(usuarioAutenticado);
+
+            // Responder con el token tanto en el encabezado como en el cuerpo
+            return Response.ok()
+                    .header("Authorization", "Bearer " + token)
+                    .entity("{\"token\":\"" + token + "\"}")
+                    .build();
+        } else {
+            return Response.status(Response.Status.UNAUTHORIZED).entity("Credenciales incorrectas").build();
         }
     }
 
-    // Método para generar un token JWT (puedes personalizarlo)
-    private String generateJWT(Usuario usuario) {
-        // Aquí usarías una librería como jjwt para generar un token JWT
-        // Por ejemplo:
-        // return Jwts.builder()
-        //          .setSubject(usuario.getNombreUsuario())
-        //          .setIssuedAt(new Date())
-        //          .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
-        //          .signWith(SignatureAlgorithm.HS512, SECRET_KEY)
-        //          .compact();
-        return "tokenEjemplo"; // Token de ejemplo (deberías reemplazarlo con lógica real)
-    }
 }

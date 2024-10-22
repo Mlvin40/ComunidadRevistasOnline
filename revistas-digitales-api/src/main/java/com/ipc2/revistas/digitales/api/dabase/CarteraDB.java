@@ -26,14 +26,13 @@ public class CarteraDB {
         }
     }
 
-
-    // Método para crear una cartera de anunciantes
+    // Método para crear una cartera para un usuario
     public void crearCartera(Usuario usuario) {
-
-        String consulta = "INSERT INTO cartera_anunciantes (nombre_anunciante) VALUES (?)";
+        String consulta = "INSERT INTO carteras (nombre_usuario, tipo_usuario) VALUES (?, ?)";
         try {
             PreparedStatement statement = connection.prepareStatement(consulta);
             statement.setString(1, usuario.getNombreUsuario());
+            statement.setString(2, usuario.getRol().toString());
             statement.executeUpdate();
             System.out.println("Cartera creada con éxito");
         } catch (SQLException e) {
@@ -41,23 +40,30 @@ public class CarteraDB {
         }
     }
 
+    // Método para recargar la cartera
     public boolean recargarCartera(String nombreUsuario, double monto) {
-        String consulta = "UPDATE cartera_anunciantes SET saldo = saldo + ? WHERE nombre_anunciante = ?";
+        String consulta = "UPDATE carteras SET saldo = saldo + ? WHERE nombre_usuario = ?";
         try {
             PreparedStatement statement = connection.prepareStatement(consulta);
             statement.setDouble(1, monto);
             statement.setString(2, nombreUsuario);
-            statement.executeUpdate();
-            System.out.println("Cartera recargada con éxito");
-            return true;
+            int filasActualizadas = statement.executeUpdate();
+            if (filasActualizadas > 0) {
+                System.out.println("Cartera recargada con éxito");
+                return true;
+            } else {
+                System.out.println("No se encontró la cartera para el usuario: " + nombreUsuario);
+                return false;
+            }
         } catch (SQLException e) {
             System.out.println("Error al recargar la cartera: " + e.getMessage());
             return false;
         }
     }
 
+    // Método para obtener el saldo actual de la cartera
     public double obtenerSaldoActual(String nombreUsuario) {
-        String consulta = "SELECT saldo FROM cartera_anunciantes WHERE nombre_anunciante = ?";
+        String consulta = "SELECT saldo FROM carteras WHERE nombre_usuario = ?";
         try {
             PreparedStatement statement = connection.prepareStatement(consulta);
             statement.setString(1, nombreUsuario);
@@ -79,5 +85,4 @@ public class CarteraDB {
             return -1;
         }
     }
-
 }
