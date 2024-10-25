@@ -30,7 +30,7 @@ public class UsuarioController {
     public UsuarioController() {
         this.usuarioService = new UsuarioService(); // Instanciación manual
     }
-
+    
     @POST
     @Path("/registro")
     @Consumes(MediaType.APPLICATION_JSON)
@@ -83,5 +83,4 @@ public class UsuarioController {
             return Response.status(Response.Status.UNAUTHORIZED).entity("Credenciales incorrectas").build();
         }
     }
-
 }

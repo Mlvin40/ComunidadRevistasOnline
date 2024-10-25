@@ -28,7 +28,7 @@ public class AuthFilter implements ContainerRequestFilter {
     public void filter(ContainerRequestContext requestContext) throws IOException {
 //        String authorizationHeader = requestContext.getHeaderString("Authorization");
 //
-//        if (authorizationHeader == null || !authorizationHeader.startsWith("Bearer ")) {
+//        if (authorizationHeader == null || !authorizationHeader.startsWith("Bearer")) {
 //            requestContext.abortWith(Response.status(Response.Status.UNAUTHORIZED).entity("Token no proporcionado").build());
 //            return;
 //        }

@@ -17,8 +17,8 @@ import java.util.Date;
  */
 public class GeneradorToken {
 
-    private static final Key SECRET_KEY = Keys.secretKeyFor(SignatureAlgorithm.HS256); // Llave secreta para firmar el token
-
+    // Llave secreta para firmar el token
+    private static final Key SECRET_KEY = Keys.secretKeyFor(SignatureAlgorithm.HS256); 
     
     // Para iniciar sesion
     public String crearTokenJWT(Usuario usuario) {
