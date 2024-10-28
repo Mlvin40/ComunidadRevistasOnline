@@ -1,0 +1,41 @@
+<div class="container my-5 py-5"> <!-- Agregar margen y padding alrededor del contenedor -->
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-md-9 col-lg-6 col-xl-6 my-lg-5 py-lg-5">
+        <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp" class="img-fluid" alt="Sample image">
+      </div>
+      <div class="col-md-8 col-lg-6 col-xl-5 offset-xl-1 my-lg-5 py-lg-5">
+        <h2>Inicio de Sesión</h2>
+        <form (ngSubmit)="onLogin(loginForm)" #loginForm="ngForm">
+          <!-- Nombre de Usuario -->
+          <div class="form-outline mb-4">
+            <label for="nombre_usuario" class="form-label" style="margin-left: 0px;">Nombre de Usuario:</label>
+            <input type="text" id="nombre_usuario" name="nombreUsuario" [(ngModel)]="nombreUsuario" class="form-control form-control-lg" placeholder="Ejemplo" required>
+          </div>
+  
+          <!-- Contraseña -->
+          <div class="form-outline mb-3">
+            <label for="contrasena" class="form-label" style="margin-left: 0px;">Contraseña:</label>
+            <input [type]="mostrarContrasena ? 'text' : 'password'" id="contrasena" name="contrasena" [(ngModel)]="contrasena" class="form-control form-control-lg" placeholder="*****" required>
+          </div>
+  
+          <!-- Mostrar Contraseña -->
+          <div class="d-flex justify-content-between align-items-center">
+            <div class="form-check mb-0">
+              <label>
+                <input type="checkbox" [(ngModel)]="mostrarContrasena" [ngModelOptions]="{standalone: true}" class="form-check-input me-2"> Mostrar contraseña
+              </label>
+            </div>
+          </div>
+
+          <!-- Botón de inicio de sesión -->
+          <div class="text-center text-lg-start mt-4 pt-2">
+            <button type="submit" class="btn btn-primary btn-lg" [disabled]="loginForm.invalid" style="padding-left: 2.5rem; padding-right: 2.5rem;">Iniciar Sesión</button>
+            <p class="small fw-bold mt-2 pt-1 mb-0">¿No tienes un perfil? 
+                <a routerLink="/registro" class="link-danger">Registrarse</a>
+             </p>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  

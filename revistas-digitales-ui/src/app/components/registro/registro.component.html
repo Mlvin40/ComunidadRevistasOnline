@@ -1,0 +1,75 @@
+<section class="vh-100" style="background-color: #eee;">
+  <div class="container h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-lg-12 col-xl-11">
+        <div class="card text-black" style="border-radius: 25px;">
+          <div class="card-body p-md-5">
+            <div class="row justify-content-center">
+              <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
+                
+                <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Registro de Usuario</p>
+                
+                <form (ngSubmit)="onRegister(usuarioForm)" #usuarioForm="ngForm" class="mx-1 mx-md-4">
+                  
+                  <!-- Nombre de Usuario -->
+                  <div class="d-flex flex-row align-items-center mb-4">
+                    <i class="fas fa-user fa-lg me-3 fa-fw"></i>
+                    <div class="form-outline flex-fill mb-0">
+                        <label class="form-label" for="nombre_usuario">Nombre de Usuario</label>
+                        <input type="text" id="nombre_usuario" name="nombreUsuario" ngModel class="form-control" required #nombreUsuario="ngModel">
+                      <div *ngIf="nombreUsuario.invalid && nombreUsuario.touched" class="error">
+                        El nombre de usuario es requerido.
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Contraseña -->
+                  <div class="d-flex flex-row align-items-center mb-4">
+                    <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
+                    <div class="form-outline flex-fill mb-0">
+                        <label class="form-label" for="contrasena">Contraseña</label>
+                        <input type="password" id="contrasena" name="contrasena" ngModel class="form-control" required #contrasena="ngModel">
+                      <div *ngIf="contrasena.invalid && contrasena.touched" class="error">
+                        La contraseña es requerida.
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Rol -->
+                  <div class="d-flex flex-row align-items-center mb-4">
+                    <i class="fas fa-user-tag fa-lg me-3 fa-fw"></i>
+                    <div class="form-outline flex-fill mb-0">
+                    <label class="form-label" for="rol">Rol</label>
+                      <select id="rol" name="rol" ngModel class="form-control" required #rol="ngModel">
+                        <option value="ADMINISTRADOR">Administrador</option>
+                        <option value="EDITOR">Editor</option>
+                        <option value="SUSCRIPTOR">Suscriptor</option>
+                        <option value="ANUNCIANTE">Anunciante</option>
+                      </select>
+                      
+                      <div *ngIf="rol.invalid && rol.touched" class="error">
+                        El rol es requerido.
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Botón de registro -->
+                  <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
+                    <button type="submit" class="btn btn-primary btn-lg" [disabled]="usuarioForm.invalid">Registrar</button>
+                  </div>
+                </form>
+
+              </div>
+
+              <!-- Imagen lateral -->
+              <div class="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2">
+                <img src="https://static.rfstat.com/mockup-maker/pack/475/slider-images/2054/e67862d546e9/2x.jpeg" class="img-fluid" alt="Persona leyendo una revista">
+            </div>
+                      
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
