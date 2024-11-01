@@ -1,9 +1,11 @@
 com/ipc2/revistas/digitales/api/modelos/usuarios/Seguridad.class
+com/ipc2/revistas/digitales/api/servicios/ConfiguracionUsuarioService.class
 com/ipc2/revistas/digitales/api/dabase/UsuarioDB.class
 com/ipc2/revistas/digitales/api/modelos/usuarios/Suscriptor.class
 com/ipc2/revistas/digitales/api/modelos/usuarios/Administrador.class
 com/ipc2/revistas/digitales/api/controladores/UsuarioController.class
 com/ipc2/revistas/digitales/api/util/AuthFilter.class
+com/ipc2/revistas/digitales/api/controladores/ConfiguracionUsuarioController.class
 com/ipc2/revistas/digitales/api/modelos/usuarios/Editor.class
 com/ipc2/revistas/digitales/api/util/GeneradorToken.class
 com/ipc2/revistas/digitales/api/modelos/usuarios/Anunciante.class
