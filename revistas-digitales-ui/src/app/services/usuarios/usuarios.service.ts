@@ -14,7 +14,8 @@ export class UsuariosService {
   constructor(private http: HttpClient, private restConstants: RestConstants) {
     this.apiUrl = `${this.restConstants.getApiURL()}/usuarios`; // URL del backend para usuarios
   }
-  
+
+
   // Método para registrar un nuevo usuario
   registrarUsuario(usuario: any): Observable<any> {
     console.log('Registrando usuario:', usuario);
@@ -25,7 +26,7 @@ export class UsuariosService {
   loginUsuario(loginData: any): Observable<string> {
     return this.http.post<any>(`${this.apiUrl}/login`, loginData).pipe(
       map(response => {
-        const token = response.token; // Suponiendo que el token viene en el cuerpo
+        const token = response.token;
         if (token) {
           this.guardarToken(token); // Guardar el token en localStorage
           return token; // Devuelve el token
@@ -87,5 +88,6 @@ export class UsuariosService {
     }
     console.log('No hay token o no tiene permisos para acceder a esta página');
     return false; // Si no hay token, no tiene permisos de ningún tipo de usuario
+    
   }
 }

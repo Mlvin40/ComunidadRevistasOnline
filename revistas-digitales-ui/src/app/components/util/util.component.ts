@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { UsuariosService } from '../../services/usuarios/usuarios.service';
+import { setThrowInvalidWriteToSignalError } from '@angular/core/primitives/signals';
 
 @Component({
   selector: 'app-util',
@@ -21,6 +22,7 @@ constructor(private router: Router, private usuarioService: UsuariosService){ }
 
 }
 irAConfiguracion() {
+  this.router.navigate(['/configuracionPerfil']);
   console.log('Ir a configuración');
 }
 irAperfil() {

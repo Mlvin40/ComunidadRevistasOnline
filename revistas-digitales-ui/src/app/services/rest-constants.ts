@@ -8,4 +8,6 @@ export class RestConstants {
   public getApiURL(): string {
     return this.API_URL;
   }
+
+  
 }
