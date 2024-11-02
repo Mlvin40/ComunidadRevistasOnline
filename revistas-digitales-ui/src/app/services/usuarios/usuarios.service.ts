@@ -15,7 +15,6 @@ export class UsuariosService {
     this.apiUrl = `${this.restConstants.getApiURL()}/usuarios`; // URL del backend para usuarios
   }
 
-
   // Método para registrar un nuevo usuario
   registrarUsuario(usuario: any): Observable<any> {
     console.log('Registrando usuario:', usuario);
@@ -88,6 +87,6 @@ export class UsuariosService {
     }
     console.log('No hay token o no tiene permisos para acceder a esta página');
     return false; // Si no hay token, no tiene permisos de ningún tipo de usuario
-    
+
   }
 }

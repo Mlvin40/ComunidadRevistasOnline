@@ -4,7 +4,7 @@ import { RestConstants } from '../rest-constants';
 import { jwtDecode } from 'jwt-decode';
 import { UsuariosService } from '../usuarios/usuarios.service';
 import { Usuario } from '../../entidades/Usuario';
-import { Observable } from 'rxjs';
+import { catchError, Observable, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +13,7 @@ export class ConfiguracionUsuarioService {
 
   private apiUrl: string;
 
+  
   constructor(private http: HttpClient, private restConstants: RestConstants, private usuarioService: UsuariosService) {
     this.apiUrl = `${this.restConstants.getApiURL()}/configuracion-usuario`; // URL del backend para usuarios
   }
@@ -33,7 +34,19 @@ export class ConfiguracionUsuarioService {
   }
   
   obtenerDatosUsuario(nombreUsuario: string): Observable<Usuario> {
-    return this.http.get<Usuario>(`${this.apiUrl}/obtener-datos-usuario`);
+    return this.http.get<Usuario>(`${this.apiUrl}/obtener-datos-usuario`, {
+      params: { nombreUsuario }
+    });
   }
-  
+
+  //Metodo para actualizar el perfil desde configuracion-usuario.component.ts
+  actualizarPerfil(formData: FormData): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/actualizar-perfil`, formData)
+      .pipe(
+        catchError(error => {
+          console.error('Error al actualizar perfil', error);
+          return throwError(error);
+        })
+      );
+  }
 }

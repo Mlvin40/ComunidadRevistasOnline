@@ -2,35 +2,28 @@ package com.ipc2.revistas.digitales.api.modelos.usuarios;
 
 
 public class Usuario {
-    
 
+    private String nombreUsuario;
+    private String contrasena;
+    private String texto;
+    private byte[] fotoPerfil;
+    private Rol rol;
+    private String fechaCreacion;
 
-   private String nombreUsuario;
-   private String contrasena;
-   private String texto;
-   private String fotoPerfil;
-   private Rol rol;
-   private String fechaCreacion;
-   
-   
-
-
-   //Constructor para registrar a un usuario
+    //Constructor para registrar a un usuario nuevo
     public Usuario(String nombreUsuario, String contrasena, Rol rol) {
-         this.nombreUsuario = nombreUsuario;
-         this.contrasena = guardarContrasena(contrasena);
-         this.texto = null;
-         this.fotoPerfil = null;
-         this.rol = rol;
+        this.nombreUsuario = nombreUsuario;
+        this.contrasena = guardarContrasena(contrasena);
+        this.texto = null;
+        this.fotoPerfil = null;
+        this.rol = rol;
     }
 
     public Usuario() {
     }
-    
-    
-  
+
     //Constructor para recuperar a un usuario de la base de datos
-    public Usuario(String nombreUsuario, String contrasena, String texto, String fotoPerfil, Rol rol, String fechaCreacion) {
+    public Usuario(String nombreUsuario, String contrasena, String texto, byte[] fotoPerfil, Rol rol, String fechaCreacion) {
         this.nombreUsuario = nombreUsuario;
         this.contrasena = contrasena;
         this.texto = texto;
@@ -39,7 +32,7 @@ public class Usuario {
         this.fechaCreacion = fechaCreacion;
     }
 
-    private String guardarContrasena(String contrasena){
+    private String guardarContrasena(String contrasena) {
         Seguridad seguridad = new Seguridad();
         return seguridad.encriptarContrasena(contrasena);
     }
@@ -84,12 +77,12 @@ public class Usuario {
         this.fechaCreacion = fechaCreacion;
     }
 
-    public String getFotoPerfil() {
+    public byte[] getFotoPerfil() {
         return fotoPerfil;
     }
 
-    public void setFotoPerfil(String fotoPerfil) {
+    public void setFotoPerfil(byte[] fotoPerfil) {
         this.fotoPerfil = fotoPerfil;
     }
-    
+
 }

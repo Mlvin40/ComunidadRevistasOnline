@@ -11,7 +11,7 @@ com/ipc2/revistas/digitales/api/util/GeneradorToken.class
 com/ipc2/revistas/digitales/api/modelos/usuarios/Anunciante.class
 com/ipc2/revistas/digitales/api/dabase/CarteraDB.class
 com/ipc2/revistas/digitales/api/dabase/DataSourceDBSingleton.class
-com/ipc2/revistas/digitales/api/JakartaRestConfiguration.class
+com/ipc2/revistas/digitales/api/RestConfiguration.class
 com/ipc2/revistas/digitales/api/modelos/usuarios/Rol.class
 com/ipc2/revistas/digitales/api/modelos/usuarios/Usuario.class
 com/ipc2/revistas/digitales/api/servicios/UsuarioService.class

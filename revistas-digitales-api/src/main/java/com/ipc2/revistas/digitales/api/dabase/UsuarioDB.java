@@ -11,6 +11,7 @@ package com.ipc2.revistas.digitales.api.dabase;
 import com.ipc2.revistas.digitales.api.modelos.usuarios.Rol;
 import com.ipc2.revistas.digitales.api.modelos.usuarios.Seguridad;
 import com.ipc2.revistas.digitales.api.modelos.usuarios.Usuario;
+import java.io.InputStream;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -98,7 +99,7 @@ public class UsuarioDB {
                     String nombre = resultSet.getString("nombre_usuario");
                     String password = resultSet.getString("contraseña");
                     String texto = resultSet.getString("perfil");
-                    String fotoPerfil = resultSet.getString("foto_perfil");
+                    byte[] fotoPerfil = resultSet.getBytes("foto_perfil");
                     String rol = resultSet.getString("rol");
                     //fechaCreacion es un campo de tipo DATE en la base de datos
                     String fechaCreacion = resultSet.getString("fecha_creacion");
@@ -111,12 +112,12 @@ public class UsuarioDB {
         return null;
     }
 
-    public void actualizarUsuario(String nombreUsuario, String texto, String fotoPerfilPath) {
+    public void actualizarUsuario(String nombreUsuario, String texto, InputStream fotoPerfil) {
         String consulta = "UPDATE usuarios SET perfil = ?, foto_perfil = ? WHERE nombre_usuario = ?";
 
         try (PreparedStatement stmt = connection.prepareStatement(consulta)) {
             stmt.setString(1, texto);
-            stmt.setString(2, fotoPerfilPath);
+            stmt.setBlob(2, fotoPerfil);
             stmt.setString(3, nombreUsuario);
             stmt.executeUpdate();
         } catch (SQLException e) {
