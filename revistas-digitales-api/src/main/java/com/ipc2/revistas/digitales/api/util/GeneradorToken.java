@@ -19,15 +19,16 @@ public class GeneradorToken {
 
     // Llave secreta para firmar el token
     private static final Key SECRET_KEY = Keys.secretKeyFor(SignatureAlgorithm.HS256); 
+    //private static final String SECRET_KEY = "clave_usr_revistas_online"; //Llave secreta para los tokens
     
     // Para iniciar sesion
     public String crearTokenJWT(Usuario usuario) {
         return Jwts.builder()
-                .setSubject(usuario.getNombreUsuario()) // Añade el nombre de usuario
+                .setSubject(usuario.getNombreUsuario()) //En esta parte se agrega el nombre de usuario al token
                 .claim("rol", usuario.getRol()) // Añade el rol como una claim
                 .setIssuedAt(new Date()) // Fecha de emisión
                 .setExpiration(new Date(System.currentTimeMillis() + 3600000)) // Expira en 1 hora
-                .signWith(SECRET_KEY) // Firma con la clave secreta
+                .signWith(SECRET_KEY) // Firma con la llave secreta
                 .compact();
     }
 }

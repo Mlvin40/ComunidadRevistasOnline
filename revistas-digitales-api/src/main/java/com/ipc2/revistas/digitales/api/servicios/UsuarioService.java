@@ -11,6 +11,8 @@ import com.ipc2.revistas.digitales.api.modelos.usuarios.Anunciante;
 import com.ipc2.revistas.digitales.api.modelos.usuarios.Editor;
 import com.ipc2.revistas.digitales.api.modelos.usuarios.Suscriptor;
 import com.ipc2.revistas.digitales.api.modelos.usuarios.Usuario;
+import com.ipc2.revistas.digitales.api.util.GeneradorToken;
+
 import java.sql.SQLException;
 
 /**
@@ -55,9 +57,24 @@ public class UsuarioService {
             }
         }
     }
-     
  
-    public Usuario autenticarUsuario(String nombreUsuario, String contrasena) {
+    public String obtenerToken(Usuario usuario){
+     
+        String token = null;
+        Usuario usuarioLog = autenticarUsuario(usuario.getNombreUsuario(), usuario.getContrasena());
+
+        //ver si el usuario obtenido no es nulo, entonces se crea un token
+        if(usuarioLog != null){
+            // Crear JWT
+            GeneradorToken generadorToken = new GeneradorToken();
+            token = generadorToken.crearTokenJWT(usuarioLog);
+            return token;
+        }
+        return null;
+    }
+    
+    private Usuario autenticarUsuario(String nombreUsuario, String contrasena) {
        return usuarioDB.iniciarSesion(nombreUsuario, contrasena);
     }
+    
 }

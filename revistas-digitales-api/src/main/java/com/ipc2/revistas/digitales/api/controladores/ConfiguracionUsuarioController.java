@@ -13,14 +13,9 @@ import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.QueryParam;
-import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 
@@ -33,7 +28,7 @@ public class ConfiguracionUsuarioController {
 
     private static final String PATH_FOTOS_PERFIL = "fotos_perfil_folder";
 
-    private ConfiguracionUsuarioService configuracionUsuarioService = new ConfiguracionUsuarioService();
+    private ConfiguracionUsuarioService configuracionUsuarioService;
 
     public ConfiguracionUsuarioController() {
         this.configuracionUsuarioService = new ConfiguracionUsuarioService();
@@ -62,13 +57,12 @@ public class ConfiguracionUsuarioController {
             @FormDataParam("fileObject") InputStream foto,
             @FormDataParam("fileObject") FormDataContentDisposition fileDetails) {
 
-        // Llama a tu método para actualizar en la base de datos
+        //Realiza los cambios en la base de datos
         UsuarioDB usuarioDB = new UsuarioDB();
-        usuarioDB.actualizarUsuario(nombre, texto, foto); // Asegúrate de que este método esté implementado para guardar la imagen
-
+        usuarioDB.actualizarUsuario(nombre, texto, foto);
+        
         return Response.ok().entity("Perfil actualizado exitosamente").build();
     }
-    
 }
 
 

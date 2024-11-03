@@ -1,0 +1,43 @@
+<div class="container mt-4">
+    <h2>REVISTA: {{ nombreRevista }}</h2>
+  
+    <form #publicarForm="ngForm" (ngSubmit)="guardarPublicacion()">
+      <div class="form-group">
+        <label for="descripcion">Descripción:</label>
+        <textarea
+          id="descripcion"
+          [(ngModel)]="descripcion"
+          name="descripcion"
+          class="form-control"
+          required
+          #descripcionInput="ngModel"
+        ></textarea>
+        <div *ngIf="descripcionInput.invalid && descripcionInput.touched" class="text-danger">
+          La descripción es obligatoria.
+        </div>
+      </div>
+  
+      <div class="form-group">
+        <label for="archivoPDF">Archivo PDF:</label>
+        <input
+          type="file"
+          id="archivoPDF"
+          (change)="onFileSelected($event)"
+          class="form-control"
+          accept=".pdf"
+          required
+        />
+        <div *ngIf="mensajeErrorArchivo" class="text-danger">{{ mensajeErrorArchivo }}</div>
+      </div>
+  
+      <button type="submit" class="btn btn-primary mt-3" [disabled]="!publicarForm.form.valid || !archivoPDF">
+        Guardar Publicación
+      </button>
+    </form>
+  
+    <!-- Mensaje de éxito -->
+    <div *ngIf="mensajeExito" class="alert alert-success mt-3">
+      {{ mensajeExito }}
+    </div>
+  </div>
+  

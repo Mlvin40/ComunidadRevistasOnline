@@ -14,6 +14,7 @@ import { TipoUsuario } from '../../entidades/TipoUsuario';
   styleUrls: ['./configuracion-usuario.component.css'],
 })
 export class ConfiguracionUsuarioComponent implements OnInit {
+  
   nombreUsuario: string | null = '';
   usuario: Usuario | null = null; // Almacena los datos del usuario
   texto: string = ''; // Para el texto del perfil

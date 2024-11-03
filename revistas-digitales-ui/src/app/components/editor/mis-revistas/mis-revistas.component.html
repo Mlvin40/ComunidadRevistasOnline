@@ -1,0 +1,31 @@
+<div class="container mt-4">
+    <h2>Mis Revistas</h2>
+    <div *ngIf="mensaje" class="alert alert-danger">{{ mensaje }}</div>
+    <div *ngIf="revistas.length > 0; else sinRevistas" class="row">
+      <div *ngFor="let revista of revistas" class="col-md-4 mb-3">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">{{ revista.nombre || 'Sin nombre' }}</h5>
+            <p>{{ revista.descripcion || 'Sin descripción' }}</p>
+            <p><strong>Categoría:</strong> {{ revista.categoria || 'Sin categoría' }}</p>
+            <p><strong>Fecha de Creación:</strong> {{ revista.fechaCreacion || 'Desconocida' }}</p>
+            <p><strong>Likes:</strong> {{ revista.likes }}</p>
+  
+            <button class="btn btn-success" (click)="realizarPublicacion(revista.nombre)">Realizar Publicación</button>
+            <button class="btn btn-warning" (click)="editarRevista(revista.nombre)">Editar</button>
+  
+            <div *ngIf="revista.comentarios && revista.comentarios.length > 0">
+              <h6>Comentarios:</h6>
+              <p *ngFor="let comentario of revista.comentarios">
+                <strong>{{ comentario.nombreUsuario }}:</strong> {{ comentario.comentario }}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <ng-template #sinRevistas>
+      <p>No hay revistas disponibles.</p>
+    </ng-template>
+  </div>
+  

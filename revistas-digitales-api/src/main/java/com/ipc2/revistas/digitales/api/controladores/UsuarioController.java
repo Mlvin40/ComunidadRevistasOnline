@@ -25,21 +25,23 @@ import java.util.Map;
 public class UsuarioController {
 
     private UsuarioService usuarioService;
-    private static final String SECRET_KEY = "clave_usr_revistas_online"; // Cambia esto a algo seguro
+    private static final String SECRET_KEY = "clave_usr_revistas_online"; //Llave secreta para los tokens
 
     public UsuarioController() {
-        this.usuarioService = new UsuarioService(); // Instanciación manual
+        this.usuarioService = new UsuarioService();
     }
-    
+
     @POST
     @Path("/registro")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response registrarUsuario(Usuario usuario) {
+
         // Validación básica de los datos recibidos
         if (usuario.getNombreUsuario() == null || usuario.getNombreUsuario().isEmpty()
                 || usuario.getContrasena() == null || usuario.getContrasena().isEmpty()
                 || usuario.getRol() == null) {
+
             // Devuelve un error en formato JSON
             Map<String, String> response = new HashMap<>();
             response.put("error", "Todos los campos son obligatorios");
@@ -67,17 +69,15 @@ public class UsuarioController {
     @Produces(MediaType.APPLICATION_JSON)
     public Response loginUsuario(Usuario usuario) {
 
-        Usuario usuarioAutenticado = usuarioService.autenticarUsuario(usuario.getNombreUsuario(), usuario.getContrasena());
-        
-        if (usuarioAutenticado != null) {
-            // Crear JWT
-            GeneradorToken generadorToken = new GeneradorToken();
-            String token = generadorToken.crearTokenJWT(usuarioAutenticado);
+        // Intenta obtener un token
+        String tokenObtenido = usuarioService.obtenerToken(usuario);
 
+        if (tokenObtenido != null) {
+            
             // Responder con el token tanto en el encabezado como en el cuerpo
             return Response.ok()
-                    .header("Authorization", "Bearer " + token)
-                    .entity("{\"token\":\"" + token + "\"}")
+                    .header("Authorization", "Bearer " + tokenObtenido)
+                    .entity("{\"token\":\"" + tokenObtenido + "\"}")
                     .build();
         } else {
             return Response.status(Response.Status.UNAUTHORIZED).entity("Credenciales incorrectas").build();

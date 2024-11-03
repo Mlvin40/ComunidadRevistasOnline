@@ -27,7 +27,7 @@ export class UsuariosService {
       map(response => {
         const token = response.token;
         if (token) {
-          this.guardarToken(token); // Guardar el token en localStorage
+          this.guardarToken(token); // Guarda el token en localStorage
           return token; // Devuelve el token
         } else {
           throw new Error('Token no encontrado en la respuesta desde servicio usuarios');
@@ -89,4 +89,37 @@ export class UsuariosService {
     return false; // Si no hay token, no tiene permisos de ningún tipo de usuario
 
   }
+
+  // Método para obtener el nombre de usuario desde el token
+  obtenerNombreUsuarioDesdeToken() {
+    const token = this.obtenerToken();
+    if (!token) {
+      console.error('No se encontró el token');
+      return null;
+    }
+
+    try {
+      const decodedToken: { sub?: string } = jwtDecode(token);
+      return decodedToken.sub ?? null;
+    } catch (error) {
+      console.error('Token inválido', error);
+      return null;
+    }
+  }
+  obtenerRolDesdeToken() {
+    const token = this.obtenerToken();
+    if (!token) {
+      console.error('No se encontró el token');
+      return null;
+    }
+
+    try {
+      const decodedToken: { rol?: string } = jwtDecode(token);
+      return decodedToken.rol ?? null;
+    } catch (error) {
+      console.error('Token inválido', error);
+      return null;
+    }
+  }
+
 }

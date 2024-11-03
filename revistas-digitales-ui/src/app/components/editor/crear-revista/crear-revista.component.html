@@ -1,2 +1,30 @@
-<app-editor-home></app-editor-home>
-<p>crear-revista works!</p>
+<div class="container mt-5">
+    <h2>Crear Nueva Revista</h2>
+    
+    <!-- Mostrar mensajes -->
+    <div *ngIf="mensaje" class="alert alert-info">{{ mensaje }}</div>
+
+    <form [formGroup]="revistaForm" (ngSubmit)="crearRevista()">
+      <div class="mb-3">
+        <label for="nombre" class="form-label">Nombre de la Revista</label>
+        <input id="nombre" type="text" class="form-control" formControlName="nombre" required />
+      </div>
+      <div class="mb-3">
+        <label for="descripcion" class="form-label">Descripción</label>
+        <textarea id="descripcion" class="form-control" formControlName="descripcion" rows="3" required></textarea>
+      </div>
+      <div class="mb-3">
+        <label for="categoria" class="form-label">Categoría</label>
+        <input id="categoria" type="text" class="form-control" formControlName="categoria" required />
+      </div>
+      <div class="mb-3">
+        <label for="fechaCreacion" class="form-label">Fecha de Creación</label>
+        <input id="fechaCreacion" type="date" class="form-control" formControlName="fechaCreacion" required />
+      </div>
+      <div class="mb-3">
+        <label for="autor" class="form-label">Autor</label>
+        <input id="autor" type="text" class="form-control" formControlName="autor" readonly />
+      </div>
+      <button type="submit" class="btn btn-primary">Crear Revista</button>
+    </form>
+</div>
