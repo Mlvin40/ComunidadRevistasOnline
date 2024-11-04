@@ -35,4 +35,8 @@ export class MisRevistasComponent implements OnInit {
     this.router.navigate(['/publicar', nombre]);
   }
   
+  verPublicaciones(nombre: string): void {
+    // Redirigir al usuario al componente de visualización de publicaciones, pasando el nombre de la revista
+    this.router.navigate(['/verPublicaciones', nombre]);
+  }
 }

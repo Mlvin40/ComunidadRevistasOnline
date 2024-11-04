@@ -9,6 +9,7 @@ import { CarteraEditorComponent } from './components/editor/cartera-editor/carte
 import { MisRevistasComponent } from './components/editor/mis-revistas/mis-revistas.component';
 import { EditarRevistaComponent } from './components/editor/editar-revista/editar-revista.component';
 import { PublicarComponent } from './components/editor/publicar/publicar.component';
+import { VerPublicacionesComponent } from './components/editor/ver-publicaciones/ver-publicaciones.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -22,5 +23,6 @@ export const routes: Routes = [
   { path: 'misRevistas', component: MisRevistasComponent },
   { path: 'editarRevista/:nombre', component: EditarRevistaComponent },
   { path: 'publicar/:nombre', component: PublicarComponent },
+  { path: 'verPublicaciones/:nombre', component: VerPublicacionesComponent },
   
 ];

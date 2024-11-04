@@ -13,6 +13,7 @@
   
             <button class="btn btn-success" (click)="realizarPublicacion(revista.nombre)">Realizar Publicación</button>
             <button class="btn btn-warning" (click)="editarRevista(revista.nombre)">Editar</button>
+            <button class="btn btn-info" (click)="verPublicaciones(revista.nombre)">Publicaciones</button>
   
             <div *ngIf="revista.comentarios && revista.comentarios.length > 0">
               <h6>Comentarios:</h6>

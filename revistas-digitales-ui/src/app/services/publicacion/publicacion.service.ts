@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { RestConstants } from '../rest-constants';
 import { UsuariosService } from '../usuarios/usuarios.service';
 import { Observable } from 'rxjs';
+import { Publicacion } from '../../entidades/Publicacion';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +18,7 @@ export class PublicacionService {
   }
 
 
-  realizarPublicacion(nombreRevista: string, descripcion: string, archivoPDF: File): Observable<void> {
+  realizarPublicacion(nombreRevista: string, descripcion: string, archivoPDF: File, fechaPublicacion: string): Observable<void> {
     const autor = this.usuarioService.obtenerNombreUsuarioDesdeToken() || 'null';
     
     const formData = new FormData();
@@ -25,9 +26,17 @@ export class PublicacionService {
     formData.append('nombreRevista', nombreRevista);
     formData.append('descripcion', descripcion);
     formData.append('archivoPDF', archivoPDF);
+    formData.append('fechaPublicacion', fechaPublicacion);
     
     return this.http.post<void>(`${this.apiUrl}/realizarPublicacion`, formData);
-}
+  }
+
+  
+  obtenerPublicacionesPorRevista(nombreRevista: string): Observable<Publicacion[]> {
+    return this.http.get<Publicacion[]>(`${this.apiUrl}/listaPublicaciones?revista=${nombreRevista}`);
+  }
+  
+
 
 
 }

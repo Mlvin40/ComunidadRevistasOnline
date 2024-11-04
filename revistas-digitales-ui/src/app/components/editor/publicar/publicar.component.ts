@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { PublicacionService } from '../../../services/publicacion/publicacion.service';
-import { CommonModule } from '@angular/common'; // Importa CommonModule
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-publicar',
   standalone: true,
-  imports: [CommonModule, FormsModule], // Asegúrate de incluir CommonModule aquí
+  imports: [CommonModule, FormsModule],
   templateUrl: './publicar.component.html',
   styleUrls: ['./publicar.component.css']
 })
@@ -15,8 +15,9 @@ export class PublicarComponent implements OnInit {
   nombreRevista: string = '';
   descripcion: string = '';
   archivoPDF: File | null = null;
+  fechaSeleccionada: string = ''; // Campo para la fecha seleccionada
   mensajeErrorArchivo: string = '';
-  mensajeExito: string = ''; // Variable para el mensaje de éxito
+  mensajeExito: string = '';
 
   constructor(private route: ActivatedRoute, private publicacionService: PublicacionService) {}
   
@@ -29,7 +30,6 @@ export class PublicarComponent implements OnInit {
     if (target.files && target.files.length > 0) {
       const file = target.files[0];
       
-      // Verificar si el archivo es PDF
       if (file.type === 'application/pdf') {
         this.archivoPDF = file;
         this.mensajeErrorArchivo = '';
@@ -41,27 +41,28 @@ export class PublicarComponent implements OnInit {
   }
 
   guardarPublicacion(): void {
-    if (this.nombreRevista && this.archivoPDF && this.descripcion) {
-      this.publicacionService.realizarPublicacion(this.nombreRevista, this.descripcion, this.archivoPDF)
+    if (this.nombreRevista && this.archivoPDF && this.descripcion && this.fechaSeleccionada) {
+      this.publicacionService.realizarPublicacion(this.nombreRevista, this.descripcion, this.archivoPDF, this.fechaSeleccionada)
         .subscribe(
           () => {
-            this.mensajeExito = 'Publicación realizada con éxito'; // Mensaje de éxito
-            this.reiniciarFormulario(); // Reiniciar los campos del formulario
+            this.mensajeExito = 'Publicación realizada con éxito';
+            this.reiniciarFormulario();
           },
           error => {
-            this.mensajeExito = ''; // Limpiar mensaje de éxito
+            this.mensajeExito = '';
             console.error('Error al realizar la publicación', error);
-            this.mensajeErrorArchivo = 'Error al realizar la publicación. Intente nuevamente.'; 
+            this.mensajeErrorArchivo = 'Error al realizar la publicación. Intente nuevamente.';
           }
         );
     } else {
-      this.mensajeErrorArchivo = 'Falta descripción, archivo PDF o nombre de la revista.';
+      this.mensajeErrorArchivo = 'Falta descripción, archivo PDF, fecha o nombre de la revista.';
     }
   }
 
   reiniciarFormulario(): void {
     this.descripcion = '';
     this.archivoPDF = null;
+    this.fechaSeleccionada = '';
     this.mensajeErrorArchivo = '';
   }
 }

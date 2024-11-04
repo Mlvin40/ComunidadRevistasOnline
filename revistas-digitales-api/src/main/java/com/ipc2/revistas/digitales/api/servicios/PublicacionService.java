@@ -8,6 +8,7 @@ import com.ipc2.revistas.digitales.api.dabase.PublicacionDB;
 import com.ipc2.revistas.digitales.api.modelos.revista.Publicacion;
 import java.io.InputStream;
 import java.time.LocalDate;
+import java.util.List;
 
 /**
  *
@@ -17,12 +18,18 @@ public class PublicacionService {
 
     private PublicacionDB publicacionDB = new PublicacionDB();
 
-    public boolean guardarPublicacion(String nombreRevista, String descripcion, InputStream archivoPDFStream) {
-        if (nombreRevista == null || descripcion == null || archivoPDFStream == null) {
+    public boolean guardarPublicacion(String nombreRevista, String descripcion, InputStream archivoPDFStream, LocalDate fechaPublicacion) {
+        if (nombreRevista == null || descripcion == null || archivoPDFStream == null || fechaPublicacion == null) {
             return false;
         }
 
-        return publicacionDB.crearPublicacion(nombreRevista, descripcion, archivoPDFStream);
+        return publicacionDB.crearPublicacion(nombreRevista, descripcion, archivoPDFStream, fechaPublicacion);
 
+    }
+
+    public List<Publicacion> obtenerPublicacionesPorRevista(String nombreRevista) {
+        List<Publicacion> publicaciones = publicacionDB.obtenerPublicacionesRevista(nombreRevista);
+        return publicaciones;
+        
     }
 }

@@ -24,6 +24,8 @@ public class Publicacion {
         this.archivoPDF = archivoPDF;
     }
     
+    
+    
     public String getNombreRevista() {
         return nombreRevista;
     }
