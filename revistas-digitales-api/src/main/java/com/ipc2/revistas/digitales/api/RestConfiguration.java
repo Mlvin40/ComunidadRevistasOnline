@@ -17,5 +17,5 @@ public class RestConfiguration extends ResourceConfig{
     
      public RestConfiguration()  {
         packages("com.ipc2.revistas.digitales.api").register(MultiPartFeature.class);
-    }   
+    }
 }

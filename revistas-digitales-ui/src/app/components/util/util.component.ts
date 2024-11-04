@@ -26,6 +26,8 @@ irAConfiguracion() {
   console.log('Ir a configuración');
 }
 irAperfil() {
+  // Redirigir al usuario al componente de perfil
+  this.router.navigate(['/perfilUsuario', this.usuarioService.obtenerNombreUsuarioDesdeToken()]);
   console.log('Ir a perfil');
 }
 

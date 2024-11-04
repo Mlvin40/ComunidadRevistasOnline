@@ -21,6 +21,7 @@ public class GeneradorToken {
     private static final Key SECRET_KEY = Keys.secretKeyFor(SignatureAlgorithm.HS256); 
     //private static final String SECRET_KEY = "clave_usr_revistas_online"; //Llave secreta para los tokens
     
+   
     // Para iniciar sesion
     public String crearTokenJWT(Usuario usuario) {
         return Jwts.builder()

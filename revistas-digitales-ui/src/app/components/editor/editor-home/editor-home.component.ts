@@ -21,4 +21,6 @@ export class EditorHomeComponent {
       this.router.navigate(['/login']);
     }
    }
+
+   
 }

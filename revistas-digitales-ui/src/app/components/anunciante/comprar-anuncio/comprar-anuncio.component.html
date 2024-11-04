@@ -1,0 +1,64 @@
+<div class="container">
+    <h2>Comprar Anuncio</h2>
+  
+    <!-- Mostrar precios por día -->
+    <div class="mb-4">
+      <p><strong>Precio por día (Texto):</strong> {{ precios.texto | currency }}</p>
+      <p><strong>Precio por día (Texto e Imagen):</strong> {{ precios.textoImagen | currency }}</p>
+      <p><strong>Precio por día (Video):</strong> {{ precios.video | currency }}</p>
+    </div>
+  
+    <form [formGroup]="anuncioForm" (ngSubmit)="comprarAnuncio()">
+      <!-- Selección del tipo de anuncio -->
+      <div class="form-group">
+        <label for="tipoAnuncio">Tipo de Anuncio:</label>
+        <select id="tipoAnuncio" formControlName="tipoAnuncio" (change)="onTipoAnuncioChange()" class="form-control">
+          <option value="">Seleccione un tipo</option>
+          <option value="TEXTO">Texto</option>
+          <option value="TEXTO_IMAGEN">Texto e Imagen</option>
+          <option value="VIDEO">Video</option>
+        </select>
+      </div>
+  
+      <!-- Campos de contenido según el tipo de anuncio seleccionado -->
+      <div *ngIf="anuncioForm.get('tipoAnuncio')?.value === 'TEXTO' || anuncioForm.get('tipoAnuncio')?.value === 'TEXTO_IMAGEN'" class="form-group">
+        <label for="contenidoTexto">Contenido Texto:</label>
+        <textarea id="contenidoTexto" formControlName="contenidoTexto" class="form-control"></textarea>
+      </div>
+  
+      <div *ngIf="anuncioForm.get('tipoAnuncio')?.value === 'TEXTO_IMAGEN'" class="form-group">
+        <label for="imagen">Imagen:</label>
+        <input type="file" id="imagen" (change)="onFileSelected($event)" class="form-control" accept="image/*" />
+      </div>
+  
+      <div *ngIf="anuncioForm.get('tipoAnuncio')?.value === 'VIDEO'" class="form-group">
+        <label for="urlVideo">URL del Video:</label>
+        <input type="text" id="urlVideo" formControlName="urlVideo" class="form-control" />
+      </div>
+  
+      <!-- Selector de duración -->
+      <div class="form-group">
+        <label for="duracion">Duración (días):</label>
+        <select id="duracion" formControlName="duracion" (change)="onDuracionChange()" class="form-control">
+          <option value="1">1 día</option>
+          <option value="3">3 días</option>
+          <option value="7">1 semana</option>
+          <option value="14">2 semanas</option>
+        </select>
+      </div>
+  
+      <!-- Total a pagar -->
+      <div class="mb-4">
+        <p><strong>Total a Pagar:</strong> {{ totalAPagar | currency }}</p>
+      </div>
+  
+      <!-- Fecha de inicio -->
+      <div class="form-group">
+        <label for="fechaInicio">Fecha de Inicio:</label>
+        <input type="date" id="fechaInicio" formControlName="fechaInicio" class="form-control" />
+      </div>
+  
+      <button type="submit" class="btn btn-primary mt-3" [disabled]="!anuncioForm.valid">Comprar Anuncio</button>
+    </form>
+  </div>
+  
