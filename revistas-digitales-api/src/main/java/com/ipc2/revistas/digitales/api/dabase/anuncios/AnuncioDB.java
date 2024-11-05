@@ -25,6 +25,7 @@ import java.util.Map;
  */
 public class AnuncioDB {
 
+    private ValidacionesAnuncioDB validacionesAnuncioDB = new ValidacionesAnuncioDB();
     private Connection connection;
 
     public AnuncioDB() {
@@ -32,64 +33,6 @@ public class AnuncioDB {
             this.connection = DataSourceDBSingleton.getInstance().getConnection();
         } catch (SQLException e) {
             throw new RuntimeException(e);
-        }
-    }
-
-    // Método para insertar un anuncio de texto
-    public boolean crearAnuncioTexto(String contenidoTexto, String nombreAnunciante, LocalDate fechaInicio, int duracionDias) {
-        String sql = "INSERT INTO anuncios (tipo_anuncio, contenido_texto, nombre_anunciante, fecha_inicio, duracion_dias, fecha_expiracion) "
-                + "VALUES (?, ?, ?, ?, ?, DATE_ADD(?, INTERVAL ? DAY))";
-        try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
-            pstmt.setString(1, "TEXTO");
-            pstmt.setString(2, contenidoTexto);
-            pstmt.setString(3, nombreAnunciante);
-            pstmt.setDate(4, java.sql.Date.valueOf(fechaInicio));  // Convertir LocalDate a java.sql.Date
-            pstmt.setInt(5, duracionDias);
-            pstmt.setDate(6, java.sql.Date.valueOf(fechaInicio));
-            pstmt.setInt(7, duracionDias); // Usar directamente el número de días
-            return pstmt.executeUpdate() > 0;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
-
-    // Método para insertar un anuncio de texto e imagen
-    public boolean crearAnuncioTextoImagen(String contenidoTexto, InputStream imagen, String nombreAnunciante, LocalDate fechaInicio, int duracionDias) {
-        String sql = "INSERT INTO anuncios (tipo_anuncio, contenido_texto, imagen, nombre_anunciante, fecha_inicio, duracion_dias, fecha_expiracion) "
-                + "VALUES (?, ?, ?, ?, ?, ?, DATE_ADD(?, INTERVAL ? DAY))";
-        try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
-            pstmt.setString(1, "TEXTO_IMAGEN");
-            pstmt.setString(2, contenidoTexto);
-            pstmt.setBlob(3, imagen);
-            pstmt.setString(4, nombreAnunciante);
-            pstmt.setDate(5, java.sql.Date.valueOf(fechaInicio));  // Convertir LocalDate a java.sql.Date
-            pstmt.setInt(6, duracionDias);
-            pstmt.setDate(7, java.sql.Date.valueOf(fechaInicio));
-            pstmt.setInt(8, duracionDias); // Usar directamente el número de días
-            return pstmt.executeUpdate() > 0;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
-
-    // Método para insertar un anuncio de video
-    public boolean crearAnuncioVideo(String urlVideo, String nombreAnunciante, LocalDate fechaInicio, int duracionDias) {
-        String sql = "INSERT INTO anuncios (tipo_anuncio, url_video, nombre_anunciante, fecha_inicio, duracion_dias, fecha_expiracion)"
-                + "VALUES (?, ?, ?, ?, ?, DATE_ADD(?, INTERVAL ? DAY))";
-        try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
-            pstmt.setString(1, "VIDEO");
-            pstmt.setString(2, urlVideo);
-            pstmt.setString(3, nombreAnunciante);
-            pstmt.setDate(4, java.sql.Date.valueOf(fechaInicio));  // Convertir LocalDate a java.sql.Date
-            pstmt.setInt(5, duracionDias);
-            pstmt.setDate(6, java.sql.Date.valueOf(fechaInicio));
-            pstmt.setInt(7, duracionDias); // Usar directamente el número de días
-            return pstmt.executeUpdate() > 0;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
         }
     }
 
@@ -116,7 +59,6 @@ public class AnuncioDB {
         List<Anuncio> anuncios = new ArrayList<>();
 
         try (PreparedStatement pstmt = connection.prepareStatement(sql); ResultSet rs = pstmt.executeQuery()) {
-
             while (rs.next()) {
                 Anuncio anuncio = new Anuncio();
                 anuncio.setIdAnuncio(rs.getInt("id_anuncio"));
@@ -132,6 +74,9 @@ public class AnuncioDB {
                         : null);
                 anuncio.setVencido(rs.getBoolean("vencido"));
                 anuncio.setActivo(rs.getBoolean("activo"));
+
+                validacionesAnuncioDB.desactivarAnuncioVencido(anuncio.getIdAnuncio()); // Con esto se desactivan los anuncios vencidos
+
                 anuncios.add(anuncio);
             }
 
@@ -202,75 +147,10 @@ public class AnuncioDB {
             }
 
         } catch (SQLException e) {
-            e.printStackTrace(); // Manejo de excepciones
-        }
-
-        return anuncio; // Retorna el anuncio encontrado o null si no existe
-    }
-
-    public boolean actualizarAnuncioTexto(int idAnuncio, String contenidoTexto, boolean activo) {
-        String sql = "UPDATE anuncios SET contenido_texto = ?, activo = ? WHERE id_anuncio = ?";
-
-        try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
-            pstmt.setString(1, contenidoTexto); // Set contenidoTexto
-            pstmt.setBoolean(2, activo); // Set activo
-            pstmt.setInt(3, idAnuncio); // Set idAnuncio
-
-            int filasActualizadas = pstmt.executeUpdate(); // Ejecutar la actualización
-
-            return filasActualizadas > 0; // Retorna verdadero si se actualizó al menos una fila
-        } catch (SQLException e) {
             e.printStackTrace();
         }
-        return false; // Retorna falso en caso de error o si no se actualizó nada
-    }
 
-
-    public boolean actualizarAnuncioTextoImagen(int idAnuncio, String contenidoTexto, InputStream imagenInputStream, boolean activo) {
-        // Crea una consulta SQL que solo actualizará los campos que se deben modificar
-        StringBuilder sql = new StringBuilder("UPDATE anuncios SET contenido_texto = ?, activo = ?");
-
-        // Agrega el campo de imagen a la consulta solo si no es nulo
-        if (imagenInputStream != null) {
-            sql.append(", imagen = ?");
-        }
-        
-        sql.append(" WHERE id_anuncio = ?");
-
-        try (PreparedStatement pstmt = connection.prepareStatement(sql.toString())) {
-            pstmt.setString(1, contenidoTexto); // Establece el contenidoTexto
-            pstmt.setBoolean(2, activo); // Establece el estado activo
-
-            int parameterIndex = 3; // Índice del siguiente parámetro
-            // Solo establece el parámetro de la imagen si no es nula
-            if (imagenInputStream != null) {
-                pstmt.setBlob(parameterIndex++, imagenInputStream); // Establece la imagen como un InputStream
-            }
-            pstmt.setInt(parameterIndex, idAnuncio); // Establece el idAnuncio
-
-            int filasActualizadas = pstmt.executeUpdate(); // Ejecuta la actualización
-
-            return filasActualizadas > 0; // Retorna verdadero si se actualizó al menos una fila
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return false; // Retorna falso en caso de error o si no se actualizó nada
+        return anuncio;
     }
     
-    public boolean actualizarAnuncioVideo(int idAnuncio, String urlVideo, boolean activo) {
-        String sql = "UPDATE anuncios SET url_video = ?, activo = ? WHERE id_anuncio = ?";
-
-        try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
-            pstmt.setString(1, urlVideo); // Establece la URL del video
-            pstmt.setBoolean(2, activo); // Establece el estado activo
-            pstmt.setInt(3, idAnuncio); // Establece el idAnuncio
-
-            int filasActualizadas = pstmt.executeUpdate(); // Ejecuta la actualización
-
-            return filasActualizadas > 0; // Retorna verdadero si se actualizó al menos una fila
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return false; // Retorna falso en caso de error o si no se actualizó nada
-    }
 }

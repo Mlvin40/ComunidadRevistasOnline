@@ -14,6 +14,7 @@ com/ipc2/revistas/digitales/api/dabase/DataSourceDBSingleton.class
 com/ipc2/revistas/digitales/api/dabase/anuncios/AnuncioDB.class
 com/ipc2/revistas/digitales/api/servicios/PublicacionService.class
 com/ipc2/revistas/digitales/api/dabase/ComentarioDB.class
+com/ipc2/revistas/digitales/api/dabase/anuncios/ValidacionesAnuncioDB.class
 com/ipc2/revistas/digitales/api/controladores/CarteraController.class
 com/ipc2/revistas/digitales/api/servicios/AnuncioService.class
 com/ipc2/revistas/digitales/api/controladores/AnuncioController.class
