@@ -1,0 +1,56 @@
+<div class="container" *ngIf="anuncio">
+  <h2 class="mt-4">Editar Anuncio</h2>
+
+  <div class="mb-3">
+    <label class="form-label">Tipo de Anuncio:</label>
+    <p class="form-control-plaintext">{{ anuncio.tipoAnuncio }}</p>
+  </div>
+
+  <div class="mb-3">
+    <label class="form-label">Fecha de Inicio:</label>
+    <p class="form-control-plaintext">{{ anuncio.fechaInicio | date }}</p>
+  </div>
+
+  <div class="mb-3">
+    <label class="form-label">Fecha de Expiración:</label>
+    <p class="form-control-plaintext">{{ anuncio.fechaExpiracion | date }}</p>
+  </div>
+
+  <div class="mb-3">
+    <label class="form-label">Vencido:</label>
+    <p class="form-control-plaintext">{{ anuncio.vencido ? 'Sí' : 'No' }}</p>
+  </div>
+
+  <div class="mb-3" *ngIf="anuncio.tipoAnuncio === 'TEXTO'">
+    <label class="form-label">Contenido:</label>
+    <textarea class="form-control" [(ngModel)]="anuncio.contenidoTexto" rows="3"></textarea>
+  </div>
+
+  <div class="mb-3" *ngIf="anuncio.tipoAnuncio === 'TEXTO_IMAGEN'">
+    <label class="form-label">Contenido:</label>
+    <textarea class="form-control" [(ngModel)]="anuncio.contenidoTexto" rows="3"></textarea>
+    <img *ngIf="anuncio.imagen" [src]="sanitizarImagen(anuncio.imagen)" alt="Imagen del anuncio" class="img-fluid my-2" style="max-width: 300px;">
+
+    <!-- Campo para seleccionar nueva imagen -->
+    <label class="form-label">Seleccionar nueva imagen:</label>
+    <input type="file" class="form-control" (change)="onFileSelected($event)" />
+  </div>
+
+  <div class="mb-3" *ngIf="anuncio.tipoAnuncio === 'VIDEO'">
+    <label class="form-label">URL del Video:</label>
+    <input type="text" class="form-control" [(ngModel)]="anuncio.urlVideo" />
+  </div>
+
+  <!-- Campo para activo -->
+  <div class="form-check mb-3">
+    <input type="checkbox" class="form-check-input" [(ngModel)]="anuncio.activo" id="activoCheckbox" />
+    <label class="form-check-label" for="activoCheckbox">Activo</label>
+  </div>
+
+  <button class="btn btn-primary" (click)="guardarCambios()">Guardar Cambios</button>
+
+  <!-- Mensaje informativo -->
+  <div *ngIf="mensajeEstado" class="alert mt-3" [ngClass]="{'alert-success': mensajeEstado.includes('éxito'), 'alert-danger': mensajeEstado.includes('Error')}">
+    {{ mensajeEstado }}
+  </div>
+</div>

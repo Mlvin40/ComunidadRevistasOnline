@@ -1,31 +1,31 @@
 <div class="container mt-4">
-    <h2>Editar Revista</h2>
-    <div *ngIf="mensaje" class="alert alert-danger">{{ mensaje }}</div>
-    <form (ngSubmit)="guardarCambios()">
-      <div class="form-group">
-        <label for="nombre">Nombre de la Revista:</label>
-        <input type="text" id="nombre" [(ngModel)]="revistaEditable.nombre" name="nombre" readonly />
+  <h2>Editar Revista</h2>
+  <div *ngIf="mensaje" class="alert alert-danger">{{ mensaje }}</div>
+  <form (ngSubmit)="guardarCambios()">
+      <div class="mb-3">
+          <label for="nombre" class="form-label">Nombre de la Revista:</label>
+          <input type="text" id="nombre" class="form-control" [(ngModel)]="revistaEditable.nombre" name="nombre" readonly />
       </div>
-      <div class="form-group">
-        <label for="descripcion">Descripción:</label>
-        <textarea id="descripcion" [(ngModel)]="revistaEditable.descripcion" name="descripcion"></textarea>
+      <div class="mb-3">
+          <label for="descripcion" class="form-label">Descripción:</label>
+          <textarea id="descripcion" class="form-control" [(ngModel)]="revistaEditable.descripcion" name="descripcion"></textarea>
       </div>
-      <div class="form-group">
-        <label for="categoria">Categoría:</label>
-        <input type="text" id="categoria" [(ngModel)]="revistaEditable.categoria" name="categoria" />
+      <div class="mb-3">
+          <label for="categoria" class="form-label">Categoría:</label>
+          <input type="text" id="categoria" class="form-control" [(ngModel)]="revistaEditable.categoria" name="categoria" />
       </div>
-      <div class="form-group">
-        <label for="estado_comentar">Estado Comentar:</label>
-        <input type="checkbox" id="estado_comentar" [(ngModel)]="revistaEditable.estadoComentar" name="estado_comentar" />
+      <div class="mb-3 form-check">
+          <input type="checkbox" id="estado_comentar" class="form-check-input" [(ngModel)]="revistaEditable.estadoComentar" name="estado_comentar" />
+          <label class="form-check-label" for="estado_comentar">Estado Comentar</label>
       </div>
-      <div class="form-group">
-        <label for="estado_me_gusta">Estado Me Gusta:</label>
-        <input type="checkbox" id="estado_me_gusta" [(ngModel)]="revistaEditable.estadoMeGusta" name="estado_me_gusta" />
+      <div class="mb-3 form-check">
+          <input type="checkbox" id="estado_me_gusta" class="form-check-input" [(ngModel)]="revistaEditable.estadoMeGusta" name="estado_me_gusta" />
+          <label class="form-check-label" for="estado_me_gusta">Estado Me Gusta</label>
       </div>
-      <div class="form-group">
-        <label for="estado_suscribirse">Estado Suscribirse:</label>
-        <input type="checkbox" id="estado_suscribirse" [(ngModel)]="revistaEditable.estadoSuscribirse" name="estado_suscribirse" />
+      <div class="mb-3 form-check">
+          <input type="checkbox" id="estado_suscribirse" class="form-check-input" [(ngModel)]="revistaEditable.estadoSuscribirse" name="estado_suscribirse" />
+          <label class="form-check-label" for="estado_suscribirse">Estado Suscribirse</label>
       </div>
       <button type="submit" class="btn btn-primary">Guardar</button>
-    </form>
+  </form>
 </div>

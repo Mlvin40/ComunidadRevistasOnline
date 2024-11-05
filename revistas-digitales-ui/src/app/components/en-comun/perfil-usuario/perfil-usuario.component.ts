@@ -27,7 +27,7 @@ export class PerfilUsuarioComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // Obtén el nombre de usuario de los parámetros de la ruta
+    // Obtén el nombre de usuario de los parámetros de la ruta esto para reutilizar el componente
     const nombreUsuario = this.route.snapshot.paramMap.get('nombreUsuario');
 
     if (nombreUsuario) {

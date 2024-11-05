@@ -20,8 +20,9 @@
       <div class="form-group">
         <label>Foto de Perfil:</label>
         <div *ngIf="fotoPerfilUrl; else noImage">
-          <img [src]="fotoPerfilUrl" alt="Foto de perfil" class="img-thumbnail" />
+          <img [src]="fotoPerfilUrl" alt="Foto de perfil" class="img-thumbnail" width="300" height="300" />
         </div>
+
         <ng-template #noImage>
           <p>No hay foto de perfil disponible.</p>
         </ng-template>

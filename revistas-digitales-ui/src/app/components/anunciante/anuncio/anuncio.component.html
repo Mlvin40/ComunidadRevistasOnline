@@ -1,0 +1,30 @@
+<div class="anuncios-container">
+    <div *ngFor="let anuncio of anuncios" class="card">
+      <div class="card-header">
+        <h3>{{ anuncio.tipoAnuncio }}</h3>
+      </div>
+      
+      <div class="card-body">
+        <!-- Mostrar contenido según el tipo de anuncio -->
+        
+        <!-- Tipo de anuncio: TEXTO -->
+        <div *ngIf="anuncio.tipoAnuncio === 'TEXTO'">
+          <p>{{ anuncio.contenidoTexto }}</p>
+        </div>
+        
+        <!-- Tipo de anuncio: TEXTO_IMAGEN -->
+        <div *ngIf="anuncio.tipoAnuncio === 'TEXTO_IMAGEN'">
+          <p>{{ anuncio.contenidoTexto }}</p>
+          <img *ngIf="anuncio.imagen" [src]="convertirImagen(anuncio.imagen)" alt="Imagen del anuncio" class="anuncio-imagen">
+        </div>
+        
+        <!-- Tipo de anuncio: VIDEO -->
+        <div *ngIf="anuncio.tipoAnuncio === 'VIDEO'">
+            <p>{{ anuncio.contenidoTexto }}</p>
+            <iframe *ngIf="anuncio.urlVideo" [src]="sanitizarURL(anuncio.urlVideo)" class="anuncio-video" frameborder="0" allowfullscreen></iframe>
+          </div>
+          
+      </div>
+    </div>
+  </div>
+  

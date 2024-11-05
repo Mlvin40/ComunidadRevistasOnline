@@ -1,0 +1,12 @@
+<div class="anuncios-container">
+    <div *ngFor="let anuncio of anuncios" class="card">
+      <div class="card-header">
+        <h3>{{ anuncio.tipoAnuncio }}</h3>
+      </div>
+      <div class="card-body">
+        <p>{{ anuncio.contenidoTexto }}</p>
+        <button [disabled]="anuncio.vencido" (click)="editarAnuncio(anuncio)">Editar</button>
+      </div>
+    </div>
+  </div>
+  

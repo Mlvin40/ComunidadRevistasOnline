@@ -21,7 +21,7 @@ import java.sql.SQLException;
 public class UsuarioDB {
 
     private Connection connection;
-    
+
     public UsuarioDB() {
         try {
             this.connection = DataSourceDBSingleton.getInstance().getConnection();
@@ -113,16 +113,30 @@ public class UsuarioDB {
     }
 
     public void actualizarUsuario(String nombreUsuario, String texto, InputStream fotoPerfil) {
-        String consulta = "UPDATE usuarios SET perfil = ?, foto_perfil = ? WHERE nombre_usuario = ?";
+        // Construimos la consulta SQL que solo actualizará los campos necesarios
+        StringBuilder consulta = new StringBuilder("UPDATE usuarios SET perfil = ?");
 
-        try (PreparedStatement stmt = connection.prepareStatement(consulta)) {
-            stmt.setString(1, texto);
-            stmt.setBlob(2, fotoPerfil);
-            stmt.setString(3, nombreUsuario);
-            stmt.executeUpdate();
+        // Agregar la columna de foto_perfil solo si no es nulo
+        if (fotoPerfil != null) {
+            consulta.append(", foto_perfil = ?");
+        }
+
+        consulta.append(" WHERE nombre_usuario = ?");
+
+        try (PreparedStatement stmt = connection.prepareStatement(consulta.toString())) {
+            stmt.setString(1, texto); // Establece el texto del perfil
+
+            int parameterIndex = 2; // Índice para los parámetros
+            // Solo se agrega el parámetro de la foto_perfil si no es nulo
+            if (fotoPerfil != null) {
+                stmt.setBlob(parameterIndex++, fotoPerfil); // Establece la foto de perfil
+            }
+            stmt.setString(parameterIndex, nombreUsuario); // Establece el nombre de usuario
+
+            stmt.executeUpdate(); // Ejecuta la actualización
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        
     }
+    
 }

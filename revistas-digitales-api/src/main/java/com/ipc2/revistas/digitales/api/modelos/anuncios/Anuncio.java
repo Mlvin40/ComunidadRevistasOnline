@@ -19,29 +19,14 @@ public class Anuncio {
     private String urlVideo;              // URL del video (si aplica)
     private String nombreAnunciante;      // Nombre del anunciante
     private LocalDate fechaInicio;        // Fecha de inicio del anuncio
-    private String duracion;              // Duración del anuncio (1_DIA, 3_DIAS, 1_SEMANA, 2_SEMANAS)
+    private int duracion;
     private LocalDate fechaExpiracion;    // Fecha de expiración del anuncio
     private boolean vencido;              // Si el anuncio está vencido
     private boolean activo;               // Si el anuncio está activo
 
     // Constructor Para recuperar un anuncio en la base de datos. 
-    public Anuncio(int idAnuncio, String tipoAnuncio, String contenidoTexto, byte[] imagen,
-            String urlVideo, String nombreAnunciante, LocalDate fechaInicio,
-            String duracion, LocalDate fechaExpiracion, boolean vencido, boolean activo) {
-        this.idAnuncio = idAnuncio;
-        this.tipoAnuncio = tipoAnuncio;
-        this.contenidoTexto = contenidoTexto;
-        this.imagen = imagen;
-        this.urlVideo = urlVideo;
-        this.nombreAnunciante = nombreAnunciante;
-        this.fechaInicio = fechaInicio;
-        this.duracion = duracion;
-        this.fechaExpiracion = fechaExpiracion;
-        this.vencido = vencido;
-        this.activo = activo;
-    }
-
-    // Getters y Setters
+    
+    
     public int getIdAnuncio() {
         return idAnuncio;
     }
@@ -98,11 +83,11 @@ public class Anuncio {
         this.fechaInicio = fechaInicio;
     }
 
-    public String getDuracion() {
+    public int getDuracion() {
         return duracion;
     }
 
-    public void setDuracion(String duracion) {
+    public void setDuracion(int duracion) {
         this.duracion = duracion;
     }
 
@@ -129,5 +114,5 @@ public class Anuncio {
     public void setActivo(boolean activo) {
         this.activo = activo;
     }
-}
 
+}

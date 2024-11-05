@@ -13,6 +13,9 @@ import { AnuncianteHomeComponent } from './components/anunciante/anunciante-home
 import { CarteraUsuarioComponent } from './components/en-comun/cartera-usuario/cartera-usuario.component';
 import { PerfilUsuarioComponent } from './components/en-comun/perfil-usuario/perfil-usuario.component';
 import { ComprarAnuncioComponent } from './components/anunciante/comprar-anuncio/comprar-anuncio.component';
+import { AnuncioComponent } from './components/anunciante/anuncio/anuncio.component';
+import { VerAnunciosComponent } from './components/anunciante/ver-anuncios/ver-anuncios.component';
+import { EditarAnuncioComponent } from './components/anunciante/editar-anuncio/editar-anuncio.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -35,6 +38,9 @@ export const routes: Routes = [
   // Rutas del anunciante
   { path : 'anuncianteHome', component: AnuncianteHomeComponent },
   { path : 'comprarAnuncio', component: ComprarAnuncioComponent },
-
+  { path : 'mostrarAnuncio', component: AnuncioComponent },
+  { path : 'verMisAnuncios', component: VerAnunciosComponent },
+  { path : 'editarAnuncio/:id', component: EditarAnuncioComponent }
   
+
 ];

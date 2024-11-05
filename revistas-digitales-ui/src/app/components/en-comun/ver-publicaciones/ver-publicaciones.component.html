@@ -6,7 +6,7 @@
   <ng-container *ngIf="publicaciones.length > 0; else sinPublicaciones">
     <div *ngFor="let publicacion of publicaciones; let i = index" class="mb-4 border p-3 rounded">
       <h4>{{ i + 1 }}. {{ publicacion.descripcion }}</h4>
-      <p><strong>Fecha de publicación:</strong> {{ publicacion.fechaPublicacion | date }}</p>
+      <p><strong>Fecha de publicación:</strong> {{ publicacion.fechaPublicacion | date:'dd/MM/yyyy' }}</p>
       <button class="btn btn-primary" (click)="verPDF(publicacion)">Ver PDF</button>
     </div>
   </ng-container>

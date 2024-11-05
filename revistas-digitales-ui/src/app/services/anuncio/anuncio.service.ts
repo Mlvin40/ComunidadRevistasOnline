@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { RestConstants } from '../rest-constants';
 import { UsuariosService } from '../usuarios/usuarios.service';
 import { Observable } from 'rxjs';
+import { Anuncio } from '../../entidades/Anuncio';
 
 @Injectable({
   providedIn: 'root'
@@ -38,7 +39,24 @@ export class AnuncioService {
       return this.http.post<any>(`${this.apiUrl}/comprarAnuncio`, formData);
     }
 
-  obtenerAnuncios() {
-    throw new Error('Method not implemented.');
-  }
+
+    // Método para obtener los anuncios en un arreglo anuncio
+    obtenerAnuncios(): Observable<Anuncio[]> {
+      return this.http.get<Anuncio[]>(`${this.apiUrl}/anunciosActivos`);
+    }
+
+
+  obtenerAnunciosPorAnunciante(): Observable<Anuncio[]> {
+  const nombreAnunciante = this.usuarioService.obtenerNombreUsuarioDesdeToken() || 'null';
+  return this.http.get<Anuncio[]>(`${this.apiUrl}/anunciosPorUsuario?nombreAnunciante=${nombreAnunciante}`);
+}
+
+// Método para obtener un anuncio por su ID
+obtenerAnuncioPorId(id: number): Observable<Anuncio> {
+return this.http.get<Anuncio>(`${this.apiUrl}/anuncioPorId/${id}`);
+}
+
+actualizarAnuncio(anuncioData: any): Observable<any> {
+  return this.http.put<Anuncio>(`${this.apiUrl}/actualizarAnuncio`, anuncioData);
+}
 }

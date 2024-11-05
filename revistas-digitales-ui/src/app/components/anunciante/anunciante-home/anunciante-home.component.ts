@@ -3,11 +3,12 @@ import { UtilComponent } from "../../util/util.component";
 import { Router, RouterModule } from '@angular/router';
 import { UsuariosService } from '../../../services/usuarios/usuarios.service';
 import { CommonModule } from '@angular/common';
+import { AnuncioComponent } from "../anuncio/anuncio.component";
 
 @Component({
   selector: 'app-anunciante-home',
   standalone: true,
-  imports: [RouterModule, CommonModule, UtilComponent],
+  imports: [RouterModule, CommonModule, UtilComponent, AnuncioComponent],
   templateUrl: './anunciante-home.component.html',
   styleUrl: './anunciante-home.component.css'
 })

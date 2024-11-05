@@ -4,17 +4,22 @@
  */
 package com.ipc2.revistas.digitales.api.controladores;
 
-import com.ipc2.revistas.digitales.api.dabase.AnuncioDB;
+import com.ipc2.revistas.digitales.api.dabase.anuncios.AnuncioDB;
+import com.ipc2.revistas.digitales.api.modelos.anuncios.Anuncio;
 import com.ipc2.revistas.digitales.api.servicios.AnuncioService;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
+import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.Path;
+import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import java.io.InputStream;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 
@@ -42,7 +47,6 @@ public class AnuncioController {
 
     }
 
-    
     @POST
     @Path("/comprarAnuncio")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
@@ -57,7 +61,6 @@ public class AnuncioController {
             @FormDataParam("fechaInicio") String fechaInicio,
             @FormDataParam("totalAPagar") Integer totalAPagar) {
 
-        
         boolean anuncioComprado = anuncioService.comprarAnuncio(anuciante, tipoAnuncio, contenidoTexto, imagenInputStream, urlVideo, duracion, fechaInicio, totalAPagar);
 
         // Si el booleano es verdadero, se envía un mensaje de éxito
@@ -73,4 +76,64 @@ public class AnuncioController {
     }
 
     
+    //Este metodo obtiene todos los anuncios validos
+    @GET
+    @Path("/anunciosActivos")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response obtenerAnuncios() {
+        List<Anuncio> anuncios = anuncioService.obtenerTodosLosAnuncios();
+        // Retornar la lista de anuncios en una respuesta JSON
+        return Response.ok(anuncios).build();
+    }
+
+    @GET
+    @Path("/anunciosPorUsuario")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response obtenerAnunciosPorAnunciante(@QueryParam("nombreAnunciante") String nombreAnunciante) {
+        List<Anuncio> anuncios = anuncioService.obtenerAnunciosPorAnunciante(nombreAnunciante);
+        return Response.ok(anuncios).build();
+    }
+
+    @GET
+    @Path("/anuncioPorId/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response obtenerAnuncioPorId(@PathParam("id") int id) {
+
+        Anuncio anuncio = anuncioService.obtenerAnuncioPorId(id);
+        if (anuncio != null) {
+            return Response.ok(anuncio).build(); // Retorna el anuncio con estado 200
+        } else {
+            return Response.status(Response.Status.NOT_FOUND) // Retorna 404 si no se encuentra
+                    .entity("Anuncio no encontrado")
+                    .build();
+        }
+    }
+    
+    @PUT
+    @Path("/actualizarAnuncio")
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response actualizarAnuncio(
+            @FormDataParam("idAnuncio") int idAnuncio,
+            @FormDataParam("tipoAnuncio") String tipoAnuncio,
+            @FormDataParam("contenidoTexto") String contenidoTexto,
+            @FormDataParam("imagen") InputStream imagenInputStream,
+            @FormDataParam("urlVideo") String urlVideo,
+            @FormDataParam("activo") boolean activo,
+            @FormDataParam("vencido") boolean vencido) {
+
+        boolean anuncioActualizado = anuncioService.actualizarAnuncio(idAnuncio, tipoAnuncio, contenidoTexto, imagenInputStream, urlVideo, activo, vencido);
+        
+        if (anuncioActualizado) {
+            Map<String, Object> response = new HashMap<>(); // Crear un mapa para la respuesta
+            response.put("mensaje", "Anuncio actualizado con éxito.");
+            response.put("exito", true);
+            return Response.ok(response).build();
+            
+        } else {
+            return Response.status(Response.Status.BAD_REQUEST)
+                    .entity("Error al actualizar el anuncio: El anuncio no fue encontrado o no se pudo actualizar.")
+                    .build(); 
+        }
+    }
 }
