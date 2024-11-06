@@ -16,6 +16,9 @@ import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
+
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 
@@ -25,8 +28,6 @@ import org.glassfish.jersey.media.multipart.FormDataParam;
  */
 @Path("/configuracion-usuario")
 public class ConfiguracionUsuarioController {
-
-    private static final String PATH_FOTOS_PERFIL = "fotos_perfil_folder";
 
     private ConfiguracionUsuarioService configuracionUsuarioService;
 
@@ -46,7 +47,6 @@ public class ConfiguracionUsuarioController {
         }
     }
 
-    
     @POST
     @Path("/actualizar-perfil")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
@@ -57,13 +57,19 @@ public class ConfiguracionUsuarioController {
             @FormDataParam("fileObject") InputStream foto,
             @FormDataParam("fileObject") FormDataContentDisposition fileDetails) {
 
-        //Realiza los cambios en la base de datos
-        UsuarioDB usuarioDB = new UsuarioDB();
-        usuarioDB.actualizarUsuario(nombre, texto, foto);
-        
-        return Response.ok().entity("Perfil actualizado exitosamente").build();
+        Map<String, Object> responseMap = new HashMap<>();
+
+        try {
+            UsuarioDB usuarioDB = new UsuarioDB();
+            usuarioDB.actualizarUsuario(nombre, texto, foto);
+            // Agregar mensaje de éxito al responseMap
+            responseMap.put("message", "Perfil actualizado correctamente");
+            return Response.ok(responseMap).build();
+        } catch (Exception e) {
+            // Si ocurre algún error, agregar mensaje de error al responseMap
+            responseMap.put("message", "Hubo un error al actualizar el perfil");
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(responseMap).build();
+        }
     }
+    
 }
-
-
-

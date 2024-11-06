@@ -14,13 +14,13 @@ import { TipoUsuario } from '../../../entidades/TipoUsuario';
   styleUrls: ['./configuracion-usuario.component.css'],
 })
 export class ConfiguracionUsuarioComponent implements OnInit {
-  
   nombreUsuario: string | null = '';
-  usuario: Usuario | null = null; // Almacena los datos del usuario
-  texto: string = ''; // Para el texto del perfil
-  fotoPerfil: File | null = null; // Para almacenar la foto seleccionada
-  fotoPerfilUrl: string | null = null; // URL de la foto de perfil para mostrar
-  rolTexto: string = ''; // Para almacenar el rol del usuario como texto
+  usuario: Usuario | null = null;
+  texto: string = '';
+  fotoPerfil: File | null = null;
+  fotoPerfilUrl: string | null = null;
+  rolTexto: string = '';
+  mensaje: string = ''; // Variable para mostrar mensajes de éxito o error
 
   constructor(private configuracionUsuarioService: ConfiguracionUsuarioService, private http: HttpClient) {}
 
@@ -32,14 +32,12 @@ export class ConfiguracionUsuarioComponent implements OnInit {
         (datosUsuario: Usuario) => {
           this.usuario = datosUsuario;
           this.texto = datosUsuario.texto;
-          this.rolTexto = TipoUsuario[datosUsuario.rol]; // Asigna el rol como texto
-          
-        // Convertir imagen binaria a Base64 para mostrarla
-        if (datosUsuario.fotoPerfil) {
-          this.fotoPerfilUrl = `data:image/png;base64,${datosUsuario.fotoPerfil}`;
-          console.log('Imagen en Base64 lista para mostrar:', this.fotoPerfilUrl);
-        }
-        
+          this.rolTexto = TipoUsuario[datosUsuario.rol];
+
+          // Convertir imagen binaria a Base64 para mostrarla
+          if (datosUsuario.fotoPerfil) {
+            this.fotoPerfilUrl = `data:image/png;base64,${datosUsuario.fotoPerfil}`;
+          }
         },
         (error) => {
           console.error('Error al obtener datos del usuario', error);
@@ -47,23 +45,19 @@ export class ConfiguracionUsuarioComponent implements OnInit {
       );
     }
   }
-  
+
   onFileChange(event: Event): void {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files.length > 0) {
       const file = input.files[0];
-      this.fotoPerfil = file; // Almacena el archivo en la propiedad fotoPerfil
-    
-      console.log('Imagen seleccionada:', file);
+      this.fotoPerfil = file;
 
       // Leer la imagen para previsualización
       const reader = new FileReader();
       reader.onload = (e: any) => {
-        this.fotoPerfilUrl = e.target.result; // Carga la imagen para previsualizar
-        console.log('Imagen cargada:', this.fotoPerfilUrl);
+        this.fotoPerfilUrl = e.target.result;
       };
-      reader.readAsDataURL(file); // Carga el archivo como URL de datos
-      
+      reader.readAsDataURL(file);
     }
   }
 
@@ -80,17 +74,13 @@ export class ConfiguracionUsuarioComponent implements OnInit {
       (response) => {
         console.log('Perfil actualizado', response);
         if (response && response.message) {
-          console.log(response.message); // Ahora esto debería mostrar el mensaje del servidor
+          this.mensaje = response.message; // Asignar el mensaje de éxito
         }
         this.ngOnInit(); // Recargar los datos del usuario después de actualizar
       },
       (error) => {
         console.error('Error al actualizar perfil', error);
-        if (error.error) {
-          console.error('Error del servidor:', error.error);
-        } else {
-          console.error('Error desconocido:', error);
-        }
+        this.mensaje = 'Hubo un error al actualizar tu perfil. Por favor, intenta nuevamente.'; // Mensaje de error
       }
     );
   }

@@ -29,4 +29,9 @@
 
     <button type="submit" class="btn btn-primary">Guardar Cambios</button>
   </form>
+
+  <!-- Mostrar mensaje de éxito o error -->
+  <div *ngIf="mensaje" class="alert alert-info mt-3">
+    {{ mensaje }}
+  </div>
 </div>

@@ -143,10 +143,10 @@ public class RevistaDB {
         }
     }
 
-    //Método para obtener todas las revistas disponibles que no están en la lista de suscripciones del usuario
+    //Método para obtener todas las revistas que estan disponibles Para realizar una suscripcion para los usuarios 
     public List<Revista> obtenerRevistasDisponibles(List<String> revistasSuscritas) {
         List<Revista> revistasDisponibles = new ArrayList<>();
-
+        
         // Construir la consulta SQL con el número adecuado de parámetros
         StringBuilder consultaBuilder = new StringBuilder("SELECT * FROM revistas");
 

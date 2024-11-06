@@ -1,0 +1,39 @@
+<div class="container">
+  <h1>Suscribirse a una Revista</h1>
+  
+  <div *ngIf="mensaje" class="alert alert-info">{{ mensaje }}</div>
+
+  <div *ngIf="revistas.length > 0; else noRevistas">
+    <div *ngFor="let revista of revistas" class="card mb-3" 
+         [class.transparente]="!revista.estadoSuscribirse">
+      <div class="card-body">
+        <h5 class="card-title">{{ revista.nombre }}</h5>
+        <p class="card-text"><strong>Descripción:</strong> {{ revista.descripcion }}</p>
+        <p class="card-text"><strong>Categoría:</strong> {{ revista.categoria }}</p>
+        <p><strong>Fecha de Creación:</strong> {{ revista.fechaCreacion | date:'dd-MM-yyyy' || 'Desconocida' }}</p>     
+          
+        <!-- Campos solo interactivos si la revista permite suscripciones -->
+        <div *ngIf="revista.estadoSuscribirse; else noSuscripcion">
+          <div class="form-group">
+            <label for="fechaSuscripcion">Seleccionar fecha de suscripción:</label>
+            <input type="date" class="form-control" #fechaInput />
+          </div>
+
+          <button class="btn btn-primary mt-2" 
+                  (click)="suscribirse(revista.nombre, fechaInput.value)">
+            Suscribirse
+          </button>
+        </div>
+        
+        <!-- Mensaje en lugar de los campos si la suscripción no está permitida -->
+        <ng-template #noSuscripcion>
+          <p class="text-muted">Suscripciones no permitidas para esta revista.</p>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+
+  <ng-template #noRevistas>
+    <p>No hay revistas disponibles para suscribirse.</p>
+  </ng-template>
+</div>

@@ -97,13 +97,13 @@ public class RevistaController {
             return Response.status(Response.Status.NOT_FOUND).entity(errorResponse).build();
         }
     }
-    
+
     @PUT
     @Path("/actualizarRevista") // Ruta para actualizar una revista
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response actualizarRevista(Revista revistaEditable) {
-        
+
         // Verifica que la revista no sea nula
         if (revistaEditable == null) {
             Map<String, String> errorResponse = new HashMap<>();
@@ -122,4 +122,5 @@ public class RevistaController {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(errorResponse).build();
         }
     }
+    
 }

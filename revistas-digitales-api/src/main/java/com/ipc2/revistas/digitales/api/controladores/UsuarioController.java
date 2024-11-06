@@ -6,7 +6,6 @@ package com.ipc2.revistas.digitales.api.controladores;
 
 import com.ipc2.revistas.digitales.api.modelos.usuarios.Usuario;
 import com.ipc2.revistas.digitales.api.servicios.UsuarioService;
-import com.ipc2.revistas.digitales.api.util.GeneradorToken;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;

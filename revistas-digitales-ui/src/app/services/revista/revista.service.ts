@@ -29,7 +29,6 @@ obtenerRevistasPorAutor(): Observable<Revista[]> {
   return this.http.get<Revista[]>(`${this.apiUrl}/obtenerRevistasPorAutor?autor=${autorActual}`);
 }
 
-
 obtenerRevistaPorNombre(nombre: string): Observable<Revista> {
   return this.http.get<Revista>(`${this.apiUrl}/obtenerRevistaPorNombre?nombre=${nombre}`);
 }
@@ -37,5 +36,7 @@ obtenerRevistaPorNombre(nombre: string): Observable<Revista> {
 actualizarRevista(revista: RevistaEditable): Observable<void> {
   return this.http.put<void>(`${this.apiUrl}/actualizarRevista`, revista);
 }
+
+
 
 }

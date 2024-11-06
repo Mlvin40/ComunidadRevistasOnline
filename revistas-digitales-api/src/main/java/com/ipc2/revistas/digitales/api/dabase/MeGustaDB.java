@@ -36,6 +36,12 @@ public class MeGustaDB {
 
     // Método para dar like a una revista
     public void darLike(String nombreRevista, String nombreUsuario) throws SQLException {
+        // Verificar si se puede dar like a la revista
+        if (!sePuedeDarLike(nombreRevista)) {
+            System.out.println("No se puede dar like a esta revista.");
+            return;
+        }
+
         // Verificar si el usuario ya ha dado like a esta revista
         if (haDadoLike(nombreRevista, nombreUsuario)) {
             System.out.println("El usuario ya ha dado like a esta revista.");
@@ -69,4 +75,20 @@ public class MeGustaDB {
         return false;
     }
 
+
+    private boolean sePuedeDarLike(String nombreRevista) throws SQLException {
+        String consulta = "SELECT estado_megusta FROM revistas WHERE nombre_revista = ?";
+
+        try (PreparedStatement statement = connection.prepareStatement(consulta)) {
+            statement.setString(1, nombreRevista);
+            try (ResultSet rs = statement.executeQuery()) {
+                if (rs.next()) {
+
+                    // Si el estado_megusta es true, significa que se puede dar like
+                    return rs.getBoolean("estado_megusta");
+                }
+            }
+        }
+        return false;  // Si no se encuentra la revista o estado_megusta es false, no se puede dar like
+    }
 }

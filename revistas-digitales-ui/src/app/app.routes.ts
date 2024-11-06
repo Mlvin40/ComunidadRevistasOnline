@@ -16,6 +16,10 @@ import { ComprarAnuncioComponent } from './components/anunciante/comprar-anuncio
 import { AnuncioComponent } from './components/anunciante/anuncio/anuncio.component';
 import { VerAnunciosComponent } from './components/anunciante/ver-anuncios/ver-anuncios.component';
 import { EditarAnuncioComponent } from './components/anunciante/editar-anuncio/editar-anuncio.component';
+import { VerRevistasDisponiblesComponent } from './components/suscriptor/ver-revistas-disponibles/ver-revistas-disponibles.component';
+import path from 'path';
+import { SuscriptorHomeComponent } from './components/suscriptor/suscriptor-home/suscriptor-home.component';
+import { MisSuscripcionesComponent } from './components/suscriptor/mis-suscripciones/mis-suscripciones.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -40,7 +44,12 @@ export const routes: Routes = [
   { path : 'comprarAnuncio', component: ComprarAnuncioComponent },
   { path : 'mostrarAnuncio', component: AnuncioComponent },
   { path : 'verMisAnuncios', component: VerAnunciosComponent },
-  { path : 'editarAnuncio/:id', component: EditarAnuncioComponent }
+  { path : 'editarAnuncio/:id', component: EditarAnuncioComponent },
   
+
+  //Rutas del suscriptor
+  { path: 'suscriptorHome', component: SuscriptorHomeComponent},
+  { path: 'verRevistasDisponibles', component: VerRevistasDisponiblesComponent },
+  { path: 'misSuscripciones', component: MisSuscripcionesComponent }
 
 ];

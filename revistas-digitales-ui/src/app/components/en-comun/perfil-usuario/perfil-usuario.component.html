@@ -16,6 +16,10 @@
         <label>Rol:</label>
         <p>{{ rolTexto }}</p>
       </div>
+
+      <div class="form-group">
+        <label>Fecha de Creación:</label>
+        <p>{{ usuario.fechaCreacion | date: 'dd-MM-yyyy' }}</p>
   
       <div class="form-group">
         <label>Foto de Perfil:</label>

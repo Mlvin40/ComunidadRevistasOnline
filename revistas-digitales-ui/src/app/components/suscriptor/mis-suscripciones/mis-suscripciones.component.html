@@ -1,0 +1,47 @@
+<div class="container">
+    <h1>Mis Suscripciones</h1>
+  
+    <div *ngIf="mensaje" class="alert alert-info">{{ mensaje }}</div>
+  
+    <div *ngIf="revistas.length > 0; else noRevistas">
+      <div *ngFor="let revista of revistas" class="card mb-3">
+        <div class="card-body">
+          <h5 class="card-title">{{ revista.nombre || 'Sin nombre' }}</h5>
+          <p class="card-text"><strong>Descripción:</strong> {{ revista.descripcion || 'Sin descripción' }}</p>
+          <p class="card-text"><strong>Categoría:</strong> {{ revista.categoria || 'Sin categoría' }}</p>
+          <p><strong>Fecha de Creación:</strong> {{ revista.fechaCreacion | date:'dd-MM-yyyy' || 'Desconocida' }}</p>
+          <p class="card-text"><strong>Cantidad de Likes:</strong> {{ revista.likes }}</p>
+  
+          <button class="btn btn-success" [disabled]="!revista.estadoMeGusta" (click)="darLike(revista.nombre)">👍 Like</button>
+  
+          <p><strong>Autor:</strong>
+            <a [routerLink]="['/perfilUsuario', revista.autor]" class="btn btn-link">
+              {{ revista.autor || 'Desconocido' }}
+            </a>
+          </p>
+  
+          <div *ngIf="revista.comentarios.length > 0">
+            <h6>Comentarios:</h6>
+            <div *ngFor="let comentario of revista.comentarios">
+              <p><strong>{{ comentario.nombreUsuario }}:</strong> {{ comentario.comentario }}</p>
+            </div>
+          </div>
+  
+          <form *ngIf="revista.estadoComentar" method="POST" (ngSubmit)="comentar(revista.nombre)">
+            <textarea rows="2" class="form-control" placeholder="Escribe tu comentario" [(ngModel)]="comentarioText[revista.nombre]" name="comentarioText" required></textarea>
+            <button type="submit" class="btn btn-info mt-2">Comentar</button>
+          </form>
+  
+          <!-- Botón para ver publicaciones -->
+          <button class="btn btn-primary mt-2" (click)="verPublicaciones(revista.nombre)">
+            Ver Publicaciones
+          </button>
+        </div>
+      </div>
+    </div>
+  
+    <ng-template #noRevistas>
+      <p>No estás suscrito a ninguna revista.</p>
+    </ng-template>
+  </div>
+  

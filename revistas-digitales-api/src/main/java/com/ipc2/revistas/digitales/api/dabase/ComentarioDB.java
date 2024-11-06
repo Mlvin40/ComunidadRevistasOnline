@@ -51,6 +51,11 @@ public class ComentarioDB {
     public void guardarComentario(String nombreRevista, String nombreUsuario, String comentarioTexto) {
         String consulta = "INSERT INTO comentarios (nombre_revista, nombre_usuario, comentario) VALUES (?, ?, ?)";
 
+        // Verificar si se puede comentar en la revista, si devuelve false, no se puede comentar
+        if (!sePuedeComentar(nombreRevista)) {
+            return;
+        }
+
         try (PreparedStatement statement = connection.prepareStatement(consulta)) {
             statement.setString(1, nombreRevista);
             statement.setString(2, nombreUsuario);
@@ -59,6 +64,24 @@ public class ComentarioDB {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    private boolean sePuedeComentar(String nombreRevista) {
+        String sql = "SELECT estado_comentar FROM revistas WHERE nombre_revista = ?";
+        try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
+            pstmt.setString(1, nombreRevista);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+
+                    // Retornar el valor de estado_comentar
+                    return rs.getBoolean("estado_comentar");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        // Si la revista no existe o hay un error, no se puede comentar
+        return false;
     }
 
 }
