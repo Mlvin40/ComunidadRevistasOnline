@@ -25,6 +25,7 @@
 /home/melvin/Escritorio/Proyecto Final IPC2/RevistasOnline/revistas-digitales-api/src/main/java/com/ipc2/revistas/digitales/api/servicios/RevistaService.java
 /home/melvin/Escritorio/Proyecto Final IPC2/RevistasOnline/revistas-digitales-api/src/main/java/com/ipc2/revistas/digitales/api/servicios/SuscriptorService.java
 /home/melvin/Escritorio/Proyecto Final IPC2/RevistasOnline/revistas-digitales-api/src/main/java/com/ipc2/revistas/digitales/api/util/GeneradorToken.java
+/home/melvin/Escritorio/Proyecto Final IPC2/RevistasOnline/revistas-digitales-api/src/main/java/com/ipc2/revistas/digitales/api/dabase/PagoAnuncioDB.java
 /home/melvin/Escritorio/Proyecto Final IPC2/RevistasOnline/revistas-digitales-api/src/main/java/com/ipc2/revistas/digitales/api/controladores/ConfiguracionUsuarioController.java
 /home/melvin/Escritorio/Proyecto Final IPC2/RevistasOnline/revistas-digitales-api/src/main/java/com/ipc2/revistas/digitales/api/modelos/usuarios/Seguridad.java
 /home/melvin/Escritorio/Proyecto Final IPC2/RevistasOnline/revistas-digitales-api/src/main/java/com/ipc2/revistas/digitales/api/dabase/DataSourceDBSingleton.java

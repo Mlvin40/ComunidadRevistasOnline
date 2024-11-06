@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angula
 import { AnuncioService } from '../../../services/anuncio/anuncio.service';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
+import { CarteraService } from '../../../services/cartera/cartera.service';
+import { MostrarSaldoCarteraComponent } from "../../en-comun/mostrar-saldo-cartera/mostrar-saldo-cartera.component";
 
 type TipoAnuncio = 'TEXTO' | 'TEXTO_IMAGEN' | 'VIDEO';
 type TipoPrecio = 'texto' | 'textoImagen' | 'video';
@@ -10,17 +12,20 @@ type TipoPrecio = 'texto' | 'textoImagen' | 'video';
 @Component({
   selector: 'app-comprar-anuncio',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, HttpClientModule],
+  imports: [CommonModule, ReactiveFormsModule, HttpClientModule, MostrarSaldoCarteraComponent],
   templateUrl: './comprar-anuncio.component.html',
   styleUrls: ['./comprar-anuncio.component.css']
 })
+
 export class ComprarAnuncioComponent implements OnInit {
   precios: Record<TipoPrecio, number> = { texto: 0, textoImagen: 0, video: 0 };
   duracion: number = 1; // duración en días
   totalAPagar: number = 0; // total a pagar por el anuncio
   anuncioForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private anuncioService: AnuncioService) {
+  saldoCartera: number = 0;
+
+  constructor(private fb: FormBuilder, private anuncioService: AnuncioService, private carteraService: CarteraService) {
     this.anuncioForm = this.fb.group({
       tipoAnuncio: ['', Validators.required],
       contenidoTexto: [''],
@@ -32,6 +37,7 @@ export class ComprarAnuncioComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.obtenerSaldo();
     this.anuncioService.obtenerPreciosAnuncios().subscribe((precios) => {
       this.precios = {
         texto: precios.texto || 0,
@@ -110,7 +116,8 @@ export class ComprarAnuncioComponent implements OnInit {
           console.log('Anuncio comprado:', response);
           // Mostrar notificación al usuario
           alert('Anuncio comprado con éxito!');
-          
+          // Actualizar el saldo de la cartera
+          this.obtenerSaldo();
           // Reiniciar el formulario
           this.anuncioForm.reset({
             tipoAnuncio: '',
@@ -124,7 +131,7 @@ export class ComprarAnuncioComponent implements OnInit {
         },
         (error) => {
           console.error('Error al comprar el anuncio:', error);
-          alert('Hubo un error al comprar el anuncio. Inténtalo de nuevo.'); // Notificación de error
+          alert('Hubo un error al comprar el anuncio. revise su credito e inténtalo de nuevo.'); // Notificación de error
         }
       );
     } else {
@@ -132,6 +139,15 @@ export class ComprarAnuncioComponent implements OnInit {
     }
   }
 
-  
-  
+  obtenerSaldo(): void {
+    this.carteraService.obtenerSaldo().subscribe(
+      (saldo) => {
+        this.saldoCartera = saldo;
+      },
+      (error) => {
+        console.error('Error al obtener el saldo', error);
+      }
+    );
+  }
+
 }

@@ -4,6 +4,8 @@
  */
 package com.ipc2.revistas.digitales.api.servicios;
 
+import com.ipc2.revistas.digitales.api.dabase.CarteraDB;
+import com.ipc2.revistas.digitales.api.dabase.PagoAnuncioDB;
 import com.ipc2.revistas.digitales.api.dabase.anuncios.*;
 import com.ipc2.revistas.digitales.api.modelos.anuncios.Anuncio;
 import java.io.InputStream;
@@ -21,16 +23,33 @@ public class AnuncioService {
     private final AnuncioTextoImagenDB anuncioTextoImagenDB = new AnuncioTextoImagenDB();
     private final AnuncioVideoDB anuncioVideoDB = new AnuncioVideoDB();
     private final ValidacionesAnuncioDB validacionesAnuncioDB = new ValidacionesAnuncioDB();
+    private final CarteraDB carteraDB = new CarteraDB();
+    private final PagoAnuncioDB pagoAnuncioDB = new PagoAnuncioDB();
 
-    public boolean comprarAnuncio(String anuciante, String tipoAnuncio, String contenidoTexto, InputStream imagenInputStream, String urlVideo, Integer duracion, String fechaInicio, Integer totalAPagar) {
+
+    public boolean comprarAnuncio(String anuciante, String tipoAnuncio, String contenidoTexto, InputStream imagenInputStream, String urlVideo, Integer duracion, String fechaInicio, double totalAPagar) {
         //Paso numero 1: Converir la fecha a localdate y darle formato yyyy-MM-dd
         LocalDate fechaInicioLocalDate = LocalDate.parse(fechaInicio);
+
+        // Si el total a pagar es menor a 0, entonces no se puede realizar la compra porque no hay suficiente dinero
+        double dineroEnCartera = cobrarTotalAnuncio(anuciante, totalAPagar);
+        if(dineroEnCartera < 0){
+            return false;
+        }
+
+        //Realizar el cobro del anuncio
+        boolean saldoActualizado = carteraDB.actualizarSaldo(anuciante, dineroEnCartera);
+        if (!saldoActualizado) {
+            return false;
+        }
+
+        // Agregar el anuncio comprado a la base de datos
+        pagoAnuncioDB.registrarPagoAnuncio(anuciante, fechaInicioLocalDate, totalAPagar);
 
         switch (tipoAnuncio) {
             case "TEXTO":
                 return anuncioTextoDB.crearAnuncioTexto(contenidoTexto, anuciante, fechaInicioLocalDate, duracion);
             case "TEXTO_IMAGEN":
-
                 return anuncioTextoImagenDB.crearAnuncioTextoImagen(contenidoTexto, imagenInputStream, anuciante, fechaInicioLocalDate, duracion);
             case "VIDEO":
                 return anuncioVideoDB.crearAnuncioVideo(urlVideo, anuciante, fechaInicioLocalDate, duracion);
@@ -63,7 +82,7 @@ public class AnuncioService {
         if (vencido) {
             return false;
         }
-
+        
         // Si el anuncio no esta vencido se procede a actualizarlo.
         switch (tipoAnuncio) {
             case "TEXTO":
@@ -75,5 +94,10 @@ public class AnuncioService {
             default:
                 return false;
         }
+    }
+    
+    private double cobrarTotalAnuncio(String nombreAnunciante, double totalAPagar) {
+        double totalEnCartera = carteraDB.obtenerSaldoActual(nombreAnunciante);
+        return totalEnCartera - totalAPagar;
     }
 }

@@ -38,6 +38,7 @@ com/ipc2/revistas/digitales/api/dabase/anuncios/AnuncioTextoDB.class
 com/ipc2/revistas/digitales/api/modelos/usuarios/Rol.class
 com/ipc2/revistas/digitales/api/modelos/errores/ErrorResponse.class
 com/ipc2/revistas/digitales/api/controladores/RevistaController.class
+com/ipc2/revistas/digitales/api/dabase/PagoAnuncioDB.class
 com/ipc2/revistas/digitales/api/modelos/usuarios/Usuario.class
 com/ipc2/revistas/digitales/api/servicios/RevistaService.class
 com/ipc2/revistas/digitales/api/modelos/revista/Publicacion.class

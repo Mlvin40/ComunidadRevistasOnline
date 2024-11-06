@@ -42,21 +42,27 @@ export class UsuariosService {
 
   // *** Métodos para manejar el token en localStorage ***
 
-  // Guardar el token en localStorage
-  guardarToken(token: string): void {
+// Guardar el token en localStorage
+guardarToken(token: string): void {
+  if (typeof window !== 'undefined') {
     localStorage.setItem('token', token);
   }
+}
 
-  // Obtener el token desde localStorage
-  obtenerToken(): string | null {
+// Obtener el token desde localStorage
+obtenerToken(): string | null {
+  if (typeof window !== 'undefined') {
     return localStorage.getItem('token');
   }
+  return null;
+}
 
-  // Eliminar el token de localStorage
-  eliminarToken(): void {
+// Eliminar el token de localStorage
+eliminarToken(): void {
+  if (typeof window !== 'undefined') {
     localStorage.removeItem('token');
   }
-
+}
   permisosAdministrador(): boolean {
     return this.tienePermiso('ADMINISTRADOR');
   }

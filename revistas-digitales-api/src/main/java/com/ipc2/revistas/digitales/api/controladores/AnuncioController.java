@@ -59,7 +59,7 @@ public class AnuncioController {
             @FormDataParam("urlVideo") String urlVideo,
             @FormDataParam("duracion") Integer duracion,
             @FormDataParam("fechaInicio") String fechaInicio,
-            @FormDataParam("totalAPagar") Integer totalAPagar) {
+            @FormDataParam("totalAPagar") double totalAPagar) {
 
         boolean anuncioComprado = anuncioService.comprarAnuncio(anuciante, tipoAnuncio, contenidoTexto, imagenInputStream, urlVideo, duracion, fechaInicio, totalAPagar);
 

@@ -1,6 +1,12 @@
 <div class="container">
     <h2>Comprar Anuncio</h2>
-  
+
+    <!-- Mostrar saldo actual -->
+    <div class="alert alert-info">
+      Saldo actual en la cartera: <strong>{{ saldoCartera }}</strong>
+    </div>
+
+
     <!-- Mostrar precios por día -->
     <div class="mb-4">
       <p><strong>Precio por día (Texto):</strong> {{ precios.texto | currency }}</p>

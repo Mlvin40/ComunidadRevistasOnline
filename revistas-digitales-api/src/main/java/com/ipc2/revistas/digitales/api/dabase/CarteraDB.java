@@ -64,6 +64,7 @@ public class CarteraDB {
     // Método para obtener el saldo actual de la cartera
     public double obtenerSaldoActual(String nombreUsuario) {
         String consulta = "SELECT saldo FROM carteras WHERE nombre_usuario = ?";
+        
         try {
             PreparedStatement statement = connection.prepareStatement(consulta);
             statement.setString(1, nombreUsuario);
@@ -85,4 +86,21 @@ public class CarteraDB {
             return -1;
         }
     }
+    
+    // Método para actualizar el saldo de la cartera cuando se realiza una compra de un anuncio
+    public boolean actualizarSaldo(String nombreUsuario, double nuevoSaldo) {
+        String consulta = "UPDATE carteras SET saldo = ? WHERE nombre_usuario = ?";
+
+        try (PreparedStatement statement = connection.prepareStatement(consulta)) {
+            statement.setDouble(1, nuevoSaldo);
+            statement.setString(2, nombreUsuario);
+
+            int filasActualizadas = statement.executeUpdate();
+            return filasActualizadas > 0; // Retorna true si se actualizó alguna fila
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }
+

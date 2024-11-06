@@ -2,15 +2,17 @@ import { Component, OnInit } from '@angular/core';
 import { CarteraService } from '../../../services/cartera/cartera.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { MostrarSaldoCarteraComponent } from "../mostrar-saldo-cartera/mostrar-saldo-cartera.component";
 
 @Component({
   selector: 'app-cartera-usuario',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, MostrarSaldoCarteraComponent],
   templateUrl: './cartera-usuario.component.html',
   styleUrl: './cartera-usuario.component.css'
 })
 export class CarteraUsuarioComponent implements OnInit {
+
   saldoCartera: number = 0;
   cantidadRecarga: number | null = null;
   mensaje: string = ''; 

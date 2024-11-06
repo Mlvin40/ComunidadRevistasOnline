@@ -40,8 +40,8 @@ public class DataSourceDBSingleton {
             p.setTestOnReturn(false);
             p.setValidationInterval(30000);
             p.setTimeBetweenEvictionRunsMillis(30000);
-            p.setMaxActive(100);
-            p.setInitialSize(10);
+            p.setMaxActive(200);
+            p.setInitialSize(50);
             p.setMaxWait(10000);
             p.setRemoveAbandonedTimeout(60);
             p.setMinEvictableIdleTimeMillis(30000);
@@ -56,7 +56,7 @@ public class DataSourceDBSingleton {
             e.printStackTrace();
         }
     }
-
+    
     // Método para obtener la única instancia (Singleton)
     public static DataSourceDBSingleton getInstance() {
         if (UNICA_INSTANCIA_DE_DATASOURCE == null) {
