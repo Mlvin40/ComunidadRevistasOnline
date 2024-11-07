@@ -131,5 +131,6 @@ public class SuscriptorDB {
         }
         return false; // Retorna false si no encuentra la revista o hay un error
     }
+    
 
 }

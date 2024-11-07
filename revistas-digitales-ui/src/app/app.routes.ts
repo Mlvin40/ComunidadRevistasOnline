@@ -20,6 +20,8 @@ import { VerRevistasDisponiblesComponent } from './components/suscriptor/ver-rev
 import path from 'path';
 import { SuscriptorHomeComponent } from './components/suscriptor/suscriptor-home/suscriptor-home.component';
 import { MisSuscripcionesComponent } from './components/suscriptor/mis-suscripciones/mis-suscripciones.component';
+import { CambiarCostoRevistaComponent } from './components/administrador/cambiar-costo-revista/cambiar-costo-revista.component';
+import { AdminHomeComponent } from './components/administrador/admin-home/admin-home.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -50,6 +52,11 @@ export const routes: Routes = [
   //Rutas del suscriptor
   { path: 'suscriptorHome', component: SuscriptorHomeComponent},
   { path: 'verRevistasDisponibles', component: VerRevistasDisponiblesComponent },
-  { path: 'misSuscripciones', component: MisSuscripcionesComponent }
+  { path: 'misSuscripciones', component: MisSuscripcionesComponent },
+
+
+  // Ruta del administrador
+  { path: 'adminHome', component: AdminHomeComponent },
+  { path: 'cambiarCostorRevista', component: CambiarCostoRevistaComponent }
 
 ];

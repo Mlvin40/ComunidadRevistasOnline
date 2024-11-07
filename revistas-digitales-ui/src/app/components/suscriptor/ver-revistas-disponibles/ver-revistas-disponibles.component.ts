@@ -37,4 +37,10 @@ export class VerRevistasDisponiblesComponent {
     );
   }
 
+  buscarPorCategoria(categoriaBuscar: string): void {
+    this.suscriptorService.obtenerRevistasPorCategoria(categoriaBuscar).subscribe(
+      (data) => this.revistas = data,
+      (error) => this.mensaje = 'Error al cargar las revistas por categoría'
+    );
+  }  
 }

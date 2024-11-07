@@ -26,6 +26,7 @@ public class SuscriptorService {
     private ComentarioDB comentarioDB = new ComentarioDB();
     private MeGustaDB meGustaDB = new MeGustaDB();
 
+    //Obtener revistas disponibles que estan para una suscripcion
     public List<Revista> obtenerRevistasParaSuscriptor(String nombreUsuario) {
 
         List<String> revistasSuscritas = suscriptorDB.obtenerRevistasSuscritas(nombreUsuario);
@@ -86,5 +87,16 @@ public class SuscriptorService {
         ComentarioDB comentarioDB = new ComentarioDB();
         comentarioDB.guardarComentario(nombreRevista, nombreSuscriptor, textoComentario);
 
+ }
+
+    public List<Revista> revistasCategoria(String categoria, String suscriptor) {
+        
+        List<Revista> revistas = obtenerRevistasParaSuscriptor(suscriptor); //Las que estan disponibles
+        List<String> categoriasAMostrar = revistaDB.obtenerRevistasPorCategoria(categoria);
+        //Filtrar las revistas que estan disponibles y que pertenecen a la categoria
+        revistas.removeIf(revista -> !categoriasAMostrar.contains(revista.getNombre()));
+        
+        return revistas;
+        
     }
 }

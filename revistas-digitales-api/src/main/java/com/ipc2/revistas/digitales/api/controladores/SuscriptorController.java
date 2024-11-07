@@ -104,10 +104,21 @@ public class SuscriptorController {
             @FormDataParam("nombreSuscriptor") String nombreSuscriptor) {
 
         suscriptorService.realizarComentario(nombreRevista, textoComentario, nombreSuscriptor);
-        
+
         Map<String, Object> responseMap = new HashMap<>();
         responseMap.put("mensaje", "Solicitud Realizada");
         return Response.ok(responseMap).build();
     }
 
+    @GET
+    @Path("/revistasPorCategoria")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response revistasPorCategoria(
+            @QueryParam("categoriaBuscar") String categoria,
+            @QueryParam("usuario") String nombreUsuario) {
+
+        List<Revista> revistas = suscriptorService.revistasCategoria(categoria, nombreUsuario);
+        return Response.ok(revistas).build();
+        
+    }
 }

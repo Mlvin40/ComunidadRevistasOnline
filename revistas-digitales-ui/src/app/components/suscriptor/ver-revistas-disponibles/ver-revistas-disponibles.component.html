@@ -1,6 +1,16 @@
 <div class="container">
   <h1>Suscribirse a una Revista</h1>
-  
+
+    <!-- Agregar un div que tenga para recibir texto y un boton que diga buscar asociado a un metodo buscarPorCategoria -->
+     
+  <div class="form-group">
+    <label for="categoria">Buscar por Categoría:</label>
+    <input type="text" class="form-control" id="categoria" #categoriaInput />
+    <button class="btn btn-primary mt-2" (click)="buscarPorCategoria(categoriaInput.value)">
+      Buscar
+    </button>
+  </div>
+
   <div *ngIf="mensaje" class="alert alert-info">{{ mensaje }}</div>
 
   <div *ngIf="revistas.length > 0; else noRevistas">

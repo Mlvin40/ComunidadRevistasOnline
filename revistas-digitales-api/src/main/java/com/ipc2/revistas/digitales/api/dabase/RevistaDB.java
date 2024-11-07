@@ -119,17 +119,6 @@ public class RevistaDB {
         return 0;
     }
 
-    public void actualizarPrecioRevista(String nombreRevista, double precio) {
-        String consulta = "UPDATE revistas SET costo = ? WHERE nombre_revista = ?";
-        try (PreparedStatement statement = connection.prepareStatement(consulta)) {
-            statement.setDouble(1, precio);
-            statement.setString(2, nombreRevista);
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            System.out.println("Error al actualizar precio de revista: " + e.getMessage());
-        }
-    }
-
     public boolean actualizarPrecioRevistaGlobal(double precio) {
         String consulta = "UPDATE precio_global_revistas SET costo = ?";
         try {
@@ -192,4 +181,25 @@ public class RevistaDB {
 
         return revistasDisponibles;
     }
+
+    //Metodo para obtener todas las revistas de una categoria especifica y luego ir comparando con las revistas suscritas
+    public List<String> obtenerRevistasPorCategoria(String categoria) {
+        String sql = "SELECT nombre_revista FROM revistas WHERE categoria = ?";
+
+        List<String> revistas = new ArrayList<>();
+        //Utilizar try-with-resources para cerrar los recursos
+
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, categoria);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    revistas.add(resultSet.getString("nombre_revista"));
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al obtener revistas por categoria: " + e.getMessage());
+        }
+        return revistas;
+    }
+
 }

@@ -23,9 +23,7 @@ export class SuscriptorService {
     return this.http.get<Revista[]>(`${this.apiUrl}/revistasDisponibles`, { params });
   }
 
-
   suscribirseRevista(revistaData: FormData): Observable<any> {
-
     revistaData.append('usuario', this.usuarioService.obtenerNombreUsuarioDesdeToken() || 'Null');
     return this.http.post<any>(`${this.apiUrl}/suscribirseRevista`, revistaData);
   }
@@ -47,4 +45,13 @@ export class SuscriptorService {
       return this.http.post<any>(`${this.apiUrl}/comentarRevista`, revistaData);
     }
 
+    // Metodo para obtener las revistas por categoria
+    obtenerRevistasPorCategoria(categoria: string): Observable<Revista[]> {
+      const nombreUsuario = this.usuarioService.obtenerNombreUsuarioDesdeToken() || 'Null';
+      const params = {
+        categoriaBuscar: categoria,
+        usuario: nombreUsuario
+      };
+      return this.http.get<Revista[]>(`${this.apiUrl}/revistasPorCategoria`, { params });
+    }
 }

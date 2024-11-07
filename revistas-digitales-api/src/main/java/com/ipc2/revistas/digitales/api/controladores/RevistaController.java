@@ -4,9 +4,6 @@
  */
 package com.ipc2.revistas.digitales.api.controladores;
 
-import com.ipc2.revistas.digitales.api.dabase.RevistaDB;
-import com.ipc2.revistas.digitales.api.modelos.errores.ErrorResponse;
-import com.ipc2.revistas.digitales.api.modelos.revista.Comentario;
 import com.ipc2.revistas.digitales.api.modelos.revista.Revista;
 import com.ipc2.revistas.digitales.api.servicios.RevistaService;
 import jakarta.ws.rs.Consumes;

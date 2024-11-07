@@ -1,0 +1,43 @@
+<div class="container">
+    <h1>Actualizar Precio por Revista</h1>
+  
+    <div *ngIf="mensaje" class="alert alert-info">
+      {{ mensaje }}
+    </div>
+  
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Descripción</th>
+          <th>Fecha de Creación</th>
+          <th>Precio Actual</th>
+          <th>Nuevo Precio</th>
+          <th>Actualizar Precio</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let revista of revistas">
+          <td>{{ revista.nombre }}</td>
+          <td>{{ revista.descripcion }}</td>
+          <td>{{ revista.fechaCreacion | date: 'dd-MM-yyyy' }}</td>
+          <td>Q{{ revista.costo }}</td>
+          <td>
+            <input
+              type="number"
+              step="0.01"
+              [(ngModel)]="nuevosCostos[revista.nombre]"
+              class="form-control"
+              required
+            />
+          </td>
+          <td>
+            <button (click)="actualizarPrecio(revista)" class="btn btn-primary mt-2">
+              Actualizar Precio
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  
