@@ -20,33 +20,35 @@ public class ComentarioDB {
         }
     }
 
-    // Método para obtener los comentarios por revista
+// Método para obtener los comentarios por revista
     public List<Comentario> obtenerComentariosPorRevista(String nombreRevista) {
         List<Comentario> comentarios = new ArrayList<>();
-        String query = "SELECT nombre_revista, nombre_usuario, comentario, fecha_comentario " +
-                "FROM comentarios WHERE nombre_revista = ?";
+        String query = "SELECT nombre_revista, nombre_usuario, comentario, fecha_comentario "
+                + "FROM comentarios WHERE nombre_revista = ?";
 
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            // Establecer el parámetro primero
             stmt.setString(1, nombreRevista);
-            ResultSet rs = stmt.executeQuery();
 
-            while (rs.next()) {
-                // Crear un objeto Comentario con los datos obtenidos de la consulta
-                Comentario comentario = new Comentario(
-                        rs.getString("nombre_revista"),
-                        rs.getString("nombre_usuario"),
-                        rs.getString("comentario"),
-                        rs.getString("fecha_comentario")
-                );
-                // Añadir el comentario a la lista de comentarios
-                comentarios.add(comentario);
+            // Ahora ejecutar la consulta
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    // Crear un objeto Comentario con los datos obtenidos de la consulta
+                    Comentario comentario = new Comentario(
+                            rs.getString("nombre_revista"),
+                            rs.getString("nombre_usuario"),
+                            rs.getString("comentario"),
+                            rs.getString("fecha_comentario")
+                    );
+                    // Añadir el comentario a la lista de comentarios
+                    comentarios.add(comentario);
+                }
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.err.println("Error al obtener comentarios de la revista '" + nombreRevista + "': " + e.getMessage());
         }
         return comentarios;
     }
-
 
     public void guardarComentario(String nombreRevista, String nombreUsuario, String comentarioTexto) {
         String consulta = "INSERT INTO comentarios (nombre_revista, nombre_usuario, comentario) VALUES (?, ?, ?)";

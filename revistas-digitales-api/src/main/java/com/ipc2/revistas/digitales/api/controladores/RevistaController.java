@@ -62,7 +62,7 @@ public class RevistaController {
         try {
             List<Revista> revistas = revistaService.obtenerRevistasPorAutor(autor);
             // Verifica si no se encontraron revistas para el autor especificado
-            if (revistas == null || revistas.isEmpty()) {
+            if (revistas == null) {
                 Map<String, String> errorResponse = new HashMap<>();
                 errorResponse.put("mensaje", "No se encontraron revistas para el autor especificado.");
                 return Response.status(Response.Status.NOT_FOUND).entity(errorResponse).build();
@@ -119,5 +119,5 @@ public class RevistaController {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(errorResponse).build();
         }
     }
-    
+
 }

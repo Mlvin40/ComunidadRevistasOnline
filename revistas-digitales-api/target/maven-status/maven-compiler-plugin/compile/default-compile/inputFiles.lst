@@ -38,6 +38,7 @@
 /home/melvin/Escritorio/Proyecto Final IPC2/RevistasOnline/revistas-digitales-api/src/main/java/com/ipc2/revistas/digitales/api/servicios/UsuarioService.java
 /home/melvin/Escritorio/Proyecto Final IPC2/RevistasOnline/revistas-digitales-api/src/main/java/com/ipc2/revistas/digitales/api/servicios/AnuncioService.java
 /home/melvin/Escritorio/Proyecto Final IPC2/RevistasOnline/revistas-digitales-api/src/main/java/com/ipc2/revistas/digitales/api/dabase/EditorDB.java
+/home/melvin/Escritorio/Proyecto Final IPC2/RevistasOnline/revistas-digitales-api/src/main/java/com/ipc2/revistas/digitales/api/validadores/ValidadorComentarioLike.java
 /home/melvin/Escritorio/Proyecto Final IPC2/RevistasOnline/revistas-digitales-api/src/main/java/com/ipc2/revistas/digitales/api/servicios/SuscriptorService.java
 /home/melvin/Escritorio/Proyecto Final IPC2/RevistasOnline/revistas-digitales-api/src/main/java/com/ipc2/revistas/digitales/api/dabase/PagoAnuncioDB.java
 /home/melvin/Escritorio/Proyecto Final IPC2/RevistasOnline/revistas-digitales-api/src/main/java/com/ipc2/revistas/digitales/api/controladores/ConfiguracionUsuarioController.java

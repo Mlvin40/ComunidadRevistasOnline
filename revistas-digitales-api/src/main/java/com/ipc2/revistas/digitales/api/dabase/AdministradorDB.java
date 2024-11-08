@@ -19,13 +19,13 @@ public class AdministradorDB {
             throw new RuntimeException(e);
         }
     }
-    
+
     public List<Revista> obtenerTodasLasRevistas() {
         List<Revista> revistas = new ArrayList<>();
         String consulta = "SELECT * FROM revistas";
 
-        try (PreparedStatement statement = connection.prepareStatement(consulta)) {
-            ResultSet resultSet = statement.executeQuery();
+        try (PreparedStatement statement = connection.prepareStatement(consulta); ResultSet resultSet = statement.executeQuery()) {
+
             while (resultSet.next()) {
                 Revista revista = new Revista(
                         resultSet.getString("nombre_revista"),
@@ -40,9 +40,11 @@ public class AdministradorDB {
                 );
                 revistas.add(revista);
             }
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
         return revistas;
     }
 
@@ -77,14 +79,15 @@ public class AdministradorDB {
 
     public boolean actualizarPrecioGlobalRevista(double precio) {
         String consulta = "UPDATE precio_global_revistas SET costo = ?";
-        try {
-            PreparedStatement statement = connection.prepareStatement(consulta);
+
+        try (PreparedStatement statement = connection.prepareStatement(consulta)) {
             statement.setDouble(1, precio);
             int filasAfectadas = statement.executeUpdate();
-            return filasAfectadas > 0;
+            return filasAfectadas > 0;  // Retorna true si se afectó al menos una fila
+
         } catch (SQLException e) {
-            System.out.println("Error al actualizar precio de revistas: " + e.getMessage());
-            return false;
+            System.err.println("Error al actualizar el precio global de revistas: " + e.getMessage());
+            return false;  // Retorna false si ocurre una excepción
         }
     }
 

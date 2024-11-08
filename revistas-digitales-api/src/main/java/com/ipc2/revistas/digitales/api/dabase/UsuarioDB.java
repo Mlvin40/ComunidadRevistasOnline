@@ -32,26 +32,28 @@ public class UsuarioDB {
 
     public boolean registrarUsuario(Usuario usuario) {
         if (existeUsuario(usuario.getNombreUsuario())) {
-            return false;
-            // Significa que el usuario ya existe en la base de datos
+            return false; // El usuario ya existe en la base de datos
         }
 
         String consulta = "INSERT INTO usuarios (nombre_usuario, contraseña, perfil, rol) VALUES (?, ?, ?, ?)";
-        try {
-            PreparedStatement statement = connection.prepareStatement(consulta);
+
+        try (PreparedStatement statement = connection.prepareStatement(consulta)) {
+            // Establecer los parámetros en el PreparedStatement
             statement.setString(1, usuario.getNombreUsuario());
             statement.setString(2, usuario.getContrasena());
             statement.setString(3, usuario.getTexto()); // Se usa String aquí
-            statement.setString(4, usuario.getRol().toString());
+            statement.setString(4, usuario.getRol().toString()); // Asumimos que Rol es un enum
 
-            // Si la inserción fue exitosa, executeUpdate devuelve el número de filas afectadas
+            // Ejecutar la consulta y obtener el número de filas afectadas
             int filasAfectadas = statement.executeUpdate();
 
-            // Si se afectó al menos una fila, devuelve true, significa que la inserción fue exitosa
+            // Si se afectó al menos una fila, la inserción fue exitosa
             return filasAfectadas > 0;
+
         } catch (SQLException e) {
-            // Si ocurre una excepción, puedes manejarla y devolver false
-            System.out.println("Error al registrar usuario: " + e.getMessage());
+            // Imprimir el error en la salida estándar de errores
+            System.err.println("Error al registrar usuario: " + e.getMessage());
+            e.printStackTrace();  // Esto ayuda a rastrear el error en detalle
             return false;
         }
     }
@@ -138,5 +140,5 @@ public class UsuarioDB {
             e.printStackTrace();
         }
     }
-    
+
 }

@@ -5,19 +5,14 @@
 package com.ipc2.revistas.digitales.api.dabase.anuncios;
 
 import com.ipc2.revistas.digitales.api.dabase.DataSourceDBSingleton;
-import com.ipc2.revistas.digitales.api.dabase.DataSourceDBSingleton;
 import com.ipc2.revistas.digitales.api.modelos.anuncios.Anuncio;
-
-import java.io.InputStream;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  *
@@ -126,31 +121,30 @@ public class AnuncioDB {
 
         try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
             pstmt.setInt(1, id); // Establece el ID del anuncio en el PreparedStatement
-            ResultSet rs = pstmt.executeQuery(); // Ejecuta la consulta
-
-            // Verifica si se encontró un anuncio
-            if (rs.next()) {
-                anuncio = new Anuncio(); // Crea un nuevo objeto Anuncio
-                anuncio.setIdAnuncio(rs.getInt("id_anuncio"));
-                anuncio.setTipoAnuncio(rs.getString("tipo_anuncio"));
-                anuncio.setContenidoTexto(rs.getString("contenido_texto"));
-                anuncio.setImagen(rs.getBytes("imagen"));
-                anuncio.setUrlVideo(rs.getString("url_video"));
-                anuncio.setNombreAnunciante(rs.getString("nombre_anunciante"));
-                anuncio.setFechaInicio(rs.getDate("fecha_inicio").toLocalDate());
-                anuncio.setDuracion(rs.getInt("duracion_dias"));
-                anuncio.setFechaExpiracion(rs.getDate("fecha_expiracion") != null
-                        ? rs.getDate("fecha_expiracion").toLocalDate()
-                        : null);
-                anuncio.setVencido(rs.getBoolean("vencido"));
-                anuncio.setActivo(rs.getBoolean("activo"));
+            try (ResultSet rs = pstmt.executeQuery()) { // Ejecuta la consulta
+                // Verifica si se encontró un anuncio
+                if (rs.next()) {
+                    anuncio = new Anuncio(); // Crea un nuevo objeto Anuncio
+                    anuncio.setIdAnuncio(rs.getInt("id_anuncio"));
+                    anuncio.setTipoAnuncio(rs.getString("tipo_anuncio"));
+                    anuncio.setContenidoTexto(rs.getString("contenido_texto"));
+                    anuncio.setImagen(rs.getBytes("imagen"));
+                    anuncio.setUrlVideo(rs.getString("url_video"));
+                    anuncio.setNombreAnunciante(rs.getString("nombre_anunciante"));
+                    anuncio.setFechaInicio(rs.getDate("fecha_inicio").toLocalDate());
+                    anuncio.setDuracion(rs.getInt("duracion_dias"));
+                    anuncio.setFechaExpiracion(rs.getDate("fecha_expiracion") != null
+                            ? rs.getDate("fecha_expiracion").toLocalDate()
+                            : null);
+                    anuncio.setVencido(rs.getBoolean("vencido"));
+                    anuncio.setActivo(rs.getBoolean("activo"));
+                }
             }
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
         return anuncio;
     }
-    
+
 }

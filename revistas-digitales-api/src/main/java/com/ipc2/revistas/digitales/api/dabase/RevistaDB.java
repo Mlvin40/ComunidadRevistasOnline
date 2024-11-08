@@ -29,24 +29,23 @@ public class RevistaDB {
 
         String consulta = "INSERT INTO revistas (nombre_revista, descripcion, categoria, fecha_creacion, autor, costo) VALUES (?, ?, ?, ?, ?, ?)";
 
-        try {
-            PreparedStatement statement = connection.prepareStatement(consulta);
+        try (PreparedStatement statement = connection.prepareStatement(consulta)) {
             statement.setString(1, revista.getNombre());
             statement.setString(2, revista.getDescripcion());
             statement.setString(3, revista.getCategoria());
 
             // Convertir LocalDate a java.sql.Date
-            java.sql.Date sqlDate = java.sql.Date.valueOf(revista.getFechaCreacion()); // Esto debe funcionar directamente
+            java.sql.Date sqlDate = java.sql.Date.valueOf(revista.getFechaCreacion());
             statement.setDate(4, sqlDate);
 
             statement.setString(5, revista.getAutor());
             statement.setDouble(6, revista.getCosto());
 
             int filasAfectadas = statement.executeUpdate();
-            return filasAfectadas > 0;
+            return filasAfectadas > 0; // Si se actualizan filas, significa que la inserción fue exitosa
         } catch (SQLException e) {
-            // Si ocurre una excepción, puedes manejarla y devolver false
-            System.out.println("Error al crear revista: " + e.getMessage());
+            System.err.println("Error al crear revista: " + e.getMessage());
+            e.printStackTrace(); // Imprime el rastro de la excepción para depuración
             return false;
         }
     }
@@ -57,9 +56,9 @@ public class RevistaDB {
         String consulta = "SELECT COUNT(*) FROM revistas WHERE nombre_revista = ?";
         try (PreparedStatement statement = connection.prepareStatement(consulta)) {
             statement.setString(1, nombreRevista);
-            try (java.sql.ResultSet resultSet = statement.executeQuery()) {
-                if (resultSet.next()) {
-                    int count = resultSet.getInt(1);
+            try (ResultSet rs = statement.executeQuery()) {
+                if (rs.next()) {
+                    int count = rs.getInt(1);
                     return count > 0; // Devuelve true si ya existe la revista
                 }
             }
@@ -75,7 +74,7 @@ public class RevistaDB {
         String consulta = "SELECT * FROM revistas WHERE nombre_revista = ?";
         try (PreparedStatement statement = connection.prepareStatement(consulta)) {
             statement.setString(1, nombreRevista);
-            try (java.sql.ResultSet resultSet = statement.executeQuery()) {
+            try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
 
                     String nombre = resultSet.getString("nombre_revista");

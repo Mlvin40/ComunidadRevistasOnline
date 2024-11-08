@@ -22,34 +22,35 @@ public class EditorDB {
         }
     }
 
+    // Método para obtener revistas por autor
     public List<Revista> obtenerRevistasPorAutor(String idAutor) {
         List<Revista> revistas = new ArrayList<>();
         String consulta = "SELECT * FROM revistas WHERE autor = ?";
 
         try (PreparedStatement statement = connection.prepareStatement(consulta)) {
             statement.setString(1, idAutor);
-            ResultSet resultSet = statement.executeQuery();
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    // Casteo de la fecha de creación a LocalDate
+                    String fechaString = resultSet.getString("fecha_creacion");
+                    LocalDate fechaCreacion = fechaString != null ? LocalDate.parse(fechaString) : null; // Manejar posibles valores nulos
 
-            while (resultSet.next()) {
-
-                //Casteo de la fecha de creacion a localdate
-                String fechaString = resultSet.getString("fecha_creacion");
-                LocalDate fechaCreacion = fechaString != null ? LocalDate.parse(fechaString) : null; // Manejar posibles valores nulos
-
-                Revista revista = new Revista(
-                        resultSet.getString("nombre_revista"),
-                        resultSet.getString("descripcion"),
-                        resultSet.getString("categoria"),
-                        fechaCreacion,
-                        resultSet.getString("autor"),
-                        resultSet.getDouble("costo"),
-                        resultSet.getBoolean("estado_comentar"),
-                        resultSet.getBoolean("estado_megusta"),
-                        resultSet.getBoolean("estado_suscribirse")
-                );
-                revistas.add(revista);
+                    Revista revista = new Revista(
+                            resultSet.getString("nombre_revista"),
+                            resultSet.getString("descripcion"),
+                            resultSet.getString("categoria"),
+                            fechaCreacion,
+                            resultSet.getString("autor"),
+                            resultSet.getDouble("costo"),
+                            resultSet.getBoolean("estado_comentar"),
+                            resultSet.getBoolean("estado_megusta"),
+                            resultSet.getBoolean("estado_suscribirse")
+                    );
+                    revistas.add(revista);
+                }
             }
         } catch (SQLException e) {
+            System.err.println("Error al obtener las revistas para el autor '" + idAutor + "': " + e.getMessage());
             e.printStackTrace();
         }
 
