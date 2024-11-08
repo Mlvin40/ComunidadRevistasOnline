@@ -19,7 +19,7 @@ public class AdministradorDB {
             throw new RuntimeException(e);
         }
     }
-
+    
     public List<Revista> obtenerTodasLasRevistas() {
         List<Revista> revistas = new ArrayList<>();
         String consulta = "SELECT * FROM revistas";
@@ -58,6 +58,53 @@ public class AdministradorDB {
         } catch (SQLException e) {
             System.out.println("Error al actualizar precio de revista: " + e.getMessage());
             return false;  // Retorna false si ocurre una excepción
+        }
+    }
+
+    public double obtenerPrecioGlobalRevista() {
+        String consulta = "SELECT costo FROM precio_global_revistas";
+        try (PreparedStatement statement = connection.prepareStatement(consulta)) {
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    return resultSet.getDouble("costo");
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al buscar precio de revistas: " + e.getMessage());
+        }
+        return 0;
+    }
+
+    public boolean actualizarPrecioGlobalRevista(double precio) {
+        String consulta = "UPDATE precio_global_revistas SET costo = ?";
+        try {
+            PreparedStatement statement = connection.prepareStatement(consulta);
+            statement.setDouble(1, precio);
+            int filasAfectadas = statement.executeUpdate();
+            return filasAfectadas > 0;
+        } catch (SQLException e) {
+            System.out.println("Error al actualizar precio de revistas: " + e.getMessage());
+            return false;
+        }
+    }
+
+    // Método para actualizar el precio de un anuncio
+    public boolean actualizarPrecioAnuncios(String tipo, double nuevoPrecio) {
+        String sql = "UPDATE precio_anuncio_dia SET costo = ? WHERE tipo_anuncio = ?";
+
+        try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
+            // Establecer los parámetros
+            pstmt.setDouble(1, nuevoPrecio);
+            pstmt.setString(2, tipo);
+
+            // Ejecutar la actualización
+            int filasAfectadas = pstmt.executeUpdate();
+
+            // Si se actualizó al menos una fila, la actualización fue exitosa
+            return filasAfectadas > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
         }
     }
 

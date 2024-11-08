@@ -10,6 +10,7 @@ import com.ipc2.revistas.digitales.api.dabase.RevistaDB;
 import com.ipc2.revistas.digitales.api.dabase.SuscriptorDB;
 import com.ipc2.revistas.digitales.api.modelos.revista.Comentario;
 import com.ipc2.revistas.digitales.api.modelos.revista.Revista;
+import com.ipc2.revistas.digitales.api.validadores.ValidadorComentarioLike;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -25,6 +26,7 @@ public class SuscriptorService {
     private RevistaDB revistaDB = new RevistaDB();
     private ComentarioDB comentarioDB = new ComentarioDB();
     private MeGustaDB meGustaDB = new MeGustaDB();
+    private ValidadorComentarioLike validadorComentarioLike = new ValidadorComentarioLike();
 
     //Obtener revistas disponibles que estan para una suscripcion
     public List<Revista> obtenerRevistasParaSuscriptor(String nombreUsuario) {
@@ -32,7 +34,7 @@ public class SuscriptorService {
         List<String> revistasSuscritas = suscriptorDB.obtenerRevistasSuscritas(nombreUsuario);
         List<Revista> revistasDisponibles = revistaDB.obtenerRevistasDisponibles(revistasSuscritas);
 
-        revistasDisponibles = agregarComentariosYLikes(revistasDisponibles);
+        revistasDisponibles = validadorComentarioLike.agregarComentariosYLikes(revistasDisponibles);
 
         return revistasDisponibles;
     }
@@ -47,28 +49,14 @@ public class SuscriptorService {
         // Crear la nueva suscripción
         return suscriptorDB.suscribirUsuarioARevista(nombreUsuario, nombreRevista, fechaDate);
     }
-    
-   
+
     //Metodo que devuelve las revistas a las que el usuario esta suscrito y puede visualizar
     public List<Revista> obtenerRevistasSuscritasPorUsuario(String nombreUsuario) {
 
         List<Revista> revistasSuscritas = suscriptorDB.obtenerRevistasPorSuscriptor(nombreUsuario);
-        revistasSuscritas = agregarComentariosYLikes(revistasSuscritas);
+        revistasSuscritas = validadorComentarioLike.agregarComentariosYLikes(revistasSuscritas);
 
         return revistasSuscritas;
-    }
-
-    //Este metodo se utiliza para agregarle los atrubutos like, comentario a un grupo de revistas
-    private List<Revista> agregarComentariosYLikes(List<Revista> revistas) {
-        for (Revista revista : revistas) {
-            int cantidadLikes = meGustaDB.obtenerCantidadMeGustaPorRevista(revista.getNombre());
-            List<Comentario> comentarios = comentarioDB.obtenerComentariosPorRevista(revista.getNombre());
-
-            // Añadir cantidad de likes y comentarios a la revista
-            revista.setLikes(cantidadLikes);
-            revista.setComentarios(comentarios);
-        }
-        return revistas;
     }
 
     public boolean darLikeRevista(String nombreRevista, String nombreSuscriptor) {
@@ -87,16 +75,16 @@ public class SuscriptorService {
         ComentarioDB comentarioDB = new ComentarioDB();
         comentarioDB.guardarComentario(nombreRevista, nombreSuscriptor, textoComentario);
 
- }
+    }
 
     public List<Revista> revistasCategoria(String categoria, String suscriptor) {
-        
+
         List<Revista> revistas = obtenerRevistasParaSuscriptor(suscriptor); //Las que estan disponibles
         List<String> categoriasAMostrar = revistaDB.obtenerRevistasPorCategoria(categoria);
         //Filtrar las revistas que estan disponibles y que pertenecen a la categoria
         revistas.removeIf(revista -> !categoriasAMostrar.contains(revista.getNombre()));
-        
+
         return revistas;
-        
+
     }
 }

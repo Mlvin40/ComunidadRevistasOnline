@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { AnuncioService } from '../../../services/anuncio/anuncio.service';
 import { Anuncio } from '../../../entidades/Anuncio';
 import { CommonModule } from '@angular/common';
-import { AnuncioTemporalService } from '../../../services/anuncio/anuncio-temporal/anuncio-temporal.service';
 import { Router } from '@angular/router';
 
 
@@ -16,7 +15,7 @@ import { Router } from '@angular/router';
 export class VerAnunciosComponent implements OnInit {
   anuncios: Anuncio[] = [];
 
-  constructor(private anuncioService: AnuncioService, private anuncioTemporalService: AnuncioTemporalService, private router: Router) {}
+  constructor(private anuncioService: AnuncioService, private router: Router) {}
 
   ngOnInit(): void {
     this.anuncioService.obtenerAnunciosPorAnunciante().subscribe(

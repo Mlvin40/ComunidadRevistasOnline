@@ -5,11 +5,8 @@
 package com.ipc2.revistas.digitales.api.servicios;
 
 import com.ipc2.revistas.digitales.api.dabase.AdministradorDB;
-import com.ipc2.revistas.digitales.api.dabase.ComentarioDB;
-import com.ipc2.revistas.digitales.api.dabase.MeGustaDB;
-import com.ipc2.revistas.digitales.api.dabase.RevistaDB;
-import com.ipc2.revistas.digitales.api.modelos.revista.Comentario;
 import com.ipc2.revistas.digitales.api.modelos.revista.Revista;
+import com.ipc2.revistas.digitales.api.validadores.ValidadorComentarioLike;
 import java.util.List;
 
 /**
@@ -19,8 +16,7 @@ import java.util.List;
 public class AdministradorService {
 
     private AdministradorDB administradorDB = new AdministradorDB();
-    private MeGustaDB meGustaDB = new MeGustaDB();
-    private ComentarioDB comentarioDB = new ComentarioDB();
+    private ValidadorComentarioLike validadorComentarioLike = new ValidadorComentarioLike();
 
     public boolean actualizarPrecioRevista(String nombreRevista, Double nuevoPrecio) {
 
@@ -35,16 +31,32 @@ public class AdministradorService {
         // Obtener la lista de revistas
         List<Revista> revistas = administradorDB.obtenerTodasLasRevistas();
 
-        for (Revista revista : revistas) {
-            int cantidadLikes = meGustaDB.obtenerCantidadMeGustaPorRevista(revista.getNombre());
-            List<Comentario> comentarios = comentarioDB.obtenerComentariosPorRevista(revista.getNombre());
+        //Se agregan los comentarios y likes
+        revistas = validadorComentarioLike.agregarComentariosYLikes(revistas);
 
-            // Añadir cantidad de likes y comentarios a la revista
-            revista.setLikes(cantidadLikes);
-            revista.setComentarios(comentarios);
-        }
-        
         return revistas;
-        
+    }
+
+    public double precioGlobalRevistas() {
+        double precioActual = administradorDB.obtenerPrecioGlobalRevista();
+        return precioActual;
+
+    }
+
+    public boolean actualizarCostoGlobal(Double nuevoPrecio) {
+        if (nuevoPrecio < 0) {
+            return false;
+        }
+        return administradorDB.actualizarPrecioGlobalRevista(nuevoPrecio);
+    }
+
+    public boolean actualizarPrecioAnuncios(String tipo, double nuevoPrecio) {
+
+        if (nuevoPrecio < 0) {
+            return false;
+        }
+
+        return administradorDB.actualizarPrecioAnuncios(tipo, nuevoPrecio);
+
     }
 }

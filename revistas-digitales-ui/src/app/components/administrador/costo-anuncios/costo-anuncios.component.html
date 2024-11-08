@@ -1,0 +1,31 @@
+<div class="container">
+    <h1>Actualizar Costos de Anuncios</h1>
+  
+    <!-- Mensaje de éxito o error -->
+    <div *ngIf="mensaje" class="alert alert-info">
+      {{ mensaje }}
+    </div>
+  
+    <!-- Formulario de precios -->
+    <form [formGroup]="preciosForm">
+      <div *ngFor="let tipo of ['texto', 'textoImagen', 'video']" class="form-group">
+        <label for="{{ tipo }}">Precio para anuncio de {{ tipo }}:</label>
+        <input
+          type="number"
+          formControlName="{{ tipo }}"
+          class="form-control"
+          required
+          min="0"
+        />
+        <!-- Botón para actualizar el precio del tipo de anuncio correspondiente -->
+        <button
+          type="button"
+          (click)="actualizarPrecio(tipo)"
+          class="btn btn-primary mt-2"
+        >
+          Actualizar Precio de {{ tipo }}
+        </button>
+      </div>
+    </form>
+  </div>
+  

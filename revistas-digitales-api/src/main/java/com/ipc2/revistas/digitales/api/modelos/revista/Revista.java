@@ -2,6 +2,7 @@ package com.ipc2.revistas.digitales.api.modelos.revista;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.ipc2.revistas.digitales.api.dabase.AdministradorDB;
 import com.ipc2.revistas.digitales.api.dabase.RevistaDB;
 import java.time.LocalDate;
 import java.util.List;
@@ -66,10 +67,10 @@ public class Revista {
     }
 
     private double establecerCosto() {
-        RevistaDB revistaDB = new RevistaDB();
-        return revistaDB.establecerPrecioRevistaGlobal();
+        AdministradorDB administradorDB = new AdministradorDB();
+        return administradorDB.obtenerPrecioGlobalRevista();
     }
-
+    
     public String getNombre() {
         return nombre;
     }

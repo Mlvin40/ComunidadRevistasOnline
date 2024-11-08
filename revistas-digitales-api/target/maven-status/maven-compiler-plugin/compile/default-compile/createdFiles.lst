@@ -11,6 +11,7 @@ com/ipc2/revistas/digitales/api/dabase/RevistaDB.class
 com/ipc2/revistas/digitales/api/servicios/PublicacionService.class
 com/ipc2/revistas/digitales/api/dabase/ComentarioDB.class
 com/ipc2/revistas/digitales/api/dabase/anuncios/ValidacionesAnuncioDB.class
+com/ipc2/revistas/digitales/api/validadores/ValidadorComentarioLike.class
 com/ipc2/revistas/digitales/api/modelos/revista/Revista.class
 com/ipc2/revistas/digitales/api/modelos/anuncios/Anuncio.class
 com/ipc2/revistas/digitales/api/modelos/usuarios/Seguridad.class

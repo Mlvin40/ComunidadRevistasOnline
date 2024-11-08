@@ -9,15 +9,12 @@ import com.ipc2.revistas.digitales.api.dabase.EditorDB;
 import com.ipc2.revistas.digitales.api.dabase.MeGustaDB;
 import com.ipc2.revistas.digitales.api.dabase.RevistaDB;
 import com.ipc2.revistas.digitales.api.modelos.revista.Comentario;
-import com.ipc2.revistas.digitales.api.modelos.revista.Comentario;
 import com.ipc2.revistas.digitales.api.modelos.revista.Revista;
-import com.ipc2.revistas.digitales.api.modelos.revista.Revista;
-import jakarta.ws.rs.core.Response;
+import com.ipc2.revistas.digitales.api.validadores.ValidadorComentarioLike;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.List;
-import java.util.Optional;
 
 /**
  *
@@ -26,8 +23,7 @@ import java.util.Optional;
 public class RevistaService {
 
     private RevistaDB revistaDB = new RevistaDB();
-    private ComentarioDB comentarioDB = new ComentarioDB();
-    private MeGustaDB meGustaDB = new MeGustaDB();
+    private ValidadorComentarioLike validadorComentarioLike = new ValidadorComentarioLike();
 
     public boolean crearRevista(String nombre, String descripcion, String categoria, String fechaCreacionStr, String autor) {
 
@@ -53,33 +49,22 @@ public class RevistaService {
 
         List<Revista> revistas = editorDB.obtenerRevistasPorAutor(autor);
 
-        for (Revista revista : revistas) {
-            int cantidadLikes = meGustaDB.obtenerCantidadMeGustaPorRevista(revista.getNombre());
-            List<Comentario> comentarios = comentarioDB.obtenerComentariosPorRevista(revista.getNombre());
-
-            // Añadir cantidad de likes y comentarios a la revista
-            revista.setLikes(cantidadLikes);
-            revista.setComentarios(comentarios);
-        }
+        //Se agregan los likes y comentarios a las revistas
+        revistas = validadorComentarioLike.agregarComentariosYLikes(revistas);
 
         return revistas;
     }
 
     public Revista obtenerRevistaPorNombre(String nombre) {
         Revista revista = revistaDB.obtenerRevista(nombre);
-        int cantidadLikes = meGustaDB.obtenerCantidadMeGustaPorRevista(revista.getNombre());
-        List<Comentario> comentarios = comentarioDB.obtenerComentariosPorRevista(revista.getNombre());
-
-        // Añadir cantidad de likes y comentarios a la revista para no de error el frontend por campos vacios
-        revista.setLikes(cantidadLikes);
-        revista.setComentarios(comentarios);
-
+        //Se obtienen los comentarios y likes de una sola revista
+        revista = validadorComentarioLike.comentariosLikesIndividual(revista);
         return revista;
     }
 
-    public boolean actualizarRevista(Revista revistaEditable) { 
+    public boolean actualizarRevista(Revista revistaEditable) {
         EditorDB editorDB = new EditorDB();
-        boolean seActualizo = editorDB.actualizarRevista(revistaEditable);  
+        boolean seActualizo = editorDB.actualizarRevista(revistaEditable);
         return seActualizo;
     }
 }

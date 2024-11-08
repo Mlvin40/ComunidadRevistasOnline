@@ -22,6 +22,8 @@ import { SuscriptorHomeComponent } from './components/suscriptor/suscriptor-home
 import { MisSuscripcionesComponent } from './components/suscriptor/mis-suscripciones/mis-suscripciones.component';
 import { CambiarCostoRevistaComponent } from './components/administrador/cambiar-costo-revista/cambiar-costo-revista.component';
 import { AdminHomeComponent } from './components/administrador/admin-home/admin-home.component';
+import { CostoGlobalRevistaComponent } from './components/administrador/costo-global-revista/costo-global-revista.component';
+import { CostoAnunciosComponent } from './components/administrador/costo-anuncios/costo-anuncios.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -57,6 +59,8 @@ export const routes: Routes = [
 
   // Ruta del administrador
   { path: 'adminHome', component: AdminHomeComponent },
-  { path: 'cambiarCostorRevista', component: CambiarCostoRevistaComponent }
+  { path: 'cambiarCostorRevista', component: CambiarCostoRevistaComponent },
+  { path: 'cambiarCostoGlobalRevista', component: CostoGlobalRevistaComponent },
+  { path: 'cambiarCostoAnuncios', component: CostoAnunciosComponent }
 
 ];

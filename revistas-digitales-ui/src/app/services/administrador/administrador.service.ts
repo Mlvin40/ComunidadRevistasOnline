@@ -30,6 +30,23 @@ export class AdministradorService {
     return this.http.post(`${this.apiUrl}/actualizarPrecioRevista`, null, { params });
   }
 
+
+  obtenerCostoGlobalRevista(): Observable<number> {
+    return this.http.get<number>(`${this.apiUrl}/obtenerCostoGlobalRevista`);
+  }
+
+  actualizarCostoGlobalRevista(nuevoPrecio: number): Observable<any> {
+    return this.http.post(`${this.apiUrl}/actualizarCostoGlobalRevista?nuevoPrecio=${nuevoPrecio}`, {});
+  }
+
+  actualizarCostoAnuncio(tipoAnuncio: string, nuevoCosto: number): Observable<any> {
+    // Agregar tipoAnuncio y nuevoCosto como parámetros QueryParam en la URL
+    return this.http.post(
+      `${this.apiUrl}/actualizarCostoAnuncio?tipoAnuncio=${tipoAnuncio}&nuevoCosto=${nuevoCosto}`,
+      {}
+    );
+  }
+  
 }
 
 

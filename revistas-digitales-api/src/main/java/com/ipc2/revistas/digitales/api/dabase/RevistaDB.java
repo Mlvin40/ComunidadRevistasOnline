@@ -86,13 +86,13 @@ public class RevistaDB {
                     //Castear la fecha de creacion a LocalDate
                     String fechaString = resultSet.getString("fecha_creacion");
                     LocalDate fechaCreacion = fechaString != null ? LocalDate.parse(fechaString) : null; // Manejar posibles valores nulos
-                    
+
                     String autor = resultSet.getString("autor");
                     double costo = resultSet.getDouble("costo");
                     boolean estadoComentar = resultSet.getBoolean("estado_comentar");
                     boolean estadoMeGusta = resultSet.getBoolean("estado_megusta");
                     boolean estadoSucribirse = resultSet.getBoolean("estado_suscribirse");
-                    
+
                     return new Revista(nombre, descripcion, categoria, fechaCreacion, autor, costo, estadoComentar, estadoMeGusta, estadoSucribirse);
                 }
             }
@@ -102,40 +102,10 @@ public class RevistaDB {
         return null;
     }
 
-    /**
-     * CREATE TABLE precio_global_revistas( costo DECIMAL(10, 2) DEFAULT 0);
-     */
-    public double establecerPrecioRevistaGlobal() {
-        String consulta = "SELECT costo FROM precio_global_revistas";
-        try (PreparedStatement statement = connection.prepareStatement(consulta)) {
-            try (ResultSet resultSet = statement.executeQuery()) {
-                if (resultSet.next()) {
-                    return resultSet.getDouble("costo");
-                }
-            }
-        } catch (SQLException e) {
-            System.out.println("Error al buscar precio de revistas: " + e.getMessage());
-        }
-        return 0;
-    }
-
-    public boolean actualizarPrecioRevistaGlobal(double precio) {
-        String consulta = "UPDATE precio_global_revistas SET costo = ?";
-        try {
-            PreparedStatement statement = connection.prepareStatement(consulta);
-            statement.setDouble(1, precio);
-            int filasAfectadas = statement.executeUpdate();
-            return filasAfectadas > 0;
-        } catch (SQLException e) {
-            System.out.println("Error al actualizar precio de revistas: " + e.getMessage());
-            return false;
-        }
-    }
-
     //Método para obtener todas las revistas que estan disponibles Para realizar una suscripcion para los usuarios 
     public List<Revista> obtenerRevistasDisponibles(List<String> revistasSuscritas) {
         List<Revista> revistasDisponibles = new ArrayList<>();
-        
+
         // Construir la consulta SQL con el número adecuado de parámetros
         StringBuilder consultaBuilder = new StringBuilder("SELECT * FROM revistas");
 
