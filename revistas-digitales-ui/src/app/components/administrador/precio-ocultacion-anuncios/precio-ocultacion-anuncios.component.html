@@ -1,0 +1,27 @@
+<div class="container mt-4">
+    <h1>Precio Para Ocultar Anuncios Por dia </h1>
+  
+    <div *ngIf="mensaje" class="alert alert-info">{{ mensaje }}</div>
+  
+    <!-- Mostrar el precio actual -->
+    <div class="mb-4">
+      <h2>Costo Actual: Q{{ precioActual }}</h2>
+    </div>
+  
+    <!-- Formulario para actualizar el precio -->
+    <div class="form-group">
+      <label for="nuevoPrecio">Nuevo Precio:</label>
+      <input
+        type="number"
+        step="0.01"
+        [(ngModel)]="nuevoPrecio"
+        id="nuevoPrecio"
+        class="form-control"
+        required
+      />
+    </div>
+    <button (click)="actualizarCostoOcultacion()" class="btn btn-primary mt-2">
+      Actualizar Precio
+    </button>
+  </div>
+  

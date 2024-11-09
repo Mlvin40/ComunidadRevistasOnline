@@ -111,4 +111,32 @@ public class AdministradorDB {
         }
     }
 
+    public double obtenerPrecioOcultacionAnuncio() {
+        String consulta = "SELECT costo FROM precio_ocultacion_anuncio";
+        try (PreparedStatement statement = connection.prepareStatement(consulta)) {
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    return resultSet.getDouble("costo");
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al buscar precio de revistas: " + e.getMessage());
+        }
+        return 0;
+    }
+
+    public boolean actualizarPrecioOcultacionAnuncio(double precio) {
+        String consulta = "UPDATE precio_ocultacion_anuncio SET costo = ?";
+
+        try (PreparedStatement statement = connection.prepareStatement(consulta)) {
+            statement.setDouble(1, precio);
+            int filasAfectadas = statement.executeUpdate();
+            return filasAfectadas > 0;  // Retorna true si se afectó al menos una fila
+
+        } catch (SQLException e) {
+            System.err.println("Error al actualizar el precio global de revistas: " + e.getMessage());
+            return false;  // Retorna false si ocurre una excepción
+        }
+    }
+
 }

@@ -9,6 +9,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class AdministradorService {
+
   
   private apiUrl: string;
   
@@ -46,7 +47,15 @@ export class AdministradorService {
       {}
     );
   }
-  
+
+  obtenerCostoOcultacionRevista(): Observable<number> {
+    return this.http.get<number>(`${this.apiUrl}/costoOcultacionAnuncio`);
+  }
+
+  actualizarCostoOcultacionRevista(nuevoPrecio: number): Observable<any> {
+    return this.http.post(`${this.apiUrl}/ActualizarcostoOcultacionAnuncio?nuevoPrecio=${nuevoPrecio}`, {});
+  }
+
 }
 
 

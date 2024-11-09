@@ -98,4 +98,28 @@ public class AdministradorController {
                     .build();
         }
     }
+
+    @GET
+    @Path("/costoOcultacionAnuncio")
+    public Response obtenerCostoOcultacion() {
+        double costoActual = administradorService.obtenerCostoOcultacion();
+        return Response.ok(costoActual).build();
+    }
+
+    @POST
+    @Path("/ActualizarcostoOcultacionAnuncio")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response actualizarCostoOcultacion(@QueryParam("nuevoPrecio") Double nuevoPrecio) {
+
+        boolean actualizado = administradorService.actualizarCostoOcultacion(nuevoPrecio);
+        if (actualizado) {
+            ExitoResponse exitoResponse = new ExitoResponse();
+            return Response.ok(exitoResponse).build();
+        } else {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity("Error al actualizar el precio.")
+                    .build();
+        }
+    }
+
 }

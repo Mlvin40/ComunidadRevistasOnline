@@ -3,7 +3,6 @@ package com.ipc2.revistas.digitales.api.modelos.revista;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.ipc2.revistas.digitales.api.dabase.AdministradorDB;
-import com.ipc2.revistas.digitales.api.dabase.RevistaDB;
 import java.time.LocalDate;
 import java.util.List;
 

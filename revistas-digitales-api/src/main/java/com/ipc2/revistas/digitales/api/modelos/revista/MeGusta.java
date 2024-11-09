@@ -2,6 +2,7 @@ package com.ipc2.revistas.digitales.api.modelos.revista;
 
 public class MeGusta {
 
+    private int id;
     private String nombreRevista;
     private String nombreUsuario;
     private String fechaMeGusta;
@@ -12,7 +13,7 @@ public class MeGusta {
         this.nombreUsuario = nombreUsuario;
         this.fechaMeGusta = fechaMeGusta;
     }
-
+    
     public String getNombreRevista() {
         return nombreRevista;
     }

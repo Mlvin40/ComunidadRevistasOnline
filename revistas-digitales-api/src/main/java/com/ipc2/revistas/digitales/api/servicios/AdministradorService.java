@@ -43,7 +43,7 @@ public class AdministradorService {
 
     }
 
-    public boolean actualizarCostoGlobal(Double nuevoPrecio) {
+    public boolean actualizarCostoGlobal(double nuevoPrecio) {
         if (nuevoPrecio < 0) {
             return false;
         }
@@ -59,4 +59,17 @@ public class AdministradorService {
         return administradorDB.actualizarPrecioAnuncios(tipo, nuevoPrecio);
 
     }
+
+    public double obtenerCostoOcultacion() {
+        double costoActual = administradorDB.obtenerPrecioOcultacionAnuncio();
+        return costoActual;
+    }
+
+    public boolean actualizarCostoOcultacion(double nuevoPrecio) {
+        if (nuevoPrecio < 0) {
+            return false;
+        }
+        return administradorDB.actualizarPrecioOcultacionAnuncio(nuevoPrecio);
+    }
+    
 }

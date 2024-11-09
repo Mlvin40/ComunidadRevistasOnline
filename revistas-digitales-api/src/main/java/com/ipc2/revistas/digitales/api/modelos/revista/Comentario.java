@@ -1,6 +1,8 @@
 package com.ipc2.revistas.digitales.api.modelos.revista;
 
 public class Comentario {
+
+    
     private String nombreRevista;
     private String nombreUsuario;
     private String comentario;
