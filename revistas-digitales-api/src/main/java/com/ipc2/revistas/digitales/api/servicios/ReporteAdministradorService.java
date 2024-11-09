@@ -4,7 +4,9 @@
  */
 package com.ipc2.revistas.digitales.api.servicios;
 
+import com.ipc2.revistas.digitales.api.dabase.reportes.GeneradorRevistaPopular;
 import com.ipc2.revistas.digitales.api.dabase.reportes.RevistasTop;
+import com.ipc2.revistas.digitales.api.modelos.reporte.RevistaPopular;
 import com.ipc2.revistas.digitales.api.modelos.revista.Revista;
 import java.util.List;
 
@@ -15,9 +17,14 @@ import java.util.List;
 public class ReporteAdministradorService {
 
     private RevistasTop revistasTop = new RevistasTop();
+    private GeneradorRevistaPopular generadorRevistaPopular = new GeneradorRevistaPopular();
 
     public List<Revista> revistasMasComentadas() {
         return revistasTop.revistasMasComentadas();
 
+    }
+
+    public List<RevistaPopular> obtenerRevistasPopulares() {
+        return generadorRevistaPopular.obtenerTop5();
     }
 }

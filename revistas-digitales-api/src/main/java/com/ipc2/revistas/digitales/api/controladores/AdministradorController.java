@@ -4,12 +4,12 @@
  */
 package com.ipc2.revistas.digitales.api.controladores;
 
+import com.ipc2.revistas.digitales.api.modelos.reporte.RevistaPopular;
 import com.ipc2.revistas.digitales.api.modelos.response.ExitoResponse;
 import com.ipc2.revistas.digitales.api.modelos.revista.Revista;
 import com.ipc2.revistas.digitales.api.servicios.AdministradorService;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
-import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.QueryParam;

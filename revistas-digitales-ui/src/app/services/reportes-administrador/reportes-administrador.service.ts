@@ -4,6 +4,7 @@ import { UsuariosService } from '../usuarios/usuarios.service';
 import { RestConstants } from '../rest-constants';
 import { Revista } from '../../entidades/Revista';
 import { Observable } from 'rxjs';
+import { RevistaPopular } from '../../entidades/RevistaPopular';
 
 @Injectable({
   providedIn: 'root'
@@ -18,6 +19,11 @@ export class ReportesAdministradorService {
 
 obtenerRevistasMasComentadas(): Observable<Revista[]> {
   return this.http.get<Revista[]>(this.apiUrl+"/revistasMasComentadas");
+}
+
+
+obtenerRevistasPopulares(): Observable<RevistaPopular[]> {
+  return this.http.get<RevistaPopular[]>(this.apiUrl+"/revistasPopulares");
 }
 
 }

@@ -14,9 +14,9 @@ com/ipc2/revistas/digitales/api/dabase/RevistaDB.class
 com/ipc2/revistas/digitales/api/servicios/PublicacionService.class
 com/ipc2/revistas/digitales/api/dabase/ComentarioDB.class
 com/ipc2/revistas/digitales/api/dabase/anuncios/ValidacionesAnuncioDB.class
+com/ipc2/revistas/digitales/api/modelos/reporte/RevistaPopular.class
 com/ipc2/revistas/digitales/api/validadores/ValidadorComentarioLike.class
 com/ipc2/revistas/digitales/api/dabase/SuscripcionDB.class
-com/ipc2/revistas/digitales/api/dabase/reportes/TablaMeGustaDB.class
 com/ipc2/revistas/digitales/api/modelos/revista/Revista.class
 com/ipc2/revistas/digitales/api/modelos/anuncios/Anuncio.class
 com/ipc2/revistas/digitales/api/modelos/usuarios/Seguridad.class
@@ -57,4 +57,5 @@ com/ipc2/revistas/digitales/api/servicios/SuscriptorService.class
 com/ipc2/revistas/digitales/api/modelos/usuarios/Rol.class
 com/ipc2/revistas/digitales/api/modelos/usuarios/Usuario.class
 com/ipc2/revistas/digitales/api/modelos/revista/Publicacion.class
+com/ipc2/revistas/digitales/api/dabase/reportes/GeneradorRevistaPopular.class
 com/ipc2/revistas/digitales/api/dabase/anuncios/AnuncioVideoDB.class

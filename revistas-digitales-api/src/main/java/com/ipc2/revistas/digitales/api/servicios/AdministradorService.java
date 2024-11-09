@@ -5,6 +5,8 @@
 package com.ipc2.revistas.digitales.api.servicios;
 
 import com.ipc2.revistas.digitales.api.dabase.AdministradorDB;
+import com.ipc2.revistas.digitales.api.dabase.reportes.GeneradorRevistaPopular;
+import com.ipc2.revistas.digitales.api.modelos.reporte.RevistaPopular;
 import com.ipc2.revistas.digitales.api.modelos.revista.Revista;
 import com.ipc2.revistas.digitales.api.validadores.ValidadorComentarioLike;
 import java.util.List;
@@ -17,7 +19,7 @@ public class AdministradorService {
 
     private AdministradorDB administradorDB = new AdministradorDB();
     private ValidadorComentarioLike validadorComentarioLike = new ValidadorComentarioLike();
-
+  
     public boolean actualizarPrecioRevista(String nombreRevista, Double nuevoPrecio) {
 
         // Validar que el precio que se quiere actualizar no sea negativo
@@ -71,5 +73,5 @@ public class AdministradorService {
         }
         return administradorDB.actualizarPrecioOcultacionAnuncio(nuevoPrecio);
     }
-    
+
 }

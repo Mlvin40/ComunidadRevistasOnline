@@ -4,7 +4,9 @@
  */
 package com.ipc2.revistas.digitales.api.controladores;
 
+import com.ipc2.revistas.digitales.api.modelos.reporte.RevistaPopular;
 import com.ipc2.revistas.digitales.api.modelos.revista.Revista;
+import com.ipc2.revistas.digitales.api.modelos.revista.Suscripcion;
 import com.ipc2.revistas.digitales.api.servicios.ReporteAdministradorService;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
@@ -26,8 +28,16 @@ public class ReporteAdministradorController {
     @Path("/revistasMasComentadas")
     @Produces(MediaType.APPLICATION_JSON)
     public Response obtenerTop5RevistasMasGustadas() {
-        List<Revista> suscripciones = reporteAdministradorService.revistasMasComentadas();
-        return Response.ok(suscripciones).build();
+        List<Revista> revistas = reporteAdministradorService.revistasMasComentadas();
+        return Response.ok(revistas).build();
+    }
+    
+    @GET
+    @Path("/revistasPopulares")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response obtenerRevistasPopulares() {
+        List<RevistaPopular> revistasPopulares = reporteAdministradorService.obtenerRevistasPopulares();
+        return Response.ok(revistasPopulares).build();
     }
     
 }

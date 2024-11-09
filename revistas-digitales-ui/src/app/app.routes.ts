@@ -29,6 +29,7 @@ import { ReporteComentariosRevistaComponent } from './components/editor/reporte-
 import { ReporteSuscripcionRevistaComponent } from './components/editor/reporte-suscripcion-revista/reporte-suscripcion-revista.component';
 import { ReporteMegustaRevistaComponent } from './components/editor/reporte-megusta-revista/reporte-megusta-revista.component';
 import { ReporteComentariosTopComponent } from './components/administrador/reporte-comentarios-top/reporte-comentarios-top.component';
+import { ReporteRevistasPopularesComponent } from './components/administrador/reporte-revistas-populares/reporte-revistas-populares.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -72,4 +73,5 @@ export const routes: Routes = [
   { path: 'cambiarCostoAnuncios', component: CostoAnunciosComponent },
   { path: 'cambiarCostoOcultacionAnuncio', component: PrecioOcultacionAnunciosComponent },
   { path: 'reporteComentariosTop', component: ReporteComentariosTopComponent }, 
+  { path: 'revistasPopulares', component: ReporteRevistasPopularesComponent },
 ];

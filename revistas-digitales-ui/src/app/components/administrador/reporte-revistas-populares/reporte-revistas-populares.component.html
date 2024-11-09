@@ -1,0 +1,27 @@
+<div class="container">
+    <h2>Reporte de Revistas Populares</h2>
+
+    <!-- Tabla de Revistas Populares -->
+    <table class="table table-striped mt-3">
+      <thead>
+        <tr>
+          <th>Nombre de la Revista</th>
+          <th>Cantidad de Suscripciones</th>
+          <th>Suscripciones Realizadas</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let revista of revistasPopulares">
+          <td>{{ revista.nombre }}</td>
+          <td>{{ revista.suscripciones.length }}</td>
+          <td>
+            <ul>
+              <li *ngFor="let suscripcion of revista.suscripciones">
+                {{ suscripcion.nombreUsuario }} -> {{ suscripcion.fechaSuscripcion | date:'dd/MM/yyyy' }}
+              </li>
+            </ul>
+          </td>          
+        </tr>
+      </tbody>
+    </table>
+  </div>
