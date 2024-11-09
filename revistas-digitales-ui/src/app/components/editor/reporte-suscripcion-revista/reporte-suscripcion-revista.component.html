@@ -1,0 +1,43 @@
+<div class="container">
+    <h2>Reporte de Suscripciones por Revista</h2>
+  
+    <!-- Input para filtrar por nombre de revista -->
+    <div class="mb-3">
+      <label for="nombreRevista" class="form-label">Nombre de la Revista</label>
+      <input 
+        type="text" 
+        id="nombreRevista" 
+        [(ngModel)]="nombreRevista" 
+        class="form-control" 
+        placeholder="Ingresa el nombre de la revista" 
+      />
+    </div>
+  
+    <!-- Botón de Filtrar -->
+    <button (click)="filtrarSuscripciones()" class="btn btn-primary">Filtrar</button>
+  
+    <!-- Tabla de Suscripciones -->
+    <table class="table table-striped mt-3" *ngIf="suscripciones.length > 0; else sinSuscripciones">
+      <thead>
+        <tr>
+          <th>Nombre de la Revista</th>
+          <th>Nombre del Usuario</th>
+          <th>Fecha de Suscripción</th>
+          <th>Estado</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let suscripcion of suscripciones">
+          <td>{{ suscripcion.nombreRevista }}</td>
+          <td>{{ suscripcion.nombreUsuario }}</td>
+          <td>{{ suscripcion.fechaSuscripcion | date }}</td>
+          <td>{{ suscripcion.estado ? 'Activa' : 'Cancelada' }}</td>
+        </tr>
+      </tbody>
+    </table>
+  
+    <ng-template #sinSuscripciones>
+      <p>No hay suscripciones para mostrar.</p>
+    </ng-template>
+  </div>
+  

@@ -1,9 +1,12 @@
 com/ipc2/revistas/digitales/api/dabase/SuscriptorDB.class
 com/ipc2/revistas/digitales/api/modelos/revista/MeGusta.class
 com/ipc2/revistas/digitales/api/modelos/usuarios/Suscriptor.class
+com/ipc2/revistas/digitales/api/servicios/ReporteAdministradorService.class
 com/ipc2/revistas/digitales/api/dabase/anuncios/AnuncioTextoImagenDB.class
+com/ipc2/revistas/digitales/api/dabase/reportes/RevistasMasGustadas.class
 com/ipc2/revistas/digitales/api/controladores/ConfiguracionUsuarioController.class
 com/ipc2/revistas/digitales/api/dabase/MeGustaDB.class
+com/ipc2/revistas/digitales/api/dabase/reportes/RevistasTop.class
 com/ipc2/revistas/digitales/api/modelos/revista/Comentario.class
 com/ipc2/revistas/digitales/api/util/GeneradorToken.class
 com/ipc2/revistas/digitales/api/modelos/usuarios/Anunciante.class
@@ -12,6 +15,8 @@ com/ipc2/revistas/digitales/api/servicios/PublicacionService.class
 com/ipc2/revistas/digitales/api/dabase/ComentarioDB.class
 com/ipc2/revistas/digitales/api/dabase/anuncios/ValidacionesAnuncioDB.class
 com/ipc2/revistas/digitales/api/validadores/ValidadorComentarioLike.class
+com/ipc2/revistas/digitales/api/dabase/SuscripcionDB.class
+com/ipc2/revistas/digitales/api/dabase/reportes/TablaMeGustaDB.class
 com/ipc2/revistas/digitales/api/modelos/revista/Revista.class
 com/ipc2/revistas/digitales/api/modelos/anuncios/Anuncio.class
 com/ipc2/revistas/digitales/api/modelos/usuarios/Seguridad.class
@@ -19,12 +24,15 @@ com/ipc2/revistas/digitales/api/modelos/revista/RevistaEditable.class
 com/ipc2/revistas/digitales/api/dabase/UsuarioDB.class
 com/ipc2/revistas/digitales/api/modelos/usuarios/Administrador.class
 com/ipc2/revistas/digitales/api/dabase/CarteraDB.class
+com/ipc2/revistas/digitales/api/controladores/ReporteAdministradorController.class
 com/ipc2/revistas/digitales/api/RestConfiguration.class
 com/ipc2/revistas/digitales/api/controladores/SuscriptorController.class
 com/ipc2/revistas/digitales/api/dabase/anuncios/AnuncioTextoDB.class
 com/ipc2/revistas/digitales/api/controladores/RevistaController.class
 com/ipc2/revistas/digitales/api/dabase/PagoAnuncioDB.class
 com/ipc2/revistas/digitales/api/servicios/RevistaService.class
+com/ipc2/revistas/digitales/api/controladores/ReporteEditorController.class
+com/ipc2/revistas/digitales/api/modelos/revista/Suscripcion.class
 com/ipc2/revistas/digitales/api/servicios/UsuarioService.class
 com/ipc2/revistas/digitales/api/modelos/response/ErrorResponse.class
 com/ipc2/revistas/digitales/api/servicios/AdministradorService.class
@@ -36,6 +44,7 @@ com/ipc2/revistas/digitales/api/controladores/AdministradorController.class
 com/ipc2/revistas/digitales/api/controladores/UsuarioController.class
 com/ipc2/revistas/digitales/api/dabase/DataSourceDBSingleton.class
 com/ipc2/revistas/digitales/api/dabase/anuncios/AnuncioDB.class
+com/ipc2/revistas/digitales/api/servicios/ReporteEditorService.class
 com/ipc2/revistas/digitales/api/controladores/CarteraController.class
 com/ipc2/revistas/digitales/api/servicios/AnuncioService.class
 com/ipc2/revistas/digitales/api/controladores/AnuncioController.class

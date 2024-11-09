@@ -98,14 +98,16 @@ public class UsuarioDB {
             statement.setString(1, nombreUsuario);
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
-                    String nombre = resultSet.getString("nombre_usuario");
-                    String password = resultSet.getString("contraseña");
-                    String texto = resultSet.getString("perfil");
-                    byte[] fotoPerfil = resultSet.getBytes("foto_perfil");
+                    //Para castear el rol al enum correspondiente
                     String rol = resultSet.getString("rol");
-                    //fechaCreacion es un campo de tipo DATE en la base de datos
-                    String fechaCreacion = resultSet.getString("fecha_creacion");
-                    return new Usuario(nombre, password, texto, fotoPerfil, Rol.valueOf(rol), fechaCreacion);
+                    return new Usuario(
+                            resultSet.getString("nombre_usuario"),
+                            resultSet.getString("contraseña"),
+                            resultSet.getString("perfil"),
+                            resultSet.getBytes("foto_perfil"),
+                            Rol.valueOf(rol),
+                            resultSet.getDate("fecha_creacion").toLocalDate()
+                    );
                 }
             }
         } catch (SQLException e) {

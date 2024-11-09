@@ -25,6 +25,10 @@ import { AdminHomeComponent } from './components/administrador/admin-home/admin-
 import { CostoGlobalRevistaComponent } from './components/administrador/costo-global-revista/costo-global-revista.component';
 import { CostoAnunciosComponent } from './components/administrador/costo-anuncios/costo-anuncios.component';
 import { PrecioOcultacionAnunciosComponent } from './components/administrador/precio-ocultacion-anuncios/precio-ocultacion-anuncios.component';
+import { ReporteComentariosRevistaComponent } from './components/editor/reporte-comentarios-revista/reporte-comentarios-revista.component';
+import { ReporteSuscripcionRevistaComponent } from './components/editor/reporte-suscripcion-revista/reporte-suscripcion-revista.component';
+import { ReporteMegustaRevistaComponent } from './components/editor/reporte-megusta-revista/reporte-megusta-revista.component';
+import { ReporteComentariosTopComponent } from './components/administrador/reporte-comentarios-top/reporte-comentarios-top.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -42,6 +46,9 @@ export const routes: Routes = [
   { path: 'editarRevista/:nombre', component: EditarRevistaComponent },
   { path: 'publicar/:nombre', component: PublicarComponent },
   { path: 'verPublicaciones/:nombre', component: VerPublicacionesComponent },
+  { path: 'reporteDeComentario', component: ReporteComentariosRevistaComponent},
+  { path: 'reporteDeSuscripcion', component: ReporteSuscripcionRevistaComponent},
+  { path: 'reporteMasGustadas', component: ReporteMegustaRevistaComponent}, 
 
 
   // Rutas del anunciante
@@ -63,5 +70,6 @@ export const routes: Routes = [
   { path: 'cambiarCostorRevista', component: CambiarCostoRevistaComponent },
   { path: 'cambiarCostoGlobalRevista', component: CostoGlobalRevistaComponent },
   { path: 'cambiarCostoAnuncios', component: CostoAnunciosComponent },
-  { path: 'cambiarCostoOcultacionAnuncio', component: PrecioOcultacionAnunciosComponent }
+  { path: 'cambiarCostoOcultacionAnuncio', component: PrecioOcultacionAnunciosComponent },
+  { path: 'reporteComentariosTop', component: ReporteComentariosTopComponent }, 
 ];

@@ -4,7 +4,7 @@ export interface Revista {
   nombre: string;
   descripcion: string;
   categoria: string;
-  fechaCreacion: string; // Fecha en formato ISO para recibir desde el backend
+  fechaCreacion: Date; 
   autor: string;
   costo: number;
   estadoComentar: boolean;

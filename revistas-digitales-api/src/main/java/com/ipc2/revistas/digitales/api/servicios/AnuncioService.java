@@ -44,7 +44,7 @@ public class AnuncioService {
         }
 
         // Agregar el anuncio comprado a la base de datos
-        pagoAnuncioDB.registrarPagoAnuncio(anuciante, fechaInicioLocalDate, totalAPagar);
+        pagoAnuncioDB.registrarPagoAnuncio(anuciante, fechaInicioLocalDate, totalAPagar, tipoAnuncio);
 
         switch (tipoAnuncio) {
             case "TEXTO":

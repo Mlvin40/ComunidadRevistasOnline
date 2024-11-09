@@ -1,19 +1,22 @@
 package com.ipc2.revistas.digitales.api.modelos.revista;
 
+import java.time.LocalDate;
+
 public class MeGusta {
 
     private int id;
     private String nombreRevista;
     private String nombreUsuario;
-    private String fechaMeGusta;
+    private LocalDate fechaMeGusta;
 
-
-    public MeGusta(String nombreRevista, String nombreUsuario, String fechaMeGusta) {
+    //Constructor para recuperar un Me Gusta de la DB
+    public MeGusta(int id, String nombreRevista, String nombreUsuario, LocalDate fechaMeGusta) {
+        this.id = id;
         this.nombreRevista = nombreRevista;
         this.nombreUsuario = nombreUsuario;
         this.fechaMeGusta = fechaMeGusta;
     }
-    
+
     public String getNombreRevista() {
         return nombreRevista;
     }
@@ -30,11 +33,20 @@ public class MeGusta {
         this.nombreUsuario = nombreUsuario;
     }
 
-    public String getFechaMeGusta() {
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public LocalDate getFechaMeGusta() {
         return fechaMeGusta;
     }
-    
-    public void setFechaMeGusta(String fechaMeGusta) {
+
+    public void setFechaMeGusta(LocalDate fechaMeGusta) {
         this.fechaMeGusta = fechaMeGusta;
     }
+
 }

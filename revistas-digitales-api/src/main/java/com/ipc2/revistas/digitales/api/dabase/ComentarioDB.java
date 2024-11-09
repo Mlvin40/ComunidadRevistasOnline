@@ -20,10 +20,33 @@ public class ComentarioDB {
         }
     }
 
-// Método para obtener los comentarios por revista
+    public List<Comentario> obtenerTodosLosComentarios() {
+        List<Comentario> comentarios = new ArrayList<>();
+        String query = "SELECT id_comentario, nombre_revista, nombre_usuario, comentario, fecha_comentario FROM comentarios";
+
+        try (PreparedStatement stmt = connection.prepareStatement(query); ResultSet rs = stmt.executeQuery()) {
+
+            while (rs.next()) {
+                Comentario comentario = new Comentario(
+                        rs.getInt("id_comentario"),
+                        rs.getString("nombre_revista"),
+                        rs.getString("nombre_usuario"),
+                        rs.getString("comentario"),
+                        rs.getDate("fecha_comentario").toLocalDate()
+                );
+                // Añadir el comentario a la lista de comentarios
+                comentarios.add(comentario);
+            }
+        } catch (SQLException e) {
+            System.err.println("Error al obtener todos los comentarios: " + e.getMessage());
+        }
+        return comentarios;
+    }
+
+    // Método para obtener los comentarios por revista
     public List<Comentario> obtenerComentariosPorRevista(String nombreRevista) {
         List<Comentario> comentarios = new ArrayList<>();
-        String query = "SELECT nombre_revista, nombre_usuario, comentario, fecha_comentario "
+        String query = "SELECT id_comentario, nombre_revista, nombre_usuario, comentario, fecha_comentario "
                 + "FROM comentarios WHERE nombre_revista = ?";
 
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
@@ -35,10 +58,11 @@ public class ComentarioDB {
                 while (rs.next()) {
                     // Crear un objeto Comentario con los datos obtenidos de la consulta
                     Comentario comentario = new Comentario(
+                            rs.getInt("id_comentario"),
                             rs.getString("nombre_revista"),
                             rs.getString("nombre_usuario"),
                             rs.getString("comentario"),
-                            rs.getString("fecha_comentario")
+                            rs.getDate("fecha_comentario").toLocalDate()
                     );
                     // Añadir el comentario a la lista de comentarios
                     comentarios.add(comentario);

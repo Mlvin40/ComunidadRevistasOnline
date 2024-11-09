@@ -1,9 +1,13 @@
 package com.ipc2.revistas.digitales.api.dabase;
 
+import com.ipc2.revistas.digitales.api.modelos.revista.MeGusta;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MeGustaDB {
 
@@ -75,7 +79,6 @@ public class MeGustaDB {
         return false;
     }
 
-
     private boolean sePuedeDarLike(String nombreRevista) throws SQLException {
         String consulta = "SELECT estado_megusta FROM revistas WHERE nombre_revista = ?";
 
@@ -91,4 +94,54 @@ public class MeGustaDB {
         }
         return false;  // Si no se encuentra la revista o estado_megusta es false, no se puede dar like
     }
+
+    // Método para recuperar todos los "Me Gusta" de la base de datos
+    public List<MeGusta> obtenerTodosMeGusta() {
+        List<MeGusta> listaMeGusta = new ArrayList<>();
+
+        String consulta = "SELECT id_me_gusta, nombre_revista, nombre_usuario, fecha_me_gusta FROM me_gusta";
+
+        try (PreparedStatement stmt = connection.prepareStatement(consulta); ResultSet rs = stmt.executeQuery()) {
+            while (rs.next()) {
+                int id = rs.getInt("id_me_gusta");
+                String nombreRevista = rs.getString("nombre_revista");
+                String nombreUsuario = rs.getString("nombre_usuario");
+                LocalDate fechaMeGusta = rs.getDate("fecha_me_gusta").toLocalDate();
+
+                MeGusta meGusta = new MeGusta(id, nombreRevista, nombreUsuario, fechaMeGusta);
+                listaMeGusta.add(meGusta);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return listaMeGusta;
+    }
+
+    // Método para recuperar todos los "Me Gusta" de una revista específica
+    public List<MeGusta> obtenerMeGustaPorRevista(String nombreRevista) {
+        List<MeGusta> listaMeGusta = new ArrayList<>();
+
+        String consulta = "SELECT id_me_gusta, nombre_revista, nombre_usuario, fecha_me_gusta "
+                + "FROM me_gusta WHERE nombre_revista = ?";
+
+        try (PreparedStatement stmt = connection.prepareStatement(consulta)) {
+            stmt.setString(1, nombreRevista);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    int id = rs.getInt("id_me_gusta");
+                    String nombreUsuario = rs.getString("nombre_usuario");
+                    LocalDate fechaMeGusta = rs.getDate("fecha_me_gusta").toLocalDate();
+
+                    MeGusta meGusta = new MeGusta(id, nombreRevista, nombreUsuario, fechaMeGusta);
+                    listaMeGusta.add(meGusta);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        
+        return listaMeGusta;
+    }
+
 }

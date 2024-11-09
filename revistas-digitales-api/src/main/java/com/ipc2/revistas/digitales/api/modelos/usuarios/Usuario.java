@@ -1,5 +1,6 @@
 package com.ipc2.revistas.digitales.api.modelos.usuarios;
 
+import java.time.LocalDate;
 
 public class Usuario {
 
@@ -8,7 +9,7 @@ public class Usuario {
     private String texto;
     private byte[] fotoPerfil;
     private Rol rol;
-    private String fechaCreacion;
+    private LocalDate fechaCreacion;
 
     //Constructor para registrar a un usuario nuevo
     public Usuario(String nombreUsuario, String contrasena, Rol rol) {
@@ -23,7 +24,7 @@ public class Usuario {
     }
 
     //Constructor para recuperar a un usuario de la base de datos
-    public Usuario(String nombreUsuario, String contrasena, String texto, byte[] fotoPerfil, Rol rol, String fechaCreacion) {
+    public Usuario(String nombreUsuario, String contrasena, String texto, byte[] fotoPerfil, Rol rol, LocalDate fechaCreacion) {
         this.nombreUsuario = nombreUsuario;
         this.contrasena = contrasena;
         this.texto = texto;
@@ -69,11 +70,11 @@ public class Usuario {
         this.texto = texto;
     }
 
-    public String getFechaCreacion() {
+    public LocalDate getFechaCreacion() {
         return fechaCreacion;
     }
 
-    public void setFechaCreacion(String fechaCreacion) {
+    public void setFechaCreacion(LocalDate fechaCreacion) {
         this.fechaCreacion = fechaCreacion;
     }
 

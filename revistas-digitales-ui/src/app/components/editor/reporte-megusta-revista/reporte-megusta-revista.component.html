@@ -1,0 +1,24 @@
+<div class="container">
+    <h2>Reporte de Me Gusta por Revista</h2>
+  
+    <!-- Tabla de Revistas Más Gustadas -->
+    <table class="table table-striped mt-3">
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Categoría</th>
+          <th>Descripción</th>
+          <th>Likes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let revista of revistas">
+          <td>{{ revista.nombre }}</td>
+          <td>{{ revista.categoria }}</td>
+          <td>{{ revista.descripcion }}</td>
+          <td>{{ revista.likes }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  

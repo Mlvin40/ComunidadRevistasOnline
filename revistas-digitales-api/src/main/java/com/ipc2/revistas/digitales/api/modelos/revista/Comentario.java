@@ -1,16 +1,18 @@
 package com.ipc2.revistas.digitales.api.modelos.revista;
 
+import java.time.LocalDate;
+
 public class Comentario {
 
-    
+    private int id;
     private String nombreRevista;
     private String nombreUsuario;
     private String comentario;
-    private String fechaComentario;
+    private LocalDate fechaComentario;
 
-    
-    //Constructor para agregar un comentario
-    public Comentario(String nombreRevista, String nombreUsuario, String comentario, String fechaComentario) {
+    //Constructor para recuperar un comentario de la DB
+    public Comentario(int id, String nombreRevista, String nombreUsuario, String comentario, LocalDate fechaComentario) {
+        this.id = id;
         this.nombreRevista = nombreRevista;
         this.nombreUsuario = nombreUsuario;
         this.comentario = comentario;
@@ -41,11 +43,20 @@ public class Comentario {
         this.comentario = comentario;
     }
 
-    public String getFechaComentario() {
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public LocalDate getFechaComentario() {
         return fechaComentario;
     }
 
-    public void setFechaComentario(String fechaComentario) {
+    public void setFechaComentario(LocalDate fechaComentario) {
         this.fechaComentario = fechaComentario;
     }
+
 }

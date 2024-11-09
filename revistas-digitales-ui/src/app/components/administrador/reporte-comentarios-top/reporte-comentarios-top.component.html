@@ -1,0 +1,27 @@
+<div class="container">
+    <h2>Reporte de Comentarios por Revista</h2>
+  
+    <table class="table table-striped mt-3">
+      <thead>
+        <tr>
+          <th>Nombre de la Revista</th>
+          <th>Cantidad de Comentarios</th>
+          <th>Comentarios</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let revista of revistas">
+          <td>{{ revista.nombre }}</td>
+          <td>{{ revista.comentarios.length }}</td>
+          <td>
+            <ul>
+              <li *ngFor="let comentario of revista.comentarios">
+                {{ comentario.nombreUsuario }}: {{ comentario.comentario }}
+              </li>
+            </ul>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  

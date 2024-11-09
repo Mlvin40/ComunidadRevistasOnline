@@ -1,0 +1,43 @@
+<div class="container">
+    <h2>Reporte de Comentarios por Revista</h2>
+  
+    <!-- Input para filtrar por nombre de revista -->
+    <div class="mb-3">
+      <label for="nombreRevista" class="form-label">Nombre de la Revista</label>
+      <input 
+        type="text" 
+        id="nombreRevista" 
+        [(ngModel)]="nombreRevista" 
+        class="form-control" 
+        placeholder="Ingresa el nombre de la revista" 
+      />
+    </div>
+  
+    <!-- Botón de Filtrar -->
+    <button (click)="filtrarComentarios()" class="btn btn-primary">Filtrar</button>
+  
+    <!-- Tabla de Comentarios -->
+    <table class="table table-striped mt-3" *ngIf="comentarios.length > 0; else sinComentarios">
+      <thead>
+        <tr>
+          <th>Nombre de la Revista</th>
+          <th>Nombre del Usuario</th>
+          <th>Comentario</th>
+          <th>Fecha del Comentario</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let comentario of comentarios">
+          <td>{{ comentario.nombreRevista }}</td>
+          <td>{{ comentario.nombreUsuario }}</td>
+          <td>{{ comentario.comentario }}</td>
+          <td>{{ comentario.fechaComentario | date }}</td>
+        </tr>
+      </tbody>
+    </table>
+  
+    <ng-template #sinComentarios>
+      <p>No hay comentarios para mostrar.</p>
+    </ng-template>
+  </div>
+  
