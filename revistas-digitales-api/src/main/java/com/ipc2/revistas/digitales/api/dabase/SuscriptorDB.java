@@ -29,7 +29,7 @@ public class SuscriptorDB {
         // Consulta que une las tablas "revistas" y "suscripciones" usando "nombre_usuario" y "nombre_revista"
         String consulta = "SELECT r.* FROM revistas r "
                 + "JOIN suscripciones s ON r.nombre_revista = s.nombre_revista "
-                + "WHERE s.nombre_usuario = ? AND s.estado = 'ACTIVA'";
+                + "WHERE s.nombre_usuario = ? AND s.estado = TRUE";
 
         try (PreparedStatement statement = connection.prepareStatement(consulta)) {
             // Establecer el valor del nombre de usuario (suscriptor)
@@ -45,7 +45,6 @@ public class SuscriptorDB {
                             resultSet.getDate("fecha_creacion").toLocalDate(),
                             resultSet.getString("autor"),
                             resultSet.getDouble("costo"),
-                            //resultSet.getString("url_pdf"),
                             resultSet.getBoolean("estado_comentar"),
                             resultSet.getBoolean("estado_megusta"),
                             resultSet.getBoolean("estado_suscribirse")
@@ -56,7 +55,7 @@ public class SuscriptorDB {
         } catch (SQLException e) {
             System.out.println("Error al obtener revistas por suscriptor: " + e.getMessage());
         }
-
+        
         return revistas;
     }
 

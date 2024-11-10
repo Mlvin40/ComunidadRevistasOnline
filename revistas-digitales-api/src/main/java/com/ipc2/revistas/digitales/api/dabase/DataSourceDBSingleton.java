@@ -39,11 +39,11 @@ public class DataSourceDBSingleton {
             p.setValidationInterval(30000);
             p.setTimeBetweenEvictionRunsMillis(30000);
             p.setMaxActive(200);
-            p.setInitialSize(50);
+            p.setInitialSize(60);
             p.setMaxWait(10000);
             p.setRemoveAbandonedTimeout(60);
             p.setMinEvictableIdleTimeMillis(30000);
-            p.setMinIdle(10);
+            p.setMinIdle(25);
             p.setLogAbandoned(true);
             p.setRemoveAbandoned(true);
             p.setJdbcInterceptors(

@@ -135,4 +135,37 @@ public class AnuncioController {
                     .build();
         }
     }
+
+    @GET
+    @Path("/anuncioRandom")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response obtenerAnuncioRandom() {
+        Anuncio anuncio = anuncioService.obtnerAnuncioAleatorio();
+
+        if (anuncio != null) {
+            return Response.ok(anuncio).build();
+        } else {
+            return Response.status(Response.Status.NOT_FOUND).entity("No hay anuncios disponibles").build();
+        }
+    }
+
+    @POST
+    @Path("/guardarAnuncioEfecivo")
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response guardarAnuncioMostrado(
+            @FormDataParam("idanuncio") int idAnuncio,
+            @FormDataParam("tipoAnuncio") String tipoAnuncio,
+            @FormDataParam("nombreAnunciante") String nombreAnunciante,
+            @FormDataParam("pathMostrado") String pathMostrado) {
+        // Lógica para insertar el anuncio en la base de datos
+        boolean exito = anuncioService.guardarAnuncioMostrado(idAnuncio, tipoAnuncio, nombreAnunciante, pathMostrado);
+
+        if (exito) {
+            return Response.status(Response.Status.CREATED).entity("Anuncio guardado exitosamente").build();
+        } else {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("Error al guardar el anuncio").build();
+        }
+    }
+
 }

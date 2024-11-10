@@ -26,14 +26,13 @@ public class AnuncioService {
     private final CarteraDB carteraDB = new CarteraDB();
     private final PagoAnuncioDB pagoAnuncioDB = new PagoAnuncioDB();
 
-
     public boolean comprarAnuncio(String anuciante, String tipoAnuncio, String contenidoTexto, InputStream imagenInputStream, String urlVideo, Integer duracion, String fechaInicio, double totalAPagar) {
         //Paso numero 1: Converir la fecha a localdate y darle formato yyyy-MM-dd
         LocalDate fechaInicioLocalDate = LocalDate.parse(fechaInicio);
 
         // Si el total a pagar es menor a 0, entonces no se puede realizar la compra porque no hay suficiente dinero
         double dineroEnCartera = cobrarTotalAnuncio(anuciante, totalAPagar);
-        if(dineroEnCartera < 0){
+        if (dineroEnCartera < 0) {
             return false;
         }
 
@@ -82,7 +81,7 @@ public class AnuncioService {
         if (vencido) {
             return false;
         }
-        
+
         // Si el anuncio no esta vencido se procede a actualizarlo.
         switch (tipoAnuncio) {
             case "TEXTO":
@@ -95,9 +94,18 @@ public class AnuncioService {
                 return false;
         }
     }
-    
+
     private double cobrarTotalAnuncio(String nombreAnunciante, double totalAPagar) {
         double totalEnCartera = carteraDB.obtenerSaldoActual(nombreAnunciante);
         return totalEnCartera - totalAPagar;
+    }
+
+    public Anuncio obtnerAnuncioAleatorio() {
+        return anuncioDB.obtenerAnuncioRandom();
+    }
+
+    public boolean guardarAnuncioMostrado(int idAnuncio, String tipoAnuncio, String nombreAnunciante, String pathMostrado) {
+        return anuncioDB.insertarAnuncioMostrado(idAnuncio, tipoAnuncio, nombreAnunciante, pathMostrado);
+
     }
 }

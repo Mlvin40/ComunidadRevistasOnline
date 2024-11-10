@@ -32,6 +32,7 @@ import { ReporteComentariosTopComponent } from './components/administrador/repor
 import { ReporteRevistasPopularesComponent } from './components/administrador/reporte-revistas-populares/reporte-revistas-populares.component';
 import { ReporteAnunciosCompradosComponent } from './components/administrador/reporte-anuncios-comprados/reporte-anuncios-comprados.component';
 import { ReporteGananciasComponent } from './components/administrador/reporte-ganancias/reporte-ganancias.component';
+import { EfectividadAnuncioComponent } from './components/administrador/efectividad-anuncio/efectividad-anuncio.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -78,5 +79,7 @@ export const routes: Routes = [
   { path: 'revistasPopulares', component: ReporteRevistasPopularesComponent },
   { path: 'anunciosComprados', component: ReporteAnunciosCompradosComponent },
   { path: 'reporteGanancias', component: ReporteGananciasComponent },
+  { path: 'efectividadAnuncios', component: EfectividadAnuncioComponent }, 
 
+  
 ];

@@ -60,6 +60,12 @@ public class SuscriptorService {
     }
 
     public boolean darLikeRevista(String nombreRevista, String nombreSuscriptor) {
+        
+        // Por si hay algun error al obtener el nombre del usuario desde el token
+        if (nombreSuscriptor == null) {
+            return false;
+        }
+
         try {
             meGustaDB.darLike(nombreRevista, nombreSuscriptor);
             return true;
@@ -85,6 +91,6 @@ public class SuscriptorService {
         revistas.removeIf(revista -> !categoriasAMostrar.contains(revista.getNombre()));
 
         return revistas;
-
+        
     }
 }

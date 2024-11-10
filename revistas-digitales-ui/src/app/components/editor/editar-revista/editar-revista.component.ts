@@ -5,6 +5,7 @@ import { RevistaService } from '../../../services/revista/revista.service';
 import { RevistaEditable } from '../../../entidades/RevistaEditable';
 import { CommonModule } from '@angular/common';
 import { Revista } from '../../../entidades/Revista';
+import { UsuariosService } from '../../../services/usuarios/usuarios.service';
 
 @Component({
   selector: 'app-editar-revista',
@@ -29,8 +30,14 @@ export class EditarRevistaComponent implements OnInit {
   constructor(
     private revistaService: RevistaService,
     private route: ActivatedRoute,
+    private usuarioService: UsuariosService,
     private router: Router
-  ) {}
+  ) {
+    if(!this.usuarioService.permisosEditor()){
+      //redirigir al login
+      this.router.navigate(['/login']);
+    }
+  }
 
   ngOnInit(): void {
     const nombreRevista = this.route.snapshot.paramMap.get('nombre');

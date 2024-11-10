@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { UsuariosService } from '../../../services/usuarios/usuarios.service';
 import { RevistaService } from '../../../services/revista/revista.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-crear-revista',
@@ -19,8 +20,13 @@ export class CrearRevistaComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private revistaService: RevistaService,
-    private usuarioService: UsuariosService
+    private usuarioService: UsuariosService,
+    private router: Router
   ) {
+    if(!this.usuarioService.permisosEditor()){
+      //redirigir al login
+      this.router.navigate(['/login']);
+    }
 
     // Este es el formulario para crear una revista
     this.revistaForm = this.fb.group({

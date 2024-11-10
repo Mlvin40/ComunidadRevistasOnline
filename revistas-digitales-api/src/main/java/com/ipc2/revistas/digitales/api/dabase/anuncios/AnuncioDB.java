@@ -147,4 +147,49 @@ public class AnuncioDB {
         return anuncio;
     }
 
+    public Anuncio obtenerAnuncioRandom() {
+        String sql = "SELECT id_anuncio, tipo_anuncio, contenido_texto, imagen, url_video, nombre_anunciante, "
+                + "fecha_inicio, duracion_dias, fecha_expiracion, vencido, activo "
+                + "FROM anuncios WHERE activo = true AND vencido = false ORDER BY RAND() LIMIT 1";
+        
+        try (PreparedStatement pstmt = connection.prepareStatement(sql); ResultSet rs = pstmt.executeQuery()) {
+            if (rs.next()) {
+                Anuncio anuncio = new Anuncio();
+                anuncio.setIdAnuncio(rs.getInt("id_anuncio"));
+                anuncio.setTipoAnuncio(rs.getString("tipo_anuncio"));
+                anuncio.setContenidoTexto(rs.getString("contenido_texto"));
+                anuncio.setImagen(rs.getBytes("imagen"));
+                anuncio.setUrlVideo(rs.getString("url_video"));
+                anuncio.setNombreAnunciante(rs.getString("nombre_anunciante"));
+                anuncio.setFechaInicio(rs.getDate("fecha_inicio").toLocalDate());
+                anuncio.setDuracion(rs.getInt("duracion_dias"));
+                anuncio.setFechaExpiracion(rs.getDate("fecha_expiracion") != null ? rs.getDate("fecha_expiracion").toLocalDate() : null);
+                anuncio.setVencido(rs.getBoolean("vencido"));
+                anuncio.setActivo(rs.getBoolean("activo"));
+                return anuncio;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null; // Retorna null si no se encuentra ningún anuncio
+    }
+    
+    public boolean insertarAnuncioMostrado(int idAnuncio, String tipoAnuncio, String nombreAnunciante, String pathMostrado) {
+        // Inserción en la tabla anuncio_mostrado
+        String query = "INSERT INTO anuncio_mostrado (id_anuncio, tipo_anuncio, nombre_anunciante, path_mostrado) "
+                + "VALUES (?, ?, ?, ?)";
+
+        try (Connection conn = connection; PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setInt(1, idAnuncio);
+            stmt.setString(2, tipoAnuncio);
+            stmt.setString(3, nombreAnunciante);
+            stmt.setString(4, pathMostrado);
+            stmt.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
 }
