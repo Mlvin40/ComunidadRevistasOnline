@@ -11,21 +11,12 @@ import java.util.List;
 
 public class MeGustaDB {
 
-    private Connection connection;
-
-    public MeGustaDB() {
-        try {
-            this.connection = DataSourceDBSingleton.getInstance().getConnection();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
     public int obtenerCantidadMeGustaPorRevista(String nombreRevista) {
         int cantidadMeGusta = 0;
         String consulta = "SELECT COUNT(*) FROM me_gusta WHERE nombre_revista = ?";
 
-        try (PreparedStatement stmt = connection.prepareStatement(consulta)) {
+        try (Connection connection = DataSourceDB.getInstance().getConnection();
+                PreparedStatement stmt = connection.prepareStatement(consulta)) {
             stmt.setString(1, nombreRevista);
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
@@ -55,7 +46,8 @@ public class MeGustaDB {
         // Insertar el registro de like en la tabla me_gusta
         String consulta = "INSERT INTO me_gusta (nombre_revista, nombre_usuario) VALUES (?, ?)";
 
-        try (PreparedStatement statement = connection.prepareStatement(consulta)) {
+        try (Connection connection = DataSourceDB.getInstance().getConnection();
+                PreparedStatement statement = connection.prepareStatement(consulta)) {
             statement.setString(1, nombreRevista);
             statement.setString(2, nombreUsuario);
             statement.executeUpdate();
@@ -66,7 +58,8 @@ public class MeGustaDB {
     private boolean haDadoLike(String nombreRevista, String nombreUsuario) throws SQLException {
         String consulta = "SELECT COUNT(*) FROM me_gusta WHERE nombre_revista = ? AND nombre_usuario = ?";
 
-        try (PreparedStatement statement = connection.prepareStatement(consulta)) {
+        try (Connection connection = DataSourceDB.getInstance().getConnection();
+                PreparedStatement statement = connection.prepareStatement(consulta)) {
             statement.setString(1, nombreRevista);
             statement.setString(2, nombreUsuario);
             try (ResultSet rs = statement.executeQuery()) {
@@ -82,7 +75,8 @@ public class MeGustaDB {
     private boolean sePuedeDarLike(String nombreRevista) throws SQLException {
         String consulta = "SELECT estado_megusta FROM revistas WHERE nombre_revista = ?";
 
-        try (PreparedStatement statement = connection.prepareStatement(consulta)) {
+        try (Connection connection = DataSourceDB.getInstance().getConnection();
+                PreparedStatement statement = connection.prepareStatement(consulta)) {
             statement.setString(1, nombreRevista);
             try (ResultSet rs = statement.executeQuery()) {
                 if (rs.next()) {
@@ -101,7 +95,8 @@ public class MeGustaDB {
 
         String consulta = "SELECT id_me_gusta, nombre_revista, nombre_usuario, fecha_me_gusta FROM me_gusta";
 
-        try (PreparedStatement stmt = connection.prepareStatement(consulta); ResultSet rs = stmt.executeQuery()) {
+        try (Connection connection = DataSourceDB.getInstance().getConnection();
+                PreparedStatement stmt = connection.prepareStatement(consulta); ResultSet rs = stmt.executeQuery()) {
             while (rs.next()) {
                 int id = rs.getInt("id_me_gusta");
                 String nombreRevista = rs.getString("nombre_revista");
@@ -124,7 +119,8 @@ public class MeGustaDB {
         String consulta = "SELECT id_me_gusta, nombre_revista, nombre_usuario, fecha_me_gusta "
                 + "FROM me_gusta WHERE nombre_revista = ?";
 
-        try (PreparedStatement stmt = connection.prepareStatement(consulta)) {
+        try (Connection connection = DataSourceDB.getInstance().getConnection();
+                PreparedStatement stmt = connection.prepareStatement(consulta)) {
             stmt.setString(1, nombreRevista);
 
             try (ResultSet rs = stmt.executeQuery()) {

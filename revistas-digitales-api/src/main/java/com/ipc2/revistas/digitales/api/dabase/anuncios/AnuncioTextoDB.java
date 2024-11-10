@@ -4,7 +4,7 @@
  */
 package com.ipc2.revistas.digitales.api.dabase.anuncios;
 
-import com.ipc2.revistas.digitales.api.dabase.DataSourceDBSingleton;
+import com.ipc2.revistas.digitales.api.dabase.DataSourceDB;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -16,21 +16,13 @@ import java.time.LocalDate;
  */
 public class AnuncioTextoDB extends AnuncioDB {
 
-    private Connection connection;
-
-    public AnuncioTextoDB() {
-        try {
-            this.connection = DataSourceDBSingleton.getInstance().getConnection();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
+    
     // Método para insertar un anuncio de texto
     public boolean crearAnuncioTexto(String contenidoTexto, String nombreAnunciante, LocalDate fechaInicio, int duracionDias) {
         String sql = "INSERT INTO anuncios (tipo_anuncio, contenido_texto, nombre_anunciante, fecha_inicio, duracion_dias, fecha_expiracion) "
                 + "VALUES (?, ?, ?, ?, ?, DATE_ADD(?, INTERVAL ? DAY))";
-        try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
+        try (Connection connection = DataSourceDB.getInstance().getConnection();
+                PreparedStatement pstmt = connection.prepareStatement(sql)) {
             pstmt.setString(1, "TEXTO");
             pstmt.setString(2, contenidoTexto);
             pstmt.setString(3, nombreAnunciante);
@@ -48,7 +40,8 @@ public class AnuncioTextoDB extends AnuncioDB {
     public boolean actualizarAnuncioTexto(int idAnuncio, String contenidoTexto, boolean activo) {
         String sql = "UPDATE anuncios SET contenido_texto = ?, activo = ? WHERE id_anuncio = ?";
 
-        try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
+        try (Connection connection = DataSourceDB.getInstance().getConnection();
+                PreparedStatement pstmt = connection.prepareStatement(sql)) {
             pstmt.setString(1, contenidoTexto); // Set contenidoTexto
             pstmt.setBoolean(2, activo); // Set activo
             pstmt.setInt(3, idAnuncio); // Set idAnuncio

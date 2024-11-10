@@ -12,22 +12,13 @@ import java.util.List;
 
 public class EditorDB {
 
-    private Connection connection;
-
-    public EditorDB() {
-        try {
-            this.connection = DataSourceDBSingleton.getInstance().getConnection();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
     // Método para obtener revistas por autor
     public List<Revista> obtenerRevistasPorAutor(String idAutor) {
         List<Revista> revistas = new ArrayList<>();
         String consulta = "SELECT * FROM revistas WHERE autor = ?";
 
-        try (PreparedStatement statement = connection.prepareStatement(consulta)) {
+        try (Connection connection = DataSourceDB.getInstance().getConnection();
+                PreparedStatement statement = connection.prepareStatement(consulta)) {
             statement.setString(1, idAutor);
             try (ResultSet resultSet = statement.executeQuery()) {
                 while (resultSet.next()) {
@@ -59,7 +50,8 @@ public class EditorDB {
 
     public Revista obtenerRevistaPorNombre(String nombreRevista) {
         String consulta = "SELECT * FROM revistas WHERE nombre_revista = ?";
-        try (PreparedStatement statement = connection.prepareStatement(consulta)) {
+        try (Connection connection = DataSourceDB.getInstance().getConnection();
+                PreparedStatement statement = connection.prepareStatement(consulta)) {
             statement.setString(1, nombreRevista);
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
@@ -90,7 +82,8 @@ public class EditorDB {
 
     public boolean actualizarRevista(Revista revista) {
         String consulta = "UPDATE revistas SET descripcion = ?, categoria = ?, estado_comentar = ?, estado_megusta = ?, estado_suscribirse = ? WHERE nombre_revista = ?";
-        try (PreparedStatement statement = connection.prepareStatement(consulta)) {
+        try (Connection connection = DataSourceDB.getInstance().getConnection();
+                PreparedStatement statement = connection.prepareStatement(consulta)) {
             statement.setString(1, revista.getDescripcion());
             statement.setString(2, revista.getCategoria());
             statement.setBoolean(3, revista.isEstadoComentar());

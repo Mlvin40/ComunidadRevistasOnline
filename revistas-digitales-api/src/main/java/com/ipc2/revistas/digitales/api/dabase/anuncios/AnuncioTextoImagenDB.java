@@ -4,7 +4,7 @@
  */
 package com.ipc2.revistas.digitales.api.dabase.anuncios;
 
-import com.ipc2.revistas.digitales.api.dabase.DataSourceDBSingleton;
+import com.ipc2.revistas.digitales.api.dabase.DataSourceDB;
 import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -17,21 +17,12 @@ import java.time.LocalDate;
  */
 public class AnuncioTextoImagenDB {
 
-    private Connection connection;
-
-    public AnuncioTextoImagenDB() {
-        try {
-            this.connection = DataSourceDBSingleton.getInstance().getConnection();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
     // Método para insertar un anuncio de texto e imagen
     public boolean crearAnuncioTextoImagen(String contenidoTexto, InputStream imagen, String nombreAnunciante, LocalDate fechaInicio, int duracionDias) {
         String sql = "INSERT INTO anuncios (tipo_anuncio, contenido_texto, imagen, nombre_anunciante, fecha_inicio, duracion_dias, fecha_expiracion) "
                 + "VALUES (?, ?, ?, ?, ?, ?, DATE_ADD(?, INTERVAL ? DAY))";
-        try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
+        try (Connection connection = DataSourceDB.getInstance().getConnection();
+                PreparedStatement pstmt = connection.prepareStatement(sql)) {
             pstmt.setString(1, "TEXTO_IMAGEN");
             pstmt.setString(2, contenidoTexto);
             pstmt.setBlob(3, imagen);
@@ -58,7 +49,8 @@ public class AnuncioTextoImagenDB {
 
         sql.append(" WHERE id_anuncio = ?");
 
-        try (PreparedStatement pstmt = connection.prepareStatement(sql.toString())) {
+        try (Connection connection = DataSourceDB.getInstance().getConnection();
+                PreparedStatement pstmt = connection.prepareStatement(sql.toString())) {
             pstmt.setString(1, contenidoTexto); // Establece el contenidoTexto
             pstmt.setBoolean(2, activo); // Establece el estado activo
 

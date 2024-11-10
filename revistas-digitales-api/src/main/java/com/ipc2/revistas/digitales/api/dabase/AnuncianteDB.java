@@ -17,7 +17,7 @@ public class AnuncianteDB {
 
     public AnuncianteDB() {
         try {
-            this.connection = DataSourceDBSingleton.getInstance().getConnection();
+            this.connection = DataSourceDB.getInstance().getConnection();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

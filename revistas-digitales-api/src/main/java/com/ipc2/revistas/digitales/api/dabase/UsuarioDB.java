@@ -20,16 +20,6 @@ import java.sql.SQLException;
 
 public class UsuarioDB {
 
-    private Connection connection;
-
-    public UsuarioDB() {
-        try {
-            this.connection = DataSourceDBSingleton.getInstance().getConnection();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
     public boolean registrarUsuario(Usuario usuario) {
         if (existeUsuario(usuario.getNombreUsuario())) {
             return false; // El usuario ya existe en la base de datos
@@ -37,7 +27,8 @@ public class UsuarioDB {
 
         String consulta = "INSERT INTO usuarios (nombre_usuario, contraseña, perfil, rol) VALUES (?, ?, ?, ?)";
 
-        try (PreparedStatement statement = connection.prepareStatement(consulta)) {
+        try (Connection connection = DataSourceDB.getInstance().getConnection();
+                PreparedStatement statement = connection.prepareStatement(consulta)) {
             // Establecer los parámetros en el PreparedStatement
             statement.setString(1, usuario.getNombreUsuario());
             statement.setString(2, usuario.getContrasena());
@@ -60,7 +51,8 @@ public class UsuarioDB {
 
     private boolean existeUsuario(String nombreUsuario) {
         String consulta = "SELECT COUNT(*) FROM usuarios WHERE nombre_usuario = ?";
-        try (PreparedStatement statement = connection.prepareStatement(consulta)) {
+        try (Connection connection = DataSourceDB.getInstance().getConnection();
+                PreparedStatement statement = connection.prepareStatement(consulta)) {
             statement.setString(1, nombreUsuario);
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
@@ -94,7 +86,8 @@ public class UsuarioDB {
 
     public Usuario obtenerUsuario(String nombreUsuario) {
         String consulta = "SELECT * FROM usuarios WHERE nombre_usuario = ?";
-        try (PreparedStatement statement = connection.prepareStatement(consulta)) {
+        try (Connection connection = DataSourceDB.getInstance().getConnection();
+                PreparedStatement statement = connection.prepareStatement(consulta)) {
             statement.setString(1, nombreUsuario);
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
@@ -127,7 +120,8 @@ public class UsuarioDB {
 
         consulta.append(" WHERE nombre_usuario = ?");
 
-        try (PreparedStatement stmt = connection.prepareStatement(consulta.toString())) {
+        try (Connection connection = DataSourceDB.getInstance().getConnection();
+                PreparedStatement stmt = connection.prepareStatement(consulta.toString())) {
             stmt.setString(1, texto); // Establece el texto del perfil
 
             int parameterIndex = 2; // Índice para los parámetros

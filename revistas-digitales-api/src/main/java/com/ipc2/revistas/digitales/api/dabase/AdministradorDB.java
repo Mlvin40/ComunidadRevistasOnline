@@ -14,21 +14,13 @@ import java.util.List;
 
 public class AdministradorDB {
 
-    private Connection connection;
-
-    public AdministradorDB() {
-        try {
-            this.connection = DataSourceDBSingleton.getInstance().getConnection();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
     public List<Revista> obtenerTodasLasRevistas() {
         List<Revista> revistas = new ArrayList<>();
         String consulta = "SELECT * FROM revistas";
 
-        try (PreparedStatement statement = connection.prepareStatement(consulta); ResultSet resultSet = statement.executeQuery()) {
+        try (Connection connection = DataSourceDB.getInstance().getConnection(); 
+                PreparedStatement statement = connection.prepareStatement(consulta); 
+                ResultSet resultSet = statement.executeQuery()) {
 
             while (resultSet.next()) {
                 Revista revista = new Revista(
@@ -55,7 +47,8 @@ public class AdministradorDB {
     public boolean actualizarPrecioRevista(String nombreRevista, double nuevoPrecio) {
         String consulta = "UPDATE revistas SET costo = ? WHERE nombre_revista = ?";
 
-        try (PreparedStatement statement = connection.prepareStatement(consulta)) {
+        try (Connection connection = DataSourceDB.getInstance().getConnection();
+                PreparedStatement statement = connection.prepareStatement(consulta)) {
             statement.setDouble(1, nuevoPrecio);
             statement.setString(2, nombreRevista);
 
@@ -69,7 +62,8 @@ public class AdministradorDB {
 
     public double obtenerPrecioGlobalRevista() {
         String consulta = "SELECT costo FROM precio_global_revistas";
-        try (PreparedStatement statement = connection.prepareStatement(consulta)) {
+        try (Connection connection = DataSourceDB.getInstance().getConnection();
+                PreparedStatement statement = connection.prepareStatement(consulta)) {
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
                     return resultSet.getDouble("costo");
@@ -84,7 +78,8 @@ public class AdministradorDB {
     public boolean actualizarPrecioGlobalRevista(double precio) {
         String consulta = "UPDATE precio_global_revistas SET costo = ?";
 
-        try (PreparedStatement statement = connection.prepareStatement(consulta)) {
+        try (Connection connection = DataSourceDB.getInstance().getConnection();
+                PreparedStatement statement = connection.prepareStatement(consulta)) {
             statement.setDouble(1, precio);
             int filasAfectadas = statement.executeUpdate();
             return filasAfectadas > 0;  // Retorna true si se afectó al menos una fila
@@ -99,7 +94,8 @@ public class AdministradorDB {
     public boolean actualizarPrecioAnuncios(String tipo, double nuevoPrecio) {
         String sql = "UPDATE precio_anuncio_dia SET costo = ? WHERE tipo_anuncio = ?";
 
-        try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
+        try (Connection connection = DataSourceDB.getInstance().getConnection();
+                PreparedStatement pstmt = connection.prepareStatement(sql)) {
             // Establecer los parámetros
             pstmt.setDouble(1, nuevoPrecio);
             pstmt.setString(2, tipo);
@@ -117,7 +113,8 @@ public class AdministradorDB {
 
     public double obtenerPrecioOcultacionAnuncio() {
         String consulta = "SELECT costo FROM precio_ocultacion_anuncio";
-        try (PreparedStatement statement = connection.prepareStatement(consulta)) {
+        try (Connection connection = DataSourceDB.getInstance().getConnection();
+                PreparedStatement statement = connection.prepareStatement(consulta)) {
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
                     return resultSet.getDouble("costo");
@@ -132,7 +129,8 @@ public class AdministradorDB {
     public boolean actualizarPrecioOcultacionAnuncio(double precio) {
         String consulta = "UPDATE precio_ocultacion_anuncio SET costo = ?";
 
-        try (PreparedStatement statement = connection.prepareStatement(consulta)) {
+        try (Connection connection = DataSourceDB.getInstance().getConnection();
+                PreparedStatement statement = connection.prepareStatement(consulta)) {
             statement.setDouble(1, precio);
             int filasAfectadas = statement.executeUpdate();
             return filasAfectadas > 0;  // Retorna true si se afectó al menos una fila
@@ -152,7 +150,8 @@ public class AdministradorDB {
             query += " AND tipo_anuncio = ?";
         }
 
-        try (PreparedStatement statement = connection.prepareStatement(query)) {
+        try (Connection connection = DataSourceDB.getInstance().getConnection();
+                PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setDate(1, java.sql.Date.valueOf(fechaInicio));
             statement.setDate(2, java.sql.Date.valueOf(fechaFin));
 
@@ -188,7 +187,8 @@ public class AdministradorDB {
                 + "GROUP BY nombre_anunciante, id_anuncio, tipo_anuncio "
                 + "ORDER BY nombre_anunciante, cantidad_mostrado DESC";
 
-        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+        try (Connection connection = DataSourceDB.getInstance().getConnection();
+                PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setDate(1, Date.valueOf(fechaInicio));  // Establecer fecha de inicio
             statement.setDate(2, Date.valueOf(fechaFin));     // Establecer fecha de fin
 

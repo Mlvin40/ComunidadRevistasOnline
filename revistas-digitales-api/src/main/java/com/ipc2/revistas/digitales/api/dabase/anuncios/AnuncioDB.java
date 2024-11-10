@@ -4,7 +4,7 @@
  */
 package com.ipc2.revistas.digitales.api.dabase.anuncios;
 
-import com.ipc2.revistas.digitales.api.dabase.DataSourceDBSingleton;
+import com.ipc2.revistas.digitales.api.dabase.DataSourceDB;
 import com.ipc2.revistas.digitales.api.modelos.anuncios.Anuncio;
 
 import java.sql.Connection;
@@ -21,20 +21,13 @@ import java.util.List;
 public class AnuncioDB {
 
     private ValidacionesAnuncioDB validacionesAnuncioDB = new ValidacionesAnuncioDB();
-    private Connection connection;
 
-    public AnuncioDB() {
-        try {
-            this.connection = DataSourceDBSingleton.getInstance().getConnection();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
 
     // Método para obtener el costo de un anuncio por día
     public double obtenerCostoAnuncioDia(String tipoAnuncio) {
         String sql = "SELECT costo FROM precio_anuncio_dia WHERE tipo_anuncio = ?";
-        try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
+        try (Connection connection = DataSourceDB.getInstance().getConnection();
+                PreparedStatement pstmt = connection.prepareStatement(sql)) {
             pstmt.setString(1, tipoAnuncio);
             try (ResultSet rs = pstmt.executeQuery()) {
                 if (rs.next()) {
@@ -53,7 +46,8 @@ public class AnuncioDB {
                 + "fecha_inicio, duracion_dias, fecha_expiracion, vencido, activo FROM anuncios";
         List<Anuncio> anuncios = new ArrayList<>();
 
-        try (PreparedStatement pstmt = connection.prepareStatement(sql); ResultSet rs = pstmt.executeQuery()) {
+        try (Connection connection = DataSourceDB.getInstance().getConnection();
+                PreparedStatement pstmt = connection.prepareStatement(sql); ResultSet rs = pstmt.executeQuery()) {
             while (rs.next()) {
                 Anuncio anuncio = new Anuncio();
                 anuncio.setIdAnuncio(rs.getInt("id_anuncio"));
@@ -86,7 +80,8 @@ public class AnuncioDB {
                 + "fecha_inicio, duracion_dias, fecha_expiracion, vencido, activo FROM anuncios "
                 + "WHERE nombre_anunciante = ?";
         List<Anuncio> anuncios = new ArrayList<>();
-        try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
+        try (Connection connection = DataSourceDB.getInstance().getConnection();
+                PreparedStatement pstmt = connection.prepareStatement(sql)) {
             pstmt.setString(1, nombreAnunciante); // Establecer el nombre del anunciante en la consulta
             try (ResultSet rs = pstmt.executeQuery()) {
                 while (rs.next()) {
@@ -119,7 +114,8 @@ public class AnuncioDB {
 
         Anuncio anuncio = null; // Inicializa la variable anuncio
 
-        try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
+        try (Connection connection = DataSourceDB.getInstance().getConnection();
+                PreparedStatement pstmt = connection.prepareStatement(sql)) {
             pstmt.setInt(1, id); // Establece el ID del anuncio en el PreparedStatement
             try (ResultSet rs = pstmt.executeQuery()) { // Ejecuta la consulta
                 // Verifica si se encontró un anuncio
@@ -152,7 +148,8 @@ public class AnuncioDB {
                 + "fecha_inicio, duracion_dias, fecha_expiracion, vencido, activo "
                 + "FROM anuncios WHERE activo = true AND vencido = false ORDER BY RAND() LIMIT 1";
         
-        try (PreparedStatement pstmt = connection.prepareStatement(sql); ResultSet rs = pstmt.executeQuery()) {
+        try (Connection connection = DataSourceDB.getInstance().getConnection();
+                PreparedStatement pstmt = connection.prepareStatement(sql); ResultSet rs = pstmt.executeQuery()) {
             if (rs.next()) {
                 Anuncio anuncio = new Anuncio();
                 anuncio.setIdAnuncio(rs.getInt("id_anuncio"));
@@ -179,7 +176,8 @@ public class AnuncioDB {
         String query = "INSERT INTO anuncio_mostrado (id_anuncio, tipo_anuncio, nombre_anunciante, path_mostrado) "
                 + "VALUES (?, ?, ?, ?)";
 
-        try (Connection conn = connection; PreparedStatement stmt = conn.prepareStatement(query)) {
+        try (Connection connection = DataSourceDB.getInstance().getConnection();
+                PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setInt(1, idAnuncio);
             stmt.setString(2, tipoAnuncio);
             stmt.setString(3, nombreAnunciante);

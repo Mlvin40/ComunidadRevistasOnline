@@ -18,22 +18,13 @@ import java.util.List;
  */
 public class SuscripcionDB {
 
-    private Connection connection;
-
-    public SuscripcionDB() {
-        try {
-            this.connection = DataSourceDBSingleton.getInstance().getConnection();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
     public List<Suscripcion> obtenerTodasSuscripciones() {
         List<Suscripcion> suscripciones = new ArrayList<>();
         String consulta = "SELECT id_suscripcion, nombre_usuario, nombre_revista, fecha_suscripcion, estado FROM suscripciones";
 
         // Aseguramos que el ResultSet solo se usa dentro del try-with-resources
-        try (PreparedStatement stmt = connection.prepareStatement(consulta); ResultSet rs = stmt.executeQuery()) {
+        try (Connection connection = DataSourceDB.getInstance().getConnection();
+                PreparedStatement stmt = connection.prepareStatement(consulta); ResultSet rs = stmt.executeQuery()) {
 
             while (rs.next()) {
 
@@ -60,7 +51,8 @@ public class SuscripcionDB {
         String query = "SELECT id_suscripcion, nombre_usuario, nombre_revista, fecha_suscripcion, estado "
                 + "FROM suscripciones WHERE nombre_revista = ?";
 
-        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+        try (Connection connection = DataSourceDB.getInstance().getConnection();
+                PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setString(1, nombreRevista);
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {

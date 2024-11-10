@@ -7,20 +7,11 @@ import java.time.LocalDate;
 
 public class PagoAnuncioDB {
 
-    private Connection connection;
-
-    public PagoAnuncioDB() {
-        try {
-            this.connection = DataSourceDBSingleton.getInstance().getConnection();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
     public void registrarPagoAnuncio(String nombreAnunciante, LocalDate fechaPago, Double pago, String tipoAnuncio) {
         String consulta = "INSERT INTO pago_anuncios (nombre_anunciante, fecha_pago, pago, tipo_anuncio) VALUES (?, ?, ?, ?)";
 
-        try (PreparedStatement statement = connection.prepareStatement(consulta)) {
+        try (Connection connection = DataSourceDB.getInstance().getConnection();
+                PreparedStatement statement = connection.prepareStatement(consulta)) {
             statement.setString(1, nombreAnunciante);
             statement.setDate(2, java.sql.Date.valueOf(fechaPago));
             statement.setDouble(3, pago);

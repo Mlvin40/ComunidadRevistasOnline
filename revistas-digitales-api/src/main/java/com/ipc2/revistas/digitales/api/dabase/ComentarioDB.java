@@ -10,21 +10,13 @@ import java.util.List;
 
 public class ComentarioDB {
 
-    private Connection connection;
-
-    public ComentarioDB() {
-        try {
-            this.connection = DataSourceDBSingleton.getInstance().getConnection();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
 
     public List<Comentario> obtenerTodosLosComentarios() {
         List<Comentario> comentarios = new ArrayList<>();
         String query = "SELECT id_comentario, nombre_revista, nombre_usuario, comentario, fecha_comentario FROM comentarios";
 
-        try (PreparedStatement stmt = connection.prepareStatement(query); ResultSet rs = stmt.executeQuery()) {
+        try (Connection connection = DataSourceDB.getInstance().getConnection();
+                PreparedStatement stmt = connection.prepareStatement(query); ResultSet rs = stmt.executeQuery()) {
 
             while (rs.next()) {
                 Comentario comentario = new Comentario(
@@ -49,7 +41,8 @@ public class ComentarioDB {
         String query = "SELECT id_comentario, nombre_revista, nombre_usuario, comentario, fecha_comentario "
                 + "FROM comentarios WHERE nombre_revista = ?";
 
-        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+        try (Connection connection = DataSourceDB.getInstance().getConnection();
+                PreparedStatement stmt = connection.prepareStatement(query)) {
             // Establecer el parámetro primero
             stmt.setString(1, nombreRevista);
 
@@ -82,7 +75,8 @@ public class ComentarioDB {
             return;
         }
 
-        try (PreparedStatement statement = connection.prepareStatement(consulta)) {
+        try (Connection connection = DataSourceDB.getInstance().getConnection();
+                PreparedStatement statement = connection.prepareStatement(consulta)) {
             statement.setString(1, nombreRevista);
             statement.setString(2, nombreUsuario);
             statement.setString(3, comentarioTexto);
@@ -94,7 +88,8 @@ public class ComentarioDB {
 
     private boolean sePuedeComentar(String nombreRevista) {
         String sql = "SELECT estado_comentar FROM revistas WHERE nombre_revista = ?";
-        try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
+        try (Connection connection = DataSourceDB.getInstance().getConnection();
+                PreparedStatement pstmt = connection.prepareStatement(sql)) {
             pstmt.setString(1, nombreRevista);
             try (ResultSet rs = pstmt.executeQuery()) {
                 if (rs.next()) {

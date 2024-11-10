@@ -4,7 +4,7 @@
  */
 package com.ipc2.revistas.digitales.api.dabase.reportes;
 
-import com.ipc2.revistas.digitales.api.dabase.DataSourceDBSingleton;
+import com.ipc2.revistas.digitales.api.dabase.DataSourceDB;
 import com.ipc2.revistas.digitales.api.modelos.anuncios.AnuncioComprado;
 import com.ipc2.revistas.digitales.api.modelos.reporte.RevistaMantenimiento;
 import java.sql.Connection;
@@ -21,22 +21,14 @@ import java.util.List;
  */
 public class ReporteGananciasDB {
 
-    private static Connection connection;
-
-    public ReporteGananciasDB() {
-        try {
-            this.connection = DataSourceDBSingleton.getInstance().getConnection();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
 
     private List<AnuncioComprado> obtenerAnunciosCompradosPorFecha(LocalDate fechaInicio, LocalDate fechaFin) {
         List<AnuncioComprado> anunciosComprados = new ArrayList<>();
         String query = "SELECT id_pago, nombre_anunciante, fecha_pago, pago, tipo_anuncio FROM pago_anuncios "
                 + "WHERE fecha_pago BETWEEN ? AND ?";
 
-        try (PreparedStatement statement = connection.prepareStatement(query)) {
+        try (Connection connection = DataSourceDB.getInstance().getConnection();
+                PreparedStatement statement = connection.prepareStatement(query)) {
             // Convertir LocalDate a java.sql.Date
             statement.setDate(1, java.sql.Date.valueOf(fechaInicio));
             statement.setDate(2, java.sql.Date.valueOf(fechaFin));
@@ -64,7 +56,8 @@ public class ReporteGananciasDB {
         String query = "SELECT nombre_revista, costo, fecha_creacion FROM revistas "
                 + "WHERE fecha_creacion BETWEEN ? AND ?";
 
-        try (PreparedStatement statement = connection.prepareStatement(query)) {
+        try (Connection connection = DataSourceDB.getInstance().getConnection();
+                PreparedStatement statement = connection.prepareStatement(query)) {
             // Convertir LocalDate a java.sql.Date
             statement.setDate(1, java.sql.Date.valueOf(fechaInicio));
             statement.setDate(2, java.sql.Date.valueOf(fechaFin));

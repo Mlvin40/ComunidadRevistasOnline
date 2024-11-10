@@ -16,21 +16,13 @@ import java.sql.SQLException;
  */
 public class CarteraDB {
 
-    private Connection connection;
-
-    public CarteraDB() {
-        try {
-            this.connection = DataSourceDBSingleton.getInstance().getConnection();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
 
 // Método para crear una cartera para un usuario
     public void crearCartera(Usuario usuario) {
         String consulta = "INSERT INTO carteras (nombre_usuario, tipo_usuario) VALUES (?, ?)";
 
-        try (PreparedStatement statement = connection.prepareStatement(consulta)) {
+        try (Connection connection = DataSourceDB.getInstance().getConnection();
+                PreparedStatement statement = connection.prepareStatement(consulta)) {
             statement.setString(1, usuario.getNombreUsuario());
             statement.setString(2, usuario.getRol().toString());
             statement.executeUpdate();
@@ -45,7 +37,8 @@ public class CarteraDB {
     public boolean recargarCartera(String nombreUsuario, double monto) {
         String consulta = "UPDATE carteras SET saldo = saldo + ? WHERE nombre_usuario = ?";
 
-        try (PreparedStatement statement = connection.prepareStatement(consulta)) {
+        try (Connection connection = DataSourceDB.getInstance().getConnection();
+                PreparedStatement statement = connection.prepareStatement(consulta)) {
             statement.setDouble(1, monto);
             statement.setString(2, nombreUsuario);
             int filasActualizadas = statement.executeUpdate();
@@ -68,7 +61,8 @@ public class CarteraDB {
     public double obtenerSaldoActual(String nombreUsuario) {
         String consulta = "SELECT saldo FROM carteras WHERE nombre_usuario = ?";
 
-        try (PreparedStatement statement = connection.prepareStatement(consulta)) {
+        try (Connection connection = DataSourceDB.getInstance().getConnection();
+                PreparedStatement statement = connection.prepareStatement(consulta)) {
             // Establecer el parámetro primero
             statement.setString(1, nombreUsuario);
 
@@ -93,7 +87,8 @@ public class CarteraDB {
     public boolean actualizarSaldo(String nombreUsuario, double nuevoSaldo) {
         String consulta = "UPDATE carteras SET saldo = ? WHERE nombre_usuario = ?";
 
-        try (PreparedStatement statement = connection.prepareStatement(consulta)) {
+        try (Connection connection = DataSourceDB.getInstance().getConnection();
+                PreparedStatement statement = connection.prepareStatement(consulta)) {
             statement.setDouble(1, nuevoSaldo);
             statement.setString(2, nombreUsuario);
 

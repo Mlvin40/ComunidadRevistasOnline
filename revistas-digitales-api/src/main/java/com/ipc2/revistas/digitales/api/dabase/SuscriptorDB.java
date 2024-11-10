@@ -11,17 +11,6 @@ import java.util.List;
 
 public class SuscriptorDB {
 
-    private static Connection connection;
-
-    public SuscriptorDB() {
-        try {
-            this.connection = DataSourceDBSingleton.getInstance().getConnection();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-
     // Método para obtener las revistas a las que el usuario está suscrito usando el nombre de usuario
     public List<Revista> obtenerRevistasPorSuscriptor(String nombreUsuario) {
         List<Revista> revistas = new ArrayList<>();
@@ -31,7 +20,8 @@ public class SuscriptorDB {
                 + "JOIN suscripciones s ON r.nombre_revista = s.nombre_revista "
                 + "WHERE s.nombre_usuario = ? AND s.estado = TRUE";
 
-        try (PreparedStatement statement = connection.prepareStatement(consulta)) {
+        try (Connection connection = DataSourceDB.getInstance().getConnection();
+                PreparedStatement statement = connection.prepareStatement(consulta)) {
             // Establecer el valor del nombre de usuario (suscriptor)
             statement.setString(1, nombreUsuario);
 
@@ -64,7 +54,8 @@ public class SuscriptorDB {
         List<String> revistasSuscritas = new ArrayList<>();
         String consulta = "SELECT nombre_revista FROM suscripciones WHERE nombre_usuario = ?";
 
-        try (PreparedStatement statement = connection.prepareStatement(consulta)) {
+        try (Connection connection = DataSourceDB.getInstance().getConnection();
+                PreparedStatement statement = connection.prepareStatement(consulta)) {
             statement.setString(1, nombreUsuario);
             try (ResultSet resultSet = statement.executeQuery()) {
                 while (resultSet.next()) {
@@ -87,7 +78,8 @@ public class SuscriptorDB {
             return false;
         }
 
-        try (PreparedStatement statement = connection.prepareStatement(consulta)) {
+        try (Connection connection = DataSourceDB.getInstance().getConnection();
+                PreparedStatement statement = connection.prepareStatement(consulta)) {
             statement.setString(1, nombreUsuario);
             statement.setString(2, nombreRevista);
             statement.setDate(3, java.sql.Date.valueOf(fechaSuscripcion));
@@ -103,7 +95,8 @@ public class SuscriptorDB {
     //metodo que se encarga de ver si el usuario ya esta suscrito a la revista
     public boolean verificarEstaSuscrito(String nombreUsuario, String nombreRevista) {
         String consulta = "SELECT * FROM suscripciones WHERE nombre_usuario = ? AND nombre_revista = ? ";
-        try (PreparedStatement statement = connection.prepareStatement(consulta)) {
+        try (Connection connection = DataSourceDB.getInstance().getConnection();
+                PreparedStatement statement = connection.prepareStatement(consulta)) {
             statement.setString(1, nombreUsuario);
             statement.setString(2, nombreRevista);
             try (ResultSet resultSet = statement.executeQuery()) {
@@ -118,7 +111,8 @@ public class SuscriptorDB {
     //Validacion para que al momento de una suscipcion se consulte antes de asignarle la revista al usuario
     private boolean verificarEstadoSuscripcion(String nombreRevista) {
         String consulta = "SELECT estado_suscribirse FROM revistas WHERE nombre_revista = ?";
-        try (PreparedStatement statement = connection.prepareStatement(consulta)) {
+        try (Connection connection = DataSourceDB.getInstance().getConnection();
+                PreparedStatement statement = connection.prepareStatement(consulta)) {
             statement.setString(1, nombreRevista);
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {

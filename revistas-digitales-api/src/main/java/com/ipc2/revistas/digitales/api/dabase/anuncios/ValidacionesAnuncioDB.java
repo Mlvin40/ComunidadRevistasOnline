@@ -4,7 +4,7 @@
  */
 package com.ipc2.revistas.digitales.api.dabase.anuncios;
 
-import com.ipc2.revistas.digitales.api.dabase.DataSourceDBSingleton;
+import com.ipc2.revistas.digitales.api.dabase.DataSourceDB;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -15,20 +15,12 @@ import java.sql.SQLException;
  */
 public class ValidacionesAnuncioDB {
 
-    private Connection connection;
-    
-    public ValidacionesAnuncioDB() {
-        try {
-            this.connection = DataSourceDBSingleton.getInstance().getConnection();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
 
     // Método para desactivar un anuncio vencido, comparando la fecha de expiración con la fecha actual
     public void desactivarAnuncioVencido(int idAnuncio) {
         String sql = "UPDATE anuncios SET activo = 0 WHERE fecha_expiracion < CURDATE()";
-        try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
+        try (Connection connection = DataSourceDB.getInstance().getConnection();
+                PreparedStatement pstmt = connection.prepareStatement(sql)) {
             int filasAfectadas = pstmt.executeUpdate();
             System.out.println("Anuncios desactivados: " + filasAfectadas);
            // return filasAfectadas > 0; // Retorna true si se desactivaron anuncios
@@ -42,7 +34,8 @@ public class ValidacionesAnuncioDB {
     // Método para verificar si un anuncio está activo
     public boolean verificarAnuncioActivo(int idAnuncio) {
         String sql = "SELECT activo FROM anuncios WHERE id_anuncio = ?";
-        try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
+        try (Connection connection = DataSourceDB.getInstance().getConnection();
+                PreparedStatement pstmt = connection.prepareStatement(sql)) {
             pstmt.setInt(1, idAnuncio);
             try (var rs = pstmt.executeQuery()) {
                 if (rs.next()) {

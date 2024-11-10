@@ -20,22 +20,14 @@ import java.util.List;
  */
 public class PublicacionDB {
 
-    private Connection connection;
-
-    public PublicacionDB() {
-        try {
-            this.connection = DataSourceDBSingleton.getInstance().getConnection();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
 
     //metodo boolean para saber si se creo la publicacion
     public boolean crearPublicacion(String nombreRevista, String descripcion, InputStream pdfPublicacion, LocalDate fechaPublicacion) {
         String consulta = "INSERT INTO publicaciones (nombre_revista, descripcion, fecha_publicacion, pdf_publicacion) VALUES (?, ?, ?, ?)";
 
         // Intentar con try-with-resources para asegurarse de que el PreparedStatement se cierre automáticamente
-        try (PreparedStatement statement = connection.prepareStatement(consulta)) {
+        try (Connection connection = DataSourceDB.getInstance().getConnection();
+                PreparedStatement statement = connection.prepareStatement(consulta)) {
             statement.setString(1, nombreRevista);
             statement.setString(2, descripcion);
             statement.setDate(3, java.sql.Date.valueOf(fechaPublicacion)); // Convertir LocalDate a java.sql.Date
@@ -58,7 +50,8 @@ public class PublicacionDB {
         List<Publicacion> publicaciones = new ArrayList<>();
         String consulta = "SELECT nombre_revista, descripcion, fecha_publicacion, pdf_publicacion FROM publicaciones WHERE nombre_revista = ?";
 
-        try (PreparedStatement statement = connection.prepareStatement(consulta)) {
+        try (Connection connection = DataSourceDB.getInstance().getConnection();
+                PreparedStatement statement = connection.prepareStatement(consulta)) {
             statement.setString(1, nombreRevista);
             try (ResultSet resultSet = statement.executeQuery()) {
 

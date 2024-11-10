@@ -4,7 +4,7 @@
  */
 package com.ipc2.revistas.digitales.api.dabase.anuncios;
 
-import com.ipc2.revistas.digitales.api.dabase.DataSourceDBSingleton;
+import com.ipc2.revistas.digitales.api.dabase.DataSourceDB;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -16,21 +16,13 @@ import java.time.LocalDate;
  */
 public class AnuncioVideoDB {
 
-    private Connection connection;
-
-    public AnuncioVideoDB() {
-        try {
-            this.connection = DataSourceDBSingleton.getInstance().getConnection();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
 
     // Método para insertar un anuncio de video
     public boolean crearAnuncioVideo(String urlVideo, String nombreAnunciante, LocalDate fechaInicio, int duracionDias) {
         String sql = "INSERT INTO anuncios (tipo_anuncio, url_video, nombre_anunciante, fecha_inicio, duracion_dias, fecha_expiracion)"
                 + "VALUES (?, ?, ?, ?, ?, DATE_ADD(?, INTERVAL ? DAY))";
-        try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
+        try (Connection connection = DataSourceDB.getInstance().getConnection();
+                PreparedStatement pstmt = connection.prepareStatement(sql)) {
             pstmt.setString(1, "VIDEO");
             pstmt.setString(2, urlVideo);
             pstmt.setString(3, nombreAnunciante);
@@ -48,7 +40,8 @@ public class AnuncioVideoDB {
     public boolean actualizarAnuncioVideo(int idAnuncio, String urlVideo, boolean activo) {
         String sql = "UPDATE anuncios SET url_video = ?, activo = ? WHERE id_anuncio = ?";
 
-        try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
+        try (Connection connection = DataSourceDB.getInstance().getConnection();
+                PreparedStatement pstmt = connection.prepareStatement(sql)) {
             pstmt.setString(1, urlVideo); // Establece la URL del video
             pstmt.setBoolean(2, activo); // Establece el estado activo
             pstmt.setInt(3, idAnuncio); // Establece el idAnuncio

@@ -25,6 +25,7 @@ com/ipc2/revistas/digitales/api/modelos/usuarios/Seguridad.class
 com/ipc2/revistas/digitales/api/modelos/revista/RevistaEditable.class
 com/ipc2/revistas/digitales/api/dabase/UsuarioDB.class
 com/ipc2/revistas/digitales/api/modelos/usuarios/Administrador.class
+com/ipc2/revistas/digitales/api/dabase/DataSourceDB.class
 com/ipc2/revistas/digitales/api/dabase/CarteraDB.class
 com/ipc2/revistas/digitales/api/controladores/ReporteAdministradorController.class
 com/ipc2/revistas/digitales/api/RestConfiguration.class
@@ -44,7 +45,6 @@ com/ipc2/revistas/digitales/api/dabase/EditorDB.class
 com/ipc2/revistas/digitales/api/dabase/AdministradorDB.class
 com/ipc2/revistas/digitales/api/controladores/AdministradorController.class
 com/ipc2/revistas/digitales/api/controladores/UsuarioController.class
-com/ipc2/revistas/digitales/api/dabase/DataSourceDBSingleton.class
 com/ipc2/revistas/digitales/api/dabase/anuncios/AnuncioDB.class
 com/ipc2/revistas/digitales/api/servicios/ReporteEditorService.class
 com/ipc2/revistas/digitales/api/controladores/CarteraController.class

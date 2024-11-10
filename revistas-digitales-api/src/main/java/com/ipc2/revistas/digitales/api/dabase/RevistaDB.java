@@ -12,16 +12,6 @@ import java.util.List;
 
 public class RevistaDB {
 
-    private Connection connection;
-
-    public RevistaDB() {
-        try {
-            this.connection = DataSourceDBSingleton.getInstance().getConnection();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
     public boolean crearRevista(Revista revista) {
         if (existeRevista(revista.getNombre())) {
             return false; // Significa que la revista ya existe en la base de datos
@@ -29,7 +19,8 @@ public class RevistaDB {
 
         String consulta = "INSERT INTO revistas (nombre_revista, descripcion, categoria, fecha_creacion, autor, costo) VALUES (?, ?, ?, ?, ?, ?)";
 
-        try (PreparedStatement statement = connection.prepareStatement(consulta)) {
+        try (Connection connection = DataSourceDB.getInstance().getConnection();
+                PreparedStatement statement = connection.prepareStatement(consulta)) {
             statement.setString(1, revista.getNombre());
             statement.setString(2, revista.getDescripcion());
             statement.setString(3, revista.getCategoria());
@@ -54,7 +45,8 @@ public class RevistaDB {
         //eliminar espacios en blanco 
         nombreRevista = nombreRevista.trim();
         String consulta = "SELECT COUNT(*) FROM revistas WHERE nombre_revista = ?";
-        try (PreparedStatement statement = connection.prepareStatement(consulta)) {
+        try (Connection connection = DataSourceDB.getInstance().getConnection();
+                PreparedStatement statement = connection.prepareStatement(consulta)) {
             statement.setString(1, nombreRevista);
             try (ResultSet rs = statement.executeQuery()) {
                 if (rs.next()) {
@@ -72,7 +64,8 @@ public class RevistaDB {
     //Para obtener una revista de la base de datos, si devuelve null es porque no existe la revista
     public Revista obtenerRevista(String nombreRevista) {
         String consulta = "SELECT * FROM revistas WHERE nombre_revista = ?";
-        try (PreparedStatement statement = connection.prepareStatement(consulta)) {
+        try (Connection connection = DataSourceDB.getInstance().getConnection();
+                PreparedStatement statement = connection.prepareStatement(consulta)) {
             statement.setString(1, nombreRevista);
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
@@ -116,7 +109,8 @@ public class RevistaDB {
 
         String consulta = consultaBuilder.toString();
 
-        try (PreparedStatement statement = connection.prepareStatement(consulta)) {
+        try (Connection connection = DataSourceDB.getInstance().getConnection();
+                PreparedStatement statement = connection.prepareStatement(consulta)) {
             // Establecer los parámetros en el PreparedStatement
             int index = 1;
             if (revistasSuscritas != null && !revistasSuscritas.isEmpty()) {
@@ -158,7 +152,8 @@ public class RevistaDB {
         List<String> revistas = new ArrayList<>();
         //Utilizar try-with-resources para cerrar los recursos
 
-        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+        try (Connection connection = DataSourceDB.getInstance().getConnection();
+                PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, categoria);
             try (ResultSet resultSet = statement.executeQuery()) {
                 while (resultSet.next()) {

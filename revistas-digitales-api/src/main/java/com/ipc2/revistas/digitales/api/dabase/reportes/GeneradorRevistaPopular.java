@@ -4,7 +4,7 @@
  */
 package com.ipc2.revistas.digitales.api.dabase.reportes;
 
-import com.ipc2.revistas.digitales.api.dabase.DataSourceDBSingleton;
+import com.ipc2.revistas.digitales.api.dabase.DataSourceDB;
 import com.ipc2.revistas.digitales.api.dabase.SuscripcionDB;
 import com.ipc2.revistas.digitales.api.modelos.reporte.RevistaPopular;
 import com.ipc2.revistas.digitales.api.modelos.revista.Suscripcion;
@@ -22,15 +22,6 @@ import java.util.List;
 public class GeneradorRevistaPopular {
 
     private SuscripcionDB suscripcionDB = new SuscripcionDB();
-    private Connection connection;
-
-    public GeneradorRevistaPopular() {
-        try {
-            this.connection = DataSourceDBSingleton.getInstance().getConnection();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
     
     public List<RevistaPopular> obtenerTop5() {
         List<RevistaPopular> revistasPopulares = new ArrayList<>();
@@ -43,7 +34,8 @@ public class GeneradorRevistaPopular {
                 + "ORDER BY total_suscripciones DESC "
                 + "LIMIT 5";
 
-        try (PreparedStatement stmt = connection.prepareStatement(sql); ResultSet rs = stmt.executeQuery()) {
+        try (Connection connection = DataSourceDB.getInstance().getConnection();
+                PreparedStatement stmt = connection.prepareStatement(sql); ResultSet rs = stmt.executeQuery()) {
 
             while (rs.next()) {
                 String nombreRevista = rs.getString("nombre_revista");
