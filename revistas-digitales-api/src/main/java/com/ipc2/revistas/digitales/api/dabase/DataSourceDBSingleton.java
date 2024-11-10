@@ -68,4 +68,15 @@ public class DataSourceDBSingleton {
     public Connection getConnection() throws SQLException {
         return datasource.getConnection();
     }
+
+    private void cerrarConexion(Connection connection) {
+        try {
+            if (connection != null && !connection.isClosed()) {
+                connection.close();
+            }
+        } catch (SQLException e) {
+            System.err.println("Error al cerrar la conexión: " + e.getMessage());
+        }
+    }
+   
 }

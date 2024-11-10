@@ -14,10 +14,5 @@ import { AnuncioComponent } from "../anuncio/anuncio.component";
 })
 export class AnuncianteHomeComponent {
   
-    constructor(private router: Router, private usuarioService: UsuariosService){
-    if(!this.usuarioService.permisosAnunciante()){
-      //redirigir al login
-      this.router.navigate(['/login']);
-    }
-   }
+    constructor(private router: Router, private usuarioService: UsuariosService){}
 }

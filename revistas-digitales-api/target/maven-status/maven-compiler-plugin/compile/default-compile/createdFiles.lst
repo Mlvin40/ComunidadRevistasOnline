@@ -9,6 +9,7 @@ com/ipc2/revistas/digitales/api/dabase/MeGustaDB.class
 com/ipc2/revistas/digitales/api/dabase/reportes/RevistasTop.class
 com/ipc2/revistas/digitales/api/modelos/revista/Comentario.class
 com/ipc2/revistas/digitales/api/util/GeneradorToken.class
+com/ipc2/revistas/digitales/api/modelos/reporte/ReporteEfectividadAnuncio.class
 com/ipc2/revistas/digitales/api/modelos/usuarios/Anunciante.class
 com/ipc2/revistas/digitales/api/dabase/RevistaDB.class
 com/ipc2/revistas/digitales/api/servicios/PublicacionService.class

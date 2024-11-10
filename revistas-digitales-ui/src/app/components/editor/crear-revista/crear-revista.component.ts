@@ -5,17 +5,19 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { UsuariosService } from '../../../services/usuarios/usuarios.service';
 import { RevistaService } from '../../../services/revista/revista.service';
 import { Router } from '@angular/router';
+import { AnuncioIndividualComponent } from "../../anunciante/anuncio-individual/anuncio-individual.component";
 
 @Component({
   selector: 'app-crear-revista',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, AnuncioIndividualComponent],
   templateUrl: './crear-revista.component.html',
   styleUrls: ['./crear-revista.component.css']
 })
 export class CrearRevistaComponent implements OnInit {
   revistaForm: FormGroup;
   mensaje: string = '';
+  rutaActual!: string;
 
   constructor(
     private fb: FormBuilder,
@@ -23,11 +25,6 @@ export class CrearRevistaComponent implements OnInit {
     private usuarioService: UsuariosService,
     private router: Router
   ) {
-    if(!this.usuarioService.permisosEditor()){
-      //redirigir al login
-      this.router.navigate(['/login']);
-    }
-
     // Este es el formulario para crear una revista
     this.revistaForm = this.fb.group({
       nombre: ['', Validators.required],
@@ -39,6 +36,7 @@ export class CrearRevistaComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.rutaActual = this.router.url;
     const autor = this.usuarioService.obtenerNombreUsuarioDesdeToken();
     this.revistaForm.patchValue({ autor });
   }
@@ -46,14 +44,14 @@ export class CrearRevistaComponent implements OnInit {
   crearRevista(): void {
     if (this.revistaForm.valid) {
       const revistaData = new FormData();
-      
+
       // Agregar los datos al FormData
       revistaData.append('nombre', this.revistaForm.get('nombre')?.value);
       revistaData.append('descripcion', this.revistaForm.get('descripcion')?.value);
       revistaData.append('categoria', this.revistaForm.get('categoria')?.value);
       revistaData.append('fechaCreacion', this.revistaForm.get('fechaCreacion')?.value);
       revistaData.append('autor', this.revistaForm.get('autor')?.value);
-  
+
       this.revistaService.crearRevista(revistaData).subscribe(
         response => {
           console.log('Revista creada exitosamente:', response);

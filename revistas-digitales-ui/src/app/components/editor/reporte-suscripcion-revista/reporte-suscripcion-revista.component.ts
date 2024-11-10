@@ -3,22 +3,26 @@ import { CommonModule } from '@angular/common';
 import { ReportesEditorService } from '../../../services/reportes-editor/reportes-editor.service';
 import { Suscripcion } from '../../../entidades/Suscripcion';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
+import { AnuncioIndividualComponent } from "../../anunciante/anuncio-individual/anuncio-individual.component";
 
 @Component({
   selector: 'app-reporte-suscripcion-revista',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, AnuncioIndividualComponent],
   templateUrl: './reporte-suscripcion-revista.component.html',
   styleUrls: ['./reporte-suscripcion-revista.component.css'],
 })
 export class ReporteSuscripcionRevistaComponent implements OnInit {
   suscripciones: Suscripcion[] = [];
   nombreRevista: string = ''; // Almacena el nombre de la revista para filtrar
+  rutaActual!: string;
 
-  constructor(private reportesEditorService: ReportesEditorService) {}
+  constructor(private reportesEditorService: ReportesEditorService, private router: Router) {}
 
   ngOnInit(): void {
-    // Cargar todas las suscripciones al inicio
+
+    this.rutaActual = this.router.url;
     this.cargarSuscripciones();
   }
 

@@ -6,6 +6,7 @@ package com.ipc2.revistas.digitales.api.controladores;
 
 import com.ipc2.revistas.digitales.api.dabase.anuncios.AnuncioDB;
 import com.ipc2.revistas.digitales.api.modelos.anuncios.Anuncio;
+import com.ipc2.revistas.digitales.api.modelos.response.ExitoResponse;
 import com.ipc2.revistas.digitales.api.servicios.AnuncioService;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.GET;
@@ -162,7 +163,8 @@ public class AnuncioController {
         boolean exito = anuncioService.guardarAnuncioMostrado(idAnuncio, tipoAnuncio, nombreAnunciante, pathMostrado);
 
         if (exito) {
-            return Response.status(Response.Status.CREATED).entity("Anuncio guardado exitosamente").build();
+            ExitoResponse exitoResponse = new ExitoResponse();
+            return Response.ok(exitoResponse).build();
         } else {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("Error al guardar el anuncio").build();
         }

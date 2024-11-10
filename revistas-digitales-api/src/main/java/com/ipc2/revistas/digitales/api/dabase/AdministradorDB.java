@@ -1,6 +1,7 @@
 package com.ipc2.revistas.digitales.api.dabase;
 
 import com.ipc2.revistas.digitales.api.modelos.anuncios.AnuncioComprado;
+import com.ipc2.revistas.digitales.api.modelos.reporte.ReporteEfectividadAnuncio;
 import com.ipc2.revistas.digitales.api.modelos.revista.Revista;
 import java.sql.Connection;
 import java.sql.Date;
@@ -176,6 +177,41 @@ public class AdministradorDB {
         }
         return anunciosComprados;
     }
+
+    public List<ReporteEfectividadAnuncio> generarReporteEfectividad(LocalDate fechaInicio, LocalDate fechaFin) {
+        // Consulta SQL para obtener los anuncios mostrados y sus paths
+        String sql = "SELECT nombre_anunciante, id_anuncio, tipo_anuncio, "
+                + "GROUP_CONCAT(path_mostrado SEPARATOR ', ') AS paths_mostrados, "
+                + "COUNT(*) AS cantidad_mostrado "
+                + "FROM anuncio_mostrado "
+                + "WHERE fecha BETWEEN ? AND ? "
+                + "GROUP BY nombre_anunciante, id_anuncio, tipo_anuncio "
+                + "ORDER BY nombre_anunciante, cantidad_mostrado DESC";
+
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setDate(1, Date.valueOf(fechaInicio));  // Establecer fecha de inicio
+            statement.setDate(2, Date.valueOf(fechaFin));     // Establecer fecha de fin
+
+            // Ejecutar la consulta
+            ResultSet resultSet = statement.executeQuery();
+
+            List<ReporteEfectividadAnuncio> reportes = new ArrayList<>();
+
+            while (resultSet.next()) {
+                String nombreAnunciante = resultSet.getString("nombre_anunciante");
+                int idAnuncio = resultSet.getInt("id_anuncio");
+                String tipoAnuncio = resultSet.getString("tipo_anuncio");
+                String pathsMostradosStr = resultSet.getString("paths_mostrados");
+                int cantidadMostrado = resultSet.getInt("cantidad_mostrado");
+
+                // Crear un objeto de ReporteEfectividadAnuncio con los resultados
+                reportes.add(new ReporteEfectividadAnuncio(nombreAnunciante, idAnuncio, tipoAnuncio, pathsMostradosStr, cantidadMostrado));
+            }
+
+            return reportes;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Error generando reporte de efectividad de anuncios", e);
+        }
+    }
 }
-
-

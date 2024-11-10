@@ -9,7 +9,7 @@
           <h5 class="card-title">{{ revista.nombre || 'Sin nombre' }}</h5>
           <p class="card-text"><strong>Descripción:</strong> {{ revista.descripcion || 'Sin descripción' }}</p>
           <p class="card-text"><strong>Categoría:</strong> {{ revista.categoria || 'Sin categoría' }}</p>
-          <p><strong>Fecha de Creación:</strong> {{ revista.fechaCreacion | date:'dd-MM-yyyy' || 'Desconocida' }}</p>
+          <p><strong>Fecha de Creación:</strong> {{ revista.fechaCreacion | date:'dd-MM-yyyy'}}</p>
           <p class="card-text"><strong>Cantidad de Likes:</strong> {{ revista.likes }}</p>
   
           <button class="btn btn-success" [disabled]="!revista.estadoMeGusta" (click)="darLike(revista.nombre)">👍 Like</button>
@@ -44,4 +44,5 @@
       <p>No estás suscrito a ninguna revista.</p>
     </ng-template>
   </div>
-  
+
+  <app-anuncio-individual [pathMostrado]="rutaActual"></app-anuncio-individual>

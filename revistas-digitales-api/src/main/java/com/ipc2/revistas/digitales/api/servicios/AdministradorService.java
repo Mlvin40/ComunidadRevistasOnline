@@ -8,6 +8,7 @@ import com.ipc2.revistas.digitales.api.dabase.AdministradorDB;
 import com.ipc2.revistas.digitales.api.dabase.reportes.ReporteGananciasDB;
 import com.ipc2.revistas.digitales.api.dabase.reportes.TablaReporteGanancia;
 import com.ipc2.revistas.digitales.api.modelos.anuncios.AnuncioComprado;
+import com.ipc2.revistas.digitales.api.modelos.reporte.ReporteEfectividadAnuncio;
 import com.ipc2.revistas.digitales.api.modelos.reporte.RevistaMantenimiento;
 import com.ipc2.revistas.digitales.api.modelos.revista.Revista;
 import com.ipc2.revistas.digitales.api.validadores.ValidadorComentarioLike;
@@ -94,5 +95,13 @@ public class AdministradorService {
         ReporteGananciasDB reporteGananciasDB = new ReporteGananciasDB();
         return reporteGananciasDB.obtenertTabla(fechaIn, fechaFn);
 
+    }
+
+    public List<ReporteEfectividadAnuncio> obtenerReporteEfectividad(String fechaInicio, String fechaFin) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate fechaIn = LocalDate.parse(fechaInicio, formatter);
+        LocalDate fechaFn = LocalDate.parse(fechaFin, formatter);
+      
+        return administradorDB.generarReporteEfectividad(fechaIn, fechaFn);
     }
 }

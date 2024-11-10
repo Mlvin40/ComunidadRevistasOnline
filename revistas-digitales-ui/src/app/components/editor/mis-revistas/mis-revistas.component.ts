@@ -4,11 +4,12 @@ import { RevistaService } from '../../../services/revista/revista.service';
 import { Revista } from '../../../entidades/Revista';
 import { Router } from '@angular/router';
 import { EditorHomeComponent } from "../editor-home/editor-home.component";
+import { AnuncioIndividualComponent } from "../../anunciante/anuncio-individual/anuncio-individual.component";
 
 @Component({
   selector: 'app-mis-revistas',
   standalone: true,
-  imports: [CommonModule, EditorHomeComponent],
+  imports: [CommonModule, EditorHomeComponent, AnuncioIndividualComponent],
   templateUrl: './mis-revistas.component.html',
   styleUrls: ['./mis-revistas.component.css']
 })
@@ -16,9 +17,13 @@ export class MisRevistasComponent implements OnInit {
   revistas: Revista[] = [];
   mensaje: string = '';
 
-  constructor(private revistaService: RevistaService, private router: Router) {}
+  rutaActual!: string;
+  constructor(private revistaService: RevistaService, private router: Router) {
+    
+  }
 
   ngOnInit(): void {
+    this.rutaActual = this.router.url;
     this.revistaService.obtenerRevistasPorAutor().subscribe(
       (revistas) => this.revistas = revistas,
       (error) => this.mensaje = 'Error al cargar las revistas'

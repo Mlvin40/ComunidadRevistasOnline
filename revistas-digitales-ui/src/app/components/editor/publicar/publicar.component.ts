@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { PublicacionService } from '../../../services/publicacion/publicacion.service';
 import { CommonModule } from '@angular/common';
+import { AnuncioIndividualComponent } from "../../anunciante/anuncio-individual/anuncio-individual.component";
 
 @Component({
   selector: 'app-publicar',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, AnuncioIndividualComponent],
   templateUrl: './publicar.component.html',
   styleUrls: ['./publicar.component.css']
 })
@@ -18,10 +19,12 @@ export class PublicarComponent implements OnInit {
   fechaSeleccionada: string = ''; // Campo para la fecha seleccionada
   mensajeErrorArchivo: string = '';
   mensajeExito: string = '';
+  rutaActual!: string;
 
-  constructor(private route: ActivatedRoute, private publicacionService: PublicacionService) {}
+  constructor(private route: ActivatedRoute, private publicacionService: PublicacionService, private router: Router ) {}
   
   ngOnInit(): void {
+    this.rutaActual = this.router.url;
     this.nombreRevista = this.route.snapshot.paramMap.get('nombre') || 'Sin nombre';
   }
 

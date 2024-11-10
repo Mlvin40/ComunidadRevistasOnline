@@ -3,21 +3,25 @@ import { CommonModule } from '@angular/common';
 import { ReportesEditorService } from '../../../services/reportes-editor/reportes-editor.service';
 import { Comentario } from '../../../entidades/Comentario';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
+import { AnuncioIndividualComponent } from "../../anunciante/anuncio-individual/anuncio-individual.component";
 
 @Component({
   selector: 'app-reporte-comentarios-revista',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, AnuncioIndividualComponent],
   templateUrl: './reporte-comentarios-revista.component.html',
   styleUrls: ['./reporte-comentarios-revista.component.css'],
 })
 export class ReporteComentariosRevistaComponent implements OnInit {
   comentarios: Comentario[] = [];
   nombreRevista: string = ''; // Para almacenar el nombre de la revista a filtrar
+  rutaActual!: string;
 
-  constructor(private reportesEditorService: ReportesEditorService) {}
+  constructor(private reportesEditorService: ReportesEditorService, private router: Router) {}
 
   ngOnInit(): void {
+    this.rutaActual = this.router.url;
     this.cargarComentarios();
   }
 

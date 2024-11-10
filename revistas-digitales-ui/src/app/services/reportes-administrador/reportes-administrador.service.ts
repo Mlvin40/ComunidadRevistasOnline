@@ -1,10 +1,11 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { UsuariosService } from '../usuarios/usuarios.service';
 import { RestConstants } from '../rest-constants';
 import { Revista } from '../../entidades/Revista';
 import { Observable } from 'rxjs';
 import { RevistaPopular } from '../../entidades/RevistaPopular';
+import { ReporteEfectividadAnuncio } from '../../entidades/reporte/ReporteEfectividadAnuncio';
 
 @Injectable({
   providedIn: 'root'
@@ -25,5 +26,7 @@ obtenerRevistasMasComentadas(): Observable<Revista[]> {
 obtenerRevistasPopulares(): Observable<RevistaPopular[]> {
   return this.http.get<RevistaPopular[]>(this.apiUrl+"/revistasPopulares");
 }
+
+
 
 }

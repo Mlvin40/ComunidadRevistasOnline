@@ -14,7 +14,6 @@ import { CommonModule } from '@angular/common'; // Import CommonModule
 export class AnuncioComponent {
   anuncios: Anuncio[] = [];
 
-
   constructor(
     private anuncioService: AnuncioService,
     private sanitizer: DomSanitizer

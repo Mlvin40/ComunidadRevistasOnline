@@ -33,6 +33,12 @@ import { ReporteRevistasPopularesComponent } from './components/administrador/re
 import { ReporteAnunciosCompradosComponent } from './components/administrador/reporte-anuncios-comprados/reporte-anuncios-comprados.component';
 import { ReporteGananciasComponent } from './components/administrador/reporte-ganancias/reporte-ganancias.component';
 import { EfectividadAnuncioComponent } from './components/administrador/efectividad-anuncio/efectividad-anuncio.component';
+import { EsAdministradorService } from './services/validaciones-enlace/es-administrador/es-administrador.service';
+import { EsAnuncianteService } from './services/validaciones-enlace/es-anunciante/es-anunciante.service';
+import { EsEditorService } from './services/validaciones-enlace/es-editor/es-editor.service';
+import { EsSuscriptorService } from './services/validaciones-enlace/es-suscriptor/es-suscriptor.service';
+import { EsAnuncianteEditorService } from './services/validaciones-enlace/es-anunciante-editor/es-anunciante-editor.service';
+import { EsSuscriptorEditorService } from './services/validaciones-enlace/es-suscriptor-editor/es-suscriptor-editor.service';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -42,44 +48,42 @@ export const routes: Routes = [
   { path: 'editorHome', component: EditorHomeComponent },
   { path: 'crearRevista', component: CrearRevistaComponent },
   { path: 'configuracionPerfil', component: ConfiguracionUsuarioComponent },
-  { path: 'carteraUsuario', component: CarteraUsuarioComponent },
+  { path: 'carteraUsuario', component: CarteraUsuarioComponent},
   { path: 'perfilUsuario/:nombreUsuario', component: PerfilUsuarioComponent },
 
   // Para el usuario editor
-  { path: 'misRevistas', component: MisRevistasComponent },
-  { path: 'editarRevista/:nombre', component: EditarRevistaComponent },
-  { path: 'publicar/:nombre', component: PublicarComponent },
-  { path: 'verPublicaciones/:nombre', component: VerPublicacionesComponent },
-  { path: 'reporteDeComentario', component: ReporteComentariosRevistaComponent},
-  { path: 'reporteDeSuscripcion', component: ReporteSuscripcionRevistaComponent},
-  { path: 'reporteMasGustadas', component: ReporteMegustaRevistaComponent}, 
+  { path: 'misRevistas', component: MisRevistasComponent, canActivate: [EsEditorService] },
+  { path: 'editarRevista/:nombre', component: EditarRevistaComponent, canActivate: [EsEditorService] },
+  { path: 'publicar/:nombre', component: PublicarComponent, canActivate: [EsEditorService] },
+  { path: 'verPublicaciones/:nombre', component: VerPublicacionesComponent},
+  { path: 'reporteDeComentario', component: ReporteComentariosRevistaComponent, canActivate: [EsEditorService] },
+  { path: 'reporteDeSuscripcion', component: ReporteSuscripcionRevistaComponent, canActivate: [EsEditorService] },
+  { path: 'reporteMasGustadas', component: ReporteMegustaRevistaComponent, canActivate: [EsEditorService] },
 
 
   // Rutas del anunciante
-  { path : 'anuncianteHome', component: AnuncianteHomeComponent },
-  { path : 'comprarAnuncio', component: ComprarAnuncioComponent },
-  { path : 'mostrarAnuncio', component: AnuncioComponent },
-  { path : 'verMisAnuncios', component: VerAnunciosComponent },
-  { path : 'editarAnuncio/:id', component: EditarAnuncioComponent },
-  
+  { path: 'anuncianteHome', component: AnuncianteHomeComponent, canActivate: [EsAnuncianteService] },
+  { path: 'comprarAnuncio', component: ComprarAnuncioComponent, canActivate: [EsAnuncianteService] },
+  { path: 'mostrarAnuncio', component: AnuncioComponent, canActivate: [EsAnuncianteService] },
+  { path: 'verMisAnuncios', component: VerAnunciosComponent, canActivate: [EsAnuncianteService] },
+  { path: 'editarAnuncio/:id', component: EditarAnuncioComponent, canActivate: [EsAnuncianteService] },
 
   //Rutas del suscriptor
-  { path: 'suscriptorHome', component: SuscriptorHomeComponent},
-  { path: 'verRevistasDisponibles', component: VerRevistasDisponiblesComponent },
-  { path: 'misSuscripciones', component: MisSuscripcionesComponent },
+  { path: 'suscriptorHome', component: SuscriptorHomeComponent, canActivate: [EsSuscriptorService] },
+  { path: 'verRevistasDisponibles', component: VerRevistasDisponiblesComponent, canActivate: [EsSuscriptorService] },
+  { path: 'misSuscripciones', component: MisSuscripcionesComponent, canActivate: [EsSuscriptorService] },
 
 
   // Ruta del administrador
-  { path: 'adminHome', component: AdminHomeComponent },
-  { path: 'cambiarCostorRevista', component: CambiarCostoRevistaComponent },
-  { path: 'cambiarCostoGlobalRevista', component: CostoGlobalRevistaComponent },
-  { path: 'cambiarCostoAnuncios', component: CostoAnunciosComponent },
-  { path: 'cambiarCostoOcultacionAnuncio', component: PrecioOcultacionAnunciosComponent },
-  { path: 'reporteComentariosTop', component: ReporteComentariosTopComponent }, 
-  { path: 'revistasPopulares', component: ReporteRevistasPopularesComponent },
-  { path: 'anunciosComprados', component: ReporteAnunciosCompradosComponent },
-  { path: 'reporteGanancias', component: ReporteGananciasComponent },
-  { path: 'efectividadAnuncios', component: EfectividadAnuncioComponent }, 
-
-  
+  { path: 'adminHome', component: AdminHomeComponent, canActivate: [EsAdministradorService] },
+  { path: 'cambiarCostorRevista', component: CambiarCostoRevistaComponent, canActivate: [EsAdministradorService] },
+  { path: 'cambiarCostoGlobalRevista', component: CostoGlobalRevistaComponent, canActivate: [EsAdministradorService] },
+  { path: 'cambiarCostoAnuncios', component: CostoAnunciosComponent, canActivate: [EsAdministradorService] },
+  { path: 'cambiarCostoOcultacionAnuncio', component: PrecioOcultacionAnunciosComponent, canActivate: [EsAdministradorService] },
+  { path: 'reporteComentariosTop', component: ReporteComentariosTopComponent, canActivate: [EsAdministradorService] },
+  { path: 'revistasPopulares', component: ReporteRevistasPopularesComponent, canActivate: [EsAdministradorService] },
+  { path: 'anunciosComprados', component: ReporteAnunciosCompradosComponent, canActivate: [EsAdministradorService] },
+  { path: 'reporteGanancias', component: ReporteGananciasComponent, canActivate: [EsAdministradorService] },
+  { path: 'efectividadAnuncios', component: EfectividadAnuncioComponent, canActivate: [EsAdministradorService] }
+    
 ];

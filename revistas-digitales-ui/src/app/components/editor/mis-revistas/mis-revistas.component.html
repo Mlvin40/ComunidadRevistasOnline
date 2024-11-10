@@ -8,7 +8,7 @@
             <h5 class="card-title">{{ revista.nombre || 'Sin nombre' }}</h5>
             <p>{{ revista.descripcion || 'Sin descripción' }}</p>
             <p><strong>Categoría:</strong> {{ revista.categoria || 'Sin categoría' }}</p>
-            <p><strong>Fecha de Creación:</strong> {{ revista.fechaCreacion | date:'dd/MM/yyyy' || 'Desconocida' }}</p>
+            <p><strong>Fecha de Creación:</strong> {{ revista.fechaCreacion | date:'dd/MM/yyyy'}}</p>
             <p><strong>Likes:</strong> {{ revista.likes }}</p>
   
             <button class="btn btn-success" (click)="realizarPublicacion(revista.nombre)">Realizar Publicación</button>
@@ -30,3 +30,4 @@
     </ng-template>
   </div>
   
+  <app-anuncio-individual [pathMostrado]="rutaActual"></app-anuncio-individual>

@@ -4,10 +4,14 @@
  */
 package com.ipc2.revistas.digitales.api.servicios;
 
+import com.ipc2.revistas.digitales.api.dabase.AdministradorDB;
 import com.ipc2.revistas.digitales.api.dabase.reportes.GeneradorRevistaPopular;
 import com.ipc2.revistas.digitales.api.dabase.reportes.RevistasTop;
+import com.ipc2.revistas.digitales.api.modelos.reporte.ReporteEfectividadAnuncio;
 import com.ipc2.revistas.digitales.api.modelos.reporte.RevistaPopular;
 import com.ipc2.revistas.digitales.api.modelos.revista.Revista;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 /**
@@ -27,4 +31,6 @@ public class ReporteAdministradorService {
     public List<RevistaPopular> obtenerRevistasPopulares() {
         return generadorRevistaPopular.obtenerTop5();
     }
+
+
 }

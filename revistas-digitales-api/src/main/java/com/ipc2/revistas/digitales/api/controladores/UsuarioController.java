@@ -24,8 +24,7 @@ import java.util.Map;
 public class UsuarioController {
 
     private UsuarioService usuarioService;
-    private static final String SECRET_KEY = "clave_usr_revistas_online"; //Llave secreta para los tokens
-
+    
     public UsuarioController() {
         this.usuarioService = new UsuarioService();
     }
@@ -67,7 +66,7 @@ public class UsuarioController {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response loginUsuario(Usuario usuario) {
-
+        
         // Intenta obtener un token
         String tokenObtenido = usuarioService.obtenerToken(usuario);
 

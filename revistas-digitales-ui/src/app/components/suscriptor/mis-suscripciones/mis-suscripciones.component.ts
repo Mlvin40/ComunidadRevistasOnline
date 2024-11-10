@@ -4,11 +4,12 @@ import { SuscriptorService } from '../../../services/suscriptor/suscriptor.servi
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { AnuncioIndividualComponent } from "../../anunciante/anuncio-individual/anuncio-individual.component";
 
 @Component({
   selector: 'app-mis-suscripciones',
   standalone: true,
-  imports: [CommonModule, RouterModule, FormsModule],
+  imports: [CommonModule, RouterModule, FormsModule, AnuncioIndividualComponent],
   templateUrl: './mis-suscripciones.component.html',
   styleUrls: ['./mis-suscripciones.component.css']
 })
@@ -16,10 +17,12 @@ export class MisSuscripcionesComponent implements OnInit {
   revistas: Revista[] = [];
   mensaje: string = '';
   comentarioText: { [revistaNombre: string]: string } = {};  // Cambié a un objeto con clave por revista
-  
+  rutaActual!: string; 
+
   constructor(private suscriptorService: SuscriptorService, private router: Router) { }
 
   ngOnInit(): void {
+    this.rutaActual = this.router.url;
     this.obtenerRevistas();
   }
 

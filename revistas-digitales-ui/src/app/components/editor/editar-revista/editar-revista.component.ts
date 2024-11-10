@@ -6,11 +6,12 @@ import { RevistaEditable } from '../../../entidades/RevistaEditable';
 import { CommonModule } from '@angular/common';
 import { Revista } from '../../../entidades/Revista';
 import { UsuariosService } from '../../../services/usuarios/usuarios.service';
+import { AnuncioIndividualComponent } from "../../anunciante/anuncio-individual/anuncio-individual.component";
 
 @Component({
   selector: 'app-editar-revista',
   standalone: true,
-  imports: [FormsModule, CommonModule], // Agregar FormsModule aquí
+  imports: [FormsModule, CommonModule, AnuncioIndividualComponent], // Agregar FormsModule aquí
   templateUrl: './editar-revista.component.html',
   styleUrls: ['./editar-revista.component.css'],
 })
@@ -26,25 +27,22 @@ export class EditarRevistaComponent implements OnInit {
   };
 
   mensaje: string = ''; // Mensaje de error o éxito
+  rutaActual!: string;
 
   constructor(
     private revistaService: RevistaService,
     private route: ActivatedRoute,
     private usuarioService: UsuariosService,
     private router: Router
-  ) {
-    if(!this.usuarioService.permisosEditor()){
-      //redirigir al login
-      this.router.navigate(['/login']);
-    }
-  }
+  ) {}
 
   ngOnInit(): void {
+    this.rutaActual = this.router.url;
     const nombreRevista = this.route.snapshot.paramMap.get('nombre');
     if (nombreRevista) {
       this.revistaService.obtenerRevistaPorNombre(nombreRevista).subscribe(
         (revista: Revista) => {
-          
+
           //Se toman los datos de la revista y se asignan a la variable revista
           this.revistaEditable = {
             nombre: revista.nombre,
@@ -70,6 +68,6 @@ export class EditarRevistaComponent implements OnInit {
         this.mensaje = error.error.mensaje || 'No se pudo actualizar la revista'; // Captura el mensaje del error
       }
     );
-}
+  }
 
 }

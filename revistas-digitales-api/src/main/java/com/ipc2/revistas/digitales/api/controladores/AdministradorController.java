@@ -6,6 +6,7 @@ package com.ipc2.revistas.digitales.api.controladores;
 
 import com.ipc2.revistas.digitales.api.dabase.reportes.TablaReporteGanancia;
 import com.ipc2.revistas.digitales.api.modelos.anuncios.AnuncioComprado;
+import com.ipc2.revistas.digitales.api.modelos.reporte.ReporteEfectividadAnuncio;
 import com.ipc2.revistas.digitales.api.modelos.response.ExitoResponse;
 import com.ipc2.revistas.digitales.api.modelos.revista.Revista;
 import com.ipc2.revistas.digitales.api.servicios.AdministradorService;
@@ -25,7 +26,7 @@ import java.util.List;
 @Path("/administrador")
 public class AdministradorController {
 
-    private AdministradorService administradorService = new AdministradorService();
+    private final AdministradorService administradorService = new AdministradorService();
 
     @GET
     @Path("/obtenerRevistas")
@@ -147,4 +148,15 @@ public class AdministradorController {
         return Response.ok(reporte).build();
     }
 
+    @GET
+    @Path("/reporteEfectividad")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response obtenerReporteEfectividad(
+            @QueryParam("fechaInicio") String fechaInicio,
+            @QueryParam("fechaFin") String fechaFin) {
+
+        List<ReporteEfectividadAnuncio> reporte = administradorService.obtenerReporteEfectividad(fechaInicio, fechaFin);
+
+        return Response.ok(reporte).build();
+    }
 }

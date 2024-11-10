@@ -4,13 +4,14 @@
  */
 package com.ipc2.revistas.digitales.api.controladores;
 
+import com.ipc2.revistas.digitales.api.modelos.reporte.ReporteEfectividadAnuncio;
 import com.ipc2.revistas.digitales.api.modelos.reporte.RevistaPopular;
 import com.ipc2.revistas.digitales.api.modelos.revista.Revista;
-import com.ipc2.revistas.digitales.api.modelos.revista.Suscripcion;
 import com.ipc2.revistas.digitales.api.servicios.ReporteAdministradorService;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import java.util.List;
@@ -23,7 +24,7 @@ import java.util.List;
 public class ReporteAdministradorController {
 
     private ReporteAdministradorService reporteAdministradorService = new ReporteAdministradorService();
-
+    
     @GET
     @Path("/revistasMasComentadas")
     @Produces(MediaType.APPLICATION_JSON)
@@ -31,7 +32,7 @@ public class ReporteAdministradorController {
         List<Revista> revistas = reporteAdministradorService.revistasMasComentadas();
         return Response.ok(revistas).build();
     }
-    
+
     @GET
     @Path("/revistasPopulares")
     @Produces(MediaType.APPLICATION_JSON)
@@ -39,5 +40,5 @@ public class ReporteAdministradorController {
         List<RevistaPopular> revistasPopulares = reporteAdministradorService.obtenerRevistasPopulares();
         return Response.ok(revistasPopulares).build();
     }
-    
+
 }

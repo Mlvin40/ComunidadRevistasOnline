@@ -6,6 +6,7 @@ import { Revista } from '../../entidades/Revista';
 import { Observable } from 'rxjs';
 import { TablaReporteGanancia } from '../../entidades/reporte/TablaReporteGanancia';
 import { AnuncioComprado } from '../../entidades/reporte/AnuncioComprado';
+import { ReporteEfectividadAnuncio } from '../../entidades/reporte/ReporteEfectividadAnuncio';
 
 
 @Injectable({
@@ -13,9 +14,9 @@ import { AnuncioComprado } from '../../entidades/reporte/AnuncioComprado';
 })
 export class AdministradorService {
 
-  
+
   private apiUrl: string;
-  
+
   constructor(private http: HttpClient, private restConstants: RestConstants, private usuarioService: UsuariosService) {
     this.apiUrl = `${this.restConstants.getApiURL()}/administrador`; // URL del backend para usuarios
   }
@@ -24,7 +25,7 @@ export class AdministradorService {
     return this.http.get<Revista[]>(`${this.apiUrl}/obtenerRevistas`);
   }
 
-  
+
   // Con este metodo se puede actualizar el precio de una revista
   actualizarPrecioRevista(nombreRevista: string, nuevoPrecio: number): Observable<any> {
     const params = new HttpParams()
@@ -64,7 +65,7 @@ export class AdministradorService {
     let params = new HttpParams()
       .set('fechaInicio', fechaInicio)
       .set('fechaFin', fechaFin);
-    
+
     if (tipoAnuncio) {
       params = params.set('tipoAnuncio', tipoAnuncio);
     }
@@ -79,6 +80,21 @@ export class AdministradorService {
 
     return this.http.get<TablaReporteGanancia>(`${this.apiUrl}/reporteGanancias`, { params });
   }
+
+  // Método para obtener el reporte de efectividad de anuncios
+  obtenerReporteEfectividad(fechaInicio: string, fechaFin: string): Observable<ReporteEfectividadAnuncio[]> {
+    let params = new HttpParams()
+      .set('fechaInicio', fechaInicio)
+      .set('fechaFin', fechaFin);
+
+    return this.http.get<ReporteEfectividadAnuncio[]>(
+      `${this.apiUrl}/reporteEfectividad`,
+      { params }
+    );
+  }
+
+
+
 }
 
 

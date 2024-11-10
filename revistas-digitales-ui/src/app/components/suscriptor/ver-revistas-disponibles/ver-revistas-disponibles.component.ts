@@ -2,12 +2,13 @@ import { Component } from '@angular/core';
 import { Revista } from '../../../entidades/Revista';
 import { CommonModule } from '@angular/common';
 import { SuscriptorService } from '../../../services/suscriptor/suscriptor.service';
-import { format } from 'path';
+import { Router } from '@angular/router';
+import { AnuncioIndividualComponent } from "../../anunciante/anuncio-individual/anuncio-individual.component";
 
 @Component({
   selector: 'app-ver-revistas-disponibles',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, AnuncioIndividualComponent],
   templateUrl: './ver-revistas-disponibles.component.html',
   styleUrl: './ver-revistas-disponibles.component.css'
 })
@@ -15,10 +16,13 @@ export class VerRevistasDisponiblesComponent {
 
   revistas: Revista[] = [];
   mensaje: string = '';
+  rutaActual!: string;
 
-  constructor(private suscriptorService: SuscriptorService) {}
+  constructor(private suscriptorService: SuscriptorService, private router: Router) {}
 
   ngOnInit(): void {
+    this.rutaActual = this.router.url;
+
     this.suscriptorService.obtenerRevistasDisponibles().subscribe(
       (data) => this.revistas = data,
       (error) => this.mensaje = 'Error al cargar las revistas'

@@ -2,20 +2,24 @@ import { Component, OnInit } from '@angular/core';
 import { ReportesEditorService } from '../../../services/reportes-editor/reportes-editor.service';
 import { CommonModule } from '@angular/common';
 import { Revista } from '../../../entidades/Revista';
+import { Router } from '@angular/router';
+import { AnuncioIndividualComponent } from "../../anunciante/anuncio-individual/anuncio-individual.component";
 
 @Component({
   selector: 'app-reporte-megusta-revista',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, AnuncioIndividualComponent],
   templateUrl: './reporte-megusta-revista.component.html',
   styleUrls: ['./reporte-megusta-revista.component.css'],
 })
 export class ReporteMegustaRevistaComponent implements OnInit {
   revistas: Revista[] = [];
+  rutaActual!: string;
 
-  constructor(private reportesEditorService: ReportesEditorService) {}
+  constructor(private reportesEditorService: ReportesEditorService, private router: Router) {}
 
   ngOnInit(): void {
+    this.rutaActual = this.router.url;
     this.obtenerRevistasMasGustadas();
   }
 

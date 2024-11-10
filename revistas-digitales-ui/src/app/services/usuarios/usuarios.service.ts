@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { catchError, map, Observable, throwError } from 'rxjs';
 import { RestConstants } from '../rest-constants'; // Asegúrate de que la ruta sea correcta
-import { jwtDecode} from 'jwt-decode';
+import { jwtDecode } from 'jwt-decode';
 
 @Injectable({
   providedIn: 'root'
@@ -42,27 +42,23 @@ export class UsuariosService {
 
   // *** Métodos para manejar el token en localStorage ***
 
-// Guardar el token en localStorage
-guardarToken(token: string): void {
-  if (typeof window !== 'undefined') {
-    localStorage.setItem('token', token);
-  }
-}
+  // Guardar el token en localStorage
+  guardarToken(token: string): void {
+    sessionStorage.setItem('token', token);
 
-// Obtener el token desde localStorage
-obtenerToken(): string | null {
-  if (typeof window !== 'undefined') {
-    return localStorage.getItem('token');
   }
-  return null;
-}
 
-// Eliminar el token de localStorage
-eliminarToken(): void {
-  if (typeof window !== 'undefined') {
-    localStorage.removeItem('token');
+  // Obtener el token desde localStorage
+  obtenerToken(): string | null {
+    return sessionStorage.getItem('token');
+    return null;
   }
-}
+
+  // Eliminar el token de localStorage
+  eliminarToken(): void {
+    sessionStorage.removeItem('token');
+
+  }
   permisosAdministrador(): boolean {
     return this.tienePermiso('ADMINISTRADOR');
   }
@@ -84,7 +80,7 @@ eliminarToken(): void {
     console.log('VIENDOLO DESDE EL SERVICIO');
     console.log('Rol:', rol);
     console.log('Token:', token);
-    
+
     if (token) {
       const decodedToken: any = jwtDecode(token); // Decodifica el token
       console.log('Rol en el token:', decodedToken.rol);
@@ -103,7 +99,7 @@ eliminarToken(): void {
       console.error('No se encontró el token');
       return null;
     }
-
+    
     try {
       const decodedToken: { sub?: string } = jwtDecode(token);
       return decodedToken.sub ?? null;
@@ -127,5 +123,4 @@ eliminarToken(): void {
       return null;
     }
   }
-
 }
