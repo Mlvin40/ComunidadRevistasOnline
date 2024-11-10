@@ -4,11 +4,12 @@ import { FormsModule } from '@angular/forms';
 import { PublicacionService } from '../../../services/publicacion/publicacion.service';
 import { CommonModule } from '@angular/common';
 import { AnuncioIndividualComponent } from "../../anunciante/anuncio-individual/anuncio-individual.component";
+import { EditorHomeComponent } from "../editor-home/editor-home.component";
 
 @Component({
   selector: 'app-publicar',
   standalone: true,
-  imports: [CommonModule, FormsModule, AnuncioIndividualComponent],
+  imports: [CommonModule, FormsModule, AnuncioIndividualComponent, EditorHomeComponent],
   templateUrl: './publicar.component.html',
   styleUrls: ['./publicar.component.css']
 })

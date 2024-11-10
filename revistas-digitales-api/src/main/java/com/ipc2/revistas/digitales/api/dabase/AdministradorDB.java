@@ -176,7 +176,7 @@ public class AdministradorDB {
         }
         return anunciosComprados;
     }
-
+    
     public List<ReporteEfectividadAnuncio> generarReporteEfectividad(LocalDate fechaInicio, LocalDate fechaFin) {
         // Consulta SQL para obtener los anuncios mostrados y sus paths
         String sql = "SELECT nombre_anunciante, id_anuncio, tipo_anuncio, "
@@ -189,10 +189,9 @@ public class AdministradorDB {
 
         try (Connection connection = DataSourceDB.getInstance().getConnection();
                 PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setDate(1, Date.valueOf(fechaInicio));  // Establecer fecha de inicio
-            statement.setDate(2, Date.valueOf(fechaFin));     // Establecer fecha de fin
+            statement.setDate(1, Date.valueOf(fechaInicio));
+            statement.setDate(2, Date.valueOf(fechaFin));
 
-            // Ejecutar la consulta
             ResultSet resultSet = statement.executeQuery();
 
             List<ReporteEfectividadAnuncio> reportes = new ArrayList<>();

@@ -7,11 +7,12 @@ import { CommonModule } from '@angular/common';
 import { Revista } from '../../../entidades/Revista';
 import { UsuariosService } from '../../../services/usuarios/usuarios.service';
 import { AnuncioIndividualComponent } from "../../anunciante/anuncio-individual/anuncio-individual.component";
+import { EditorHomeComponent } from "../editor-home/editor-home.component";
 
 @Component({
   selector: 'app-editar-revista',
   standalone: true,
-  imports: [FormsModule, CommonModule, AnuncioIndividualComponent], // Agregar FormsModule aquí
+  imports: [FormsModule, CommonModule, AnuncioIndividualComponent, EditorHomeComponent], // Agregar FormsModule aquí
   templateUrl: './editar-revista.component.html',
   styleUrls: ['./editar-revista.component.css'],
 })

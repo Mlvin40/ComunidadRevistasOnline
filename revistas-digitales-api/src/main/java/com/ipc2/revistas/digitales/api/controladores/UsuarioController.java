@@ -4,6 +4,7 @@
  */
 package com.ipc2.revistas.digitales.api.controladores;
 
+import com.ipc2.revistas.digitales.api.modelos.response.ExitoResponse;
 import com.ipc2.revistas.digitales.api.modelos.usuarios.Usuario;
 import com.ipc2.revistas.digitales.api.servicios.UsuarioService;
 import jakarta.ws.rs.Consumes;
@@ -23,12 +24,10 @@ import java.util.Map;
 @Path("/usuarios")
 public class UsuarioController {
 
-    private UsuarioService usuarioService;
-    
-    public UsuarioController() {
-        this.usuarioService = new UsuarioService();
-    }
+    private UsuarioService usuarioService = new UsuarioService();
 
+    ;
+    
     @POST
     @Path("/registro")
     @Consumes(MediaType.APPLICATION_JSON)
@@ -50,9 +49,8 @@ public class UsuarioController {
             usuarioService.registrarUsuario(usuario); // Registrar el usuario en la base de datos
 
             // Devuelve una respuesta de éxito en formato JSON
-            Map<String, String> response = new HashMap<>();
-            response.put("message", "Usuario registrado exitosamente");
-            return Response.ok(response).build();
+            ExitoResponse exitoResponse = new ExitoResponse();
+            return Response.ok(exitoResponse).build();
         } catch (SQLException e) {
             // Devuelve un error en formato JSON
             Map<String, String> response = new HashMap<>();
@@ -66,12 +64,12 @@ public class UsuarioController {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response loginUsuario(Usuario usuario) {
-        
+
         // Intenta obtener un token
         String tokenObtenido = usuarioService.obtenerToken(usuario);
 
         if (tokenObtenido != null) {
-            
+
             // Responder con el token tanto en el encabezado como en el cuerpo
             return Response.ok()
                     .header("Authorization", "Bearer " + tokenObtenido)

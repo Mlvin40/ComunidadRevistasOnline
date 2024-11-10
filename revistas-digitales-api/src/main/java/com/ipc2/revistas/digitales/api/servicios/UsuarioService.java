@@ -26,7 +26,6 @@ public class UsuarioService {
     private CarteraDB carteraDB = new CarteraDB();
 
     public void registrarUsuario(Usuario usuario) throws SQLException {
-
         boolean agregarCartera = false;
 
         switch (usuario.getRol().toString()) {

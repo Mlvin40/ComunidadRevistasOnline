@@ -4,4 +4,5 @@ export interface ReporteEfectividadAnuncio {
     tipoAnuncio: string;
     pathsMostrados: string[];
     cantidadMostrado: number;
+    pathSeleccionado?: string 
   }

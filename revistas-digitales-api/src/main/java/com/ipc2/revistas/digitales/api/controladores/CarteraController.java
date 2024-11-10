@@ -23,11 +23,7 @@ import java.util.Map;
 @Path("/carteras")
 public class CarteraController {
 
-    private CarteraDB carteraDB;
-
-    public CarteraController() {
-        this.carteraDB = new CarteraDB();
-    }
+    private CarteraDB carteraDB = new CarteraDB();
 
     @GET
     @Path("/{nombreUsuario}")

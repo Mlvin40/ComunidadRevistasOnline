@@ -4,11 +4,12 @@ import { CommonModule } from '@angular/common';
 import { Revista } from '../../../entidades/Revista';
 import { Router } from '@angular/router';
 import { AnuncioIndividualComponent } from "../../anunciante/anuncio-individual/anuncio-individual.component";
+import { EditorHomeComponent } from "../editor-home/editor-home.component";
 
 @Component({
   selector: 'app-reporte-megusta-revista',
   standalone: true,
-  imports: [CommonModule, AnuncioIndividualComponent],
+  imports: [CommonModule, AnuncioIndividualComponent, EditorHomeComponent],
   templateUrl: './reporte-megusta-revista.component.html',
   styleUrls: ['./reporte-megusta-revista.component.css'],
 })

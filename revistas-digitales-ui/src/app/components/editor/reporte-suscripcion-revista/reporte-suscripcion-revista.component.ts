@@ -5,11 +5,12 @@ import { Suscripcion } from '../../../entidades/Suscripcion';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AnuncioIndividualComponent } from "../../anunciante/anuncio-individual/anuncio-individual.component";
+import { EditorHomeComponent } from "../editor-home/editor-home.component";
 
 @Component({
   selector: 'app-reporte-suscripcion-revista',
   standalone: true,
-  imports: [CommonModule, FormsModule, AnuncioIndividualComponent],
+  imports: [CommonModule, FormsModule, AnuncioIndividualComponent, EditorHomeComponent],
   templateUrl: './reporte-suscripcion-revista.component.html',
   styleUrls: ['./reporte-suscripcion-revista.component.css'],
 })

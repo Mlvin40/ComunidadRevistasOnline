@@ -6,6 +6,7 @@ package com.ipc2.revistas.digitales.api.controladores;
 
 import com.ipc2.revistas.digitales.api.dabase.anuncios.AnuncioDB;
 import com.ipc2.revistas.digitales.api.modelos.anuncios.Anuncio;
+import com.ipc2.revistas.digitales.api.modelos.response.ErrorResponse;
 import com.ipc2.revistas.digitales.api.modelos.response.ExitoResponse;
 import com.ipc2.revistas.digitales.api.servicios.AnuncioService;
 import jakarta.ws.rs.Consumes;
@@ -146,10 +147,11 @@ public class AnuncioController {
         if (anuncio != null) {
             return Response.ok(anuncio).build();
         } else {
-            return Response.status(Response.Status.NOT_FOUND).entity("No hay anuncios disponibles").build();
+            ErrorResponse errorResponse = new ErrorResponse();
+            return Response.status(Response.Status.NOT_FOUND).entity(errorResponse).build();
         }
     }
-
+   
     @POST
     @Path("/guardarAnuncioEfecivo")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
@@ -166,8 +168,9 @@ public class AnuncioController {
             ExitoResponse exitoResponse = new ExitoResponse();
             return Response.ok(exitoResponse).build();
         } else {
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("Error al guardar el anuncio").build();
+             ErrorResponse errorResponse = new ErrorResponse();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(errorResponse).build();
         }
     }
-
+    
 }

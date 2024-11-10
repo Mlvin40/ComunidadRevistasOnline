@@ -6,11 +6,12 @@ import { UsuariosService } from '../../../services/usuarios/usuarios.service';
 import { RevistaService } from '../../../services/revista/revista.service';
 import { Router } from '@angular/router';
 import { AnuncioIndividualComponent } from "../../anunciante/anuncio-individual/anuncio-individual.component";
+import { EditorHomeComponent } from "../editor-home/editor-home.component";
 
 @Component({
   selector: 'app-crear-revista',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, AnuncioIndividualComponent],
+  imports: [CommonModule, ReactiveFormsModule, AnuncioIndividualComponent, EditorHomeComponent],
   templateUrl: './crear-revista.component.html',
   styleUrls: ['./crear-revista.component.css']
 })

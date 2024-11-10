@@ -1,43 +1,49 @@
 <div class="container">
-    <h2>Reporte de Efectividad de Anuncios</h2>
-    
-    <!-- Formulario para seleccionar las fechas -->
-    <div class="form-group">
-      <label for="fechaInicio">Fecha de inicio:</label>
-      <input type="date" id="fechaInicio" [(ngModel)]="fechaInicio" class="form-control" />
-    </div>
-    
-    <div class="form-group">
-      <label for="fechaFin">Fecha de fin:</label>
-      <input type="date" id="fechaFin" [(ngModel)]="fechaFin" class="form-control" />
-    </div>
-    
-    <!-- Botón para generar el reporte -->
-    <button (click)="obtenerReporte()" class="btn btn-primary">Generar Reporte</button>
-  
-    <!-- Mostrar los resultados del reporte -->
-    <div *ngIf="reportes.length > 0">
-      <h3>Reporte</h3>
-      <table class="table">
-        <thead>
-          <tr>
-            <th>Nombre Anunciante</th>
-            <th>ID Anuncio</th>
-            <th>Tipo de Anuncio</th>
-            <th>Cantidad Mostrada</th>
-            <th>Paths Mostrados</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let reporte of reportes">
-            <td>{{ reporte.nombreAnunciante }}</td>
-            <td>{{ reporte.idAnuncio }}</td>
-            <td>{{ reporte.tipoAnuncio }}</td>
-            <td>{{ reporte.cantidadMostrado }}</td>
-            <td>{{ reporte.pathsMostrados }}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+  <h2>Reporte de Efectividad de Anuncios</h2>
+
+  <!-- Formulario para seleccionar las fechas -->
+  <div class="form-group">
+    <label for="fechaInicio">Fecha de inicio:</label>
+    <input type="date" id="fechaInicio" [(ngModel)]="fechaInicio" class="form-control" />
   </div>
-  
+
+  <div class="form-group">
+    <label for="fechaFin">Fecha de fin:</label>
+    <input type="date" id="fechaFin" [(ngModel)]="fechaFin" class="form-control" />
+  </div>
+
+  <!-- Botón para generar el reporte -->
+  <button (click)="obtenerReporte()" class="btn btn-primary">Generar Reporte</button>
+
+  <!-- Mostrar los resultados del reporte -->
+  <div *ngIf="reportes.length > 0">
+    <h3>Reporte</h3>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Nombre Anunciante</th>
+          <th>ID Anuncio</th>
+          <th>Tipo de Anuncio</th>
+          <th>Cantidad Mostrada</th>
+          <th>Paths Mostrados</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let reporte of reportes">
+          <td>{{ reporte.nombreAnunciante }}</td>
+          <td>{{ reporte.idAnuncio }}</td>
+          <td>{{ reporte.tipoAnuncio }}</td>
+          <td>{{ reporte.cantidadMostrado }}</td>
+          <td>
+            <!-- Lista desplegable de paths -->
+            <select [(ngModel)]="reporte.pathSeleccionado" class="form-control">
+              <option *ngFor="let path of reporte.pathsMostrados" [value]="path">
+                {{ path }}
+              </option>
+            </select>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

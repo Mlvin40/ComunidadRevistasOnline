@@ -4,11 +4,12 @@ import { CommonModule } from '@angular/common';
 import { SuscriptorService } from '../../../services/suscriptor/suscriptor.service';
 import { Router } from '@angular/router';
 import { AnuncioIndividualComponent } from "../../anunciante/anuncio-individual/anuncio-individual.component";
+import { SuscriptorHomeComponent } from "../suscriptor-home/suscriptor-home.component";
 
 @Component({
   selector: 'app-ver-revistas-disponibles',
   standalone: true,
-  imports: [CommonModule, AnuncioIndividualComponent],
+  imports: [CommonModule, AnuncioIndividualComponent, SuscriptorHomeComponent],
   templateUrl: './ver-revistas-disponibles.component.html',
   styleUrl: './ver-revistas-disponibles.component.css'
 })

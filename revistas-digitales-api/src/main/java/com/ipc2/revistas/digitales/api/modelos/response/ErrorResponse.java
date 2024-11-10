@@ -4,23 +4,19 @@
  */
 package com.ipc2.revistas.digitales.api.modelos.response;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  *
  * @author melvin
  */
 public class ErrorResponse {
 
+    // Atributo que contiene el mensaje de exito en formato JSON
+    @JsonProperty("nombre")
     private String message;
 
-    public ErrorResponse(String message) {
-        this.message = message;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
+    public ErrorResponse() {
+        this.message = "Hubo un error al realizar la operacion";
     }
 }

@@ -12,7 +12,7 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./anuncio-individual.component.css']
 })
 export class AnuncioIndividualComponent implements OnInit {
-  @Input() pathMostrado!: string; // El ID del anuncio recibido como parámetro
+  @Input() pathMostrado!: string;
   anuncio: Anuncio | undefined;
 
   constructor(
@@ -21,15 +21,15 @@ export class AnuncioIndividualComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.anuncioService.obtenerAnuncioRandom().subscribe(
-      (data) => {
+    this.anuncioService.obtenerAnuncioRandom().subscribe({
+      next: (data) => {
         this.anuncio = data;
         this.almacenarAnuncioEfectivo();
       },
-      (error) => {
-        console.error('Error al obtener el anuncio:', error);
+      error: () => {
+        console.warn('No se encontró un anuncio disponible en este momento.');
       }
-    );
+    });
   }
 
   almacenarAnuncioEfectivo(): void {
@@ -37,7 +37,7 @@ export class AnuncioIndividualComponent implements OnInit {
       console.error('No hay anuncio para almacenar');
       return;
     }
-
+    
     const formData = new FormData();
     formData.append('idanuncio', this.anuncio.idAnuncio.toString());
     formData.append('tipoAnuncio', this.anuncio.tipoAnuncio);

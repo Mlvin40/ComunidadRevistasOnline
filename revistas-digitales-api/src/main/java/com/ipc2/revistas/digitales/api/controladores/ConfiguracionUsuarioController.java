@@ -29,11 +29,7 @@ import org.glassfish.jersey.media.multipart.FormDataParam;
 @Path("/configuracion-usuario")
 public class ConfiguracionUsuarioController {
 
-    private ConfiguracionUsuarioService configuracionUsuarioService;
-
-    public ConfiguracionUsuarioController() {
-        this.configuracionUsuarioService = new ConfiguracionUsuarioService();
-    }
+    private ConfiguracionUsuarioService configuracionUsuarioService = new ConfiguracionUsuarioService();
 
     @GET
     @Path("/obtener-datos-usuario")
@@ -71,5 +67,5 @@ public class ConfiguracionUsuarioController {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(responseMap).build();
         }
     }
-    
+
 }

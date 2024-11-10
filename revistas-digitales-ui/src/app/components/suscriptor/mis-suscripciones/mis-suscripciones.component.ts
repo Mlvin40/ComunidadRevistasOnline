@@ -5,11 +5,12 @@ import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { AnuncioIndividualComponent } from "../../anunciante/anuncio-individual/anuncio-individual.component";
+import { SuscriptorHomeComponent } from "../suscriptor-home/suscriptor-home.component";
 
 @Component({
   selector: 'app-mis-suscripciones',
   standalone: true,
-  imports: [CommonModule, RouterModule, FormsModule, AnuncioIndividualComponent],
+  imports: [CommonModule, RouterModule, FormsModule, AnuncioIndividualComponent, SuscriptorHomeComponent],
   templateUrl: './mis-suscripciones.component.html',
   styleUrls: ['./mis-suscripciones.component.css']
 })
@@ -22,8 +23,8 @@ export class MisSuscripcionesComponent implements OnInit {
   constructor(private suscriptorService: SuscriptorService, private router: Router) { }
 
   ngOnInit(): void {
-    this.rutaActual = this.router.url;
     this.obtenerRevistas();
+    this.rutaActual = this.router.url;
   }
 
   obtenerRevistas(): void {
