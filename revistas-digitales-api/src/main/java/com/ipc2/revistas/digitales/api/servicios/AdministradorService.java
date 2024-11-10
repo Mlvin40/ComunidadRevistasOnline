@@ -5,10 +5,14 @@
 package com.ipc2.revistas.digitales.api.servicios;
 
 import com.ipc2.revistas.digitales.api.dabase.AdministradorDB;
-import com.ipc2.revistas.digitales.api.dabase.reportes.GeneradorRevistaPopular;
-import com.ipc2.revistas.digitales.api.modelos.reporte.RevistaPopular;
+import com.ipc2.revistas.digitales.api.dabase.reportes.ReporteGananciasDB;
+import com.ipc2.revistas.digitales.api.dabase.reportes.TablaReporteGanancia;
+import com.ipc2.revistas.digitales.api.modelos.anuncios.AnuncioComprado;
+import com.ipc2.revistas.digitales.api.modelos.reporte.RevistaMantenimiento;
 import com.ipc2.revistas.digitales.api.modelos.revista.Revista;
 import com.ipc2.revistas.digitales.api.validadores.ValidadorComentarioLike;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 /**
@@ -19,7 +23,7 @@ public class AdministradorService {
 
     private AdministradorDB administradorDB = new AdministradorDB();
     private ValidadorComentarioLike validadorComentarioLike = new ValidadorComentarioLike();
-  
+
     public boolean actualizarPrecioRevista(String nombreRevista, Double nuevoPrecio) {
 
         // Validar que el precio que se quiere actualizar no sea negativo
@@ -74,4 +78,21 @@ public class AdministradorService {
         return administradorDB.actualizarPrecioOcultacionAnuncio(nuevoPrecio);
     }
 
+    public List<AnuncioComprado> obtenerAnunciosCompradosFiltro(String fechaInicio, String fechaFin, String tipoAnuncio) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");  // Ajusta el patrón a yyyy-MM-dd
+        LocalDate fechaIn = LocalDate.parse(fechaInicio, formatter);
+        LocalDate fechaFn = LocalDate.parse(fechaFin, formatter);
+
+        return administradorDB.obtenerAnunciosCompradosFiltro(fechaIn, fechaFn, tipoAnuncio);
+    }
+
+    public TablaReporteGanancia obtenerReporteGanancias(String fechaInicio, String fechaFin) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate fechaIn = LocalDate.parse(fechaInicio, formatter);
+        LocalDate fechaFn = LocalDate.parse(fechaFin, formatter);
+
+        ReporteGananciasDB reporteGananciasDB = new ReporteGananciasDB();
+        return reporteGananciasDB.obtenertTabla(fechaIn, fechaFn);
+
+    }
 }

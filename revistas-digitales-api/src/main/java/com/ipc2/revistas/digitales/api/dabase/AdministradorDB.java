@@ -1,10 +1,13 @@
 package com.ipc2.revistas.digitales.api.dabase;
 
+import com.ipc2.revistas.digitales.api.modelos.anuncios.AnuncioComprado;
 import com.ipc2.revistas.digitales.api.modelos.revista.Revista;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -139,4 +142,40 @@ public class AdministradorDB {
         }
     }
 
+    public List<AnuncioComprado> obtenerAnunciosCompradosFiltro(LocalDate fechaInicio, LocalDate fechaFin, String tipoAnuncio) {
+        List<AnuncioComprado> anunciosComprados = new ArrayList<>();
+        String query = "SELECT id_pago, nombre_anunciante, fecha_pago, pago, tipo_anuncio FROM pago_anuncios "
+                + "WHERE fecha_pago BETWEEN ? AND ?";
+
+        if (tipoAnuncio != null && !tipoAnuncio.isEmpty()) {
+            query += " AND tipo_anuncio = ?";
+        }
+
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setDate(1, java.sql.Date.valueOf(fechaInicio));
+            statement.setDate(2, java.sql.Date.valueOf(fechaFin));
+
+            if (tipoAnuncio != null && !tipoAnuncio.isEmpty()) {
+                statement.setString(3, tipoAnuncio);
+            }
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    AnuncioComprado anuncio = new AnuncioComprado(
+                            resultSet.getInt("id_pago"),
+                            resultSet.getString("nombre_anunciante"),
+                            resultSet.getDate("fecha_pago").toLocalDate(),
+                            resultSet.getDouble("pago"),
+                            resultSet.getString("tipo_anuncio")
+                    );
+                    anunciosComprados.add(anuncio);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return anunciosComprados;
+    }
 }
+
+

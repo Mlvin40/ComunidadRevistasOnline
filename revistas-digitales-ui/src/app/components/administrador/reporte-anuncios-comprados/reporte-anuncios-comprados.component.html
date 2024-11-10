@@ -1,0 +1,59 @@
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Reporte de Anuncios Comprados</h2>
+
+    <!-- Formulario con Bootstrap -->
+    <form [formGroup]="filtroForm" (ngSubmit)="generarReporte()" class="mb-4">
+        <div class="row">
+            <div class="col-md-4">
+                <label for="fechaInicio" class="form-label">Fecha Inicio:</label>
+                <input id="fechaInicio" formControlName="fechaInicio" type="date" class="form-control">
+            </div>
+
+
+
+            <div class="col-md-4">
+                <label for="fechaFin" class="form-label">Fecha Fin:</label>
+                <input id="fechaFin" formControlName="fechaFin" type="date" class="form-control">
+            </div>
+
+            <div class="col-md-4">
+                <label for="tipoAnuncio" class="form-label">Tipo de Anuncio:</label>
+                <select id="tipoAnuncio" formControlName="tipoAnuncio" class="form-select">
+                    <option value="">Todos</option>
+                    <option value="TEXTO">Texto</option>
+                    <option value="TEXTO_IMAGEN">Texto e Imagen</option>
+                    <option value="VIDEO">Video</option>
+                </select>
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary mt-3">Generar Reporte</button>
+    </form>
+
+    <!-- Mensaje de error si las fechas no están completas -->
+    <div *ngIf="mostrarError" class="alert alert-danger mt-3">
+        <strong>Debe ingresar las fechas de inicio y fin.</strong>
+    </div>
+
+
+    <table *ngIf="anuncios.length" class="table table-bordered table-striped table-hover">
+        <thead class="table-dark">
+            <tr>
+                <th>ID</th>
+                <th>Anunciante</th>
+                <th>Fecha de Pago</th>
+                <th>Monto Pagado</th>
+                <th>Tipo de Anuncio</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let anuncio of anuncios">
+                <td>{{ anuncio.id }}</td>
+                <td>{{ anuncio.nombreAnunciante }}</td>
+                <td>{{ anuncio.fechaPago | date: 'shortDate' }}</td>
+                <td>{{ anuncio.pago | currency }}</td>
+                <td>{{ anuncio.tipoAnuncio }}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

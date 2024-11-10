@@ -75,7 +75,6 @@ public class AnuncioController {
         }
     }
 
-    
     //Este metodo obtiene todos los anuncios validos
     @GET
     @Path("/anunciosActivos")
@@ -108,7 +107,7 @@ public class AnuncioController {
                     .build();
         }
     }
-    
+
     @PUT
     @Path("/actualizarAnuncio")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
@@ -123,17 +122,17 @@ public class AnuncioController {
             @FormDataParam("vencido") boolean vencido) {
 
         boolean anuncioActualizado = anuncioService.actualizarAnuncio(idAnuncio, tipoAnuncio, contenidoTexto, imagenInputStream, urlVideo, activo, vencido);
-        
+
         if (anuncioActualizado) {
             Map<String, Object> response = new HashMap<>(); // Crear un mapa para la respuesta
             response.put("mensaje", "Anuncio actualizado con éxito.");
             response.put("exito", true);
             return Response.ok(response).build();
-            
+
         } else {
             return Response.status(Response.Status.BAD_REQUEST)
                     .entity("Error al actualizar el anuncio: El anuncio no fue encontrado o no se pudo actualizar.")
-                    .build(); 
+                    .build();
         }
     }
 }

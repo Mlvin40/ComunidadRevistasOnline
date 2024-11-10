@@ -4,7 +4,8 @@
  */
 package com.ipc2.revistas.digitales.api.controladores;
 
-import com.ipc2.revistas.digitales.api.modelos.reporte.RevistaPopular;
+import com.ipc2.revistas.digitales.api.dabase.reportes.TablaReporteGanancia;
+import com.ipc2.revistas.digitales.api.modelos.anuncios.AnuncioComprado;
 import com.ipc2.revistas.digitales.api.modelos.response.ExitoResponse;
 import com.ipc2.revistas.digitales.api.modelos.revista.Revista;
 import com.ipc2.revistas.digitales.api.servicios.AdministradorService;
@@ -120,6 +121,30 @@ public class AdministradorController {
                     .entity("Error al actualizar el precio.")
                     .build();
         }
+    }
+
+    @GET
+    @Path("/reporteAnunciosFiltro")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response obtenerReporteAnunciosFiltro(
+            @QueryParam("fechaInicio") String fechaInicio,
+            @QueryParam("fechaFin") String fechaFin,
+            @QueryParam("tipoAnuncio") String tipoAnuncio) {
+
+        List<AnuncioComprado> anunciosFiltrados = administradorService.obtenerAnunciosCompradosFiltro(fechaInicio, fechaFin, tipoAnuncio);
+        return Response.ok(anunciosFiltrados).build();
+    }
+
+    @GET
+    @Path("/reporteGanancias")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response obtenerReporteGanancias(
+            @QueryParam("fechaInicio") String fechaInicio,
+            @QueryParam("fechaFin") String fechaFin) {
+
+        TablaReporteGanancia reporte = administradorService.obtenerReporteGanancias(fechaInicio, fechaFin);
+
+        return Response.ok(reporte).build();
     }
 
 }

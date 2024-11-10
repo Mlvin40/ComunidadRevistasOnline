@@ -4,6 +4,9 @@ import { RestConstants } from '../rest-constants';
 import { UsuariosService } from '../usuarios/usuarios.service';
 import { Revista } from '../../entidades/Revista';
 import { Observable } from 'rxjs';
+import { TablaReporteGanancia } from '../../entidades/reporte/TablaReporteGanancia';
+import { AnuncioComprado } from '../../entidades/reporte/AnuncioComprado';
+
 
 @Injectable({
   providedIn: 'root'
@@ -56,6 +59,28 @@ export class AdministradorService {
     return this.http.post(`${this.apiUrl}/ActualizarcostoOcultacionAnuncio?nuevoPrecio=${nuevoPrecio}`, {});
   }
 
+  // Con este metodo se puede obtener el reporte de anuncios comprados con un rango de fechas
+  obtenerReporteAnuncios(fechaInicio: string, fechaFin: string, tipoAnuncio?: string): Observable<AnuncioComprado[]> {
+    let params = new HttpParams()
+      .set('fechaInicio', fechaInicio)
+      .set('fechaFin', fechaFin);
+    
+    if (tipoAnuncio) {
+      params = params.set('tipoAnuncio', tipoAnuncio);
+    }
+
+    return this.http.get<AnuncioComprado[]>(`${this.apiUrl}/reporteAnunciosFiltro`, { params });
+  }
+
+  obtenerReporteGanancias(fechaInicio: string, fechaFin: string): Observable<TablaReporteGanancia> {
+    const params = new HttpParams()
+      .set('fechaInicio', fechaInicio)
+      .set('fechaFin', fechaFin);
+
+    return this.http.get<TablaReporteGanancia>(`${this.apiUrl}/reporteGanancias`, { params });
+  }
 }
+
+
 
 

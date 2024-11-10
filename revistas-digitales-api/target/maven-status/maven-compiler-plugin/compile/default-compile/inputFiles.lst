@@ -1,5 +1,6 @@
 /home/melvin/Escritorio/Proyecto Final IPC2/RevistasOnline/revistas-digitales-api/src/main/java/com/ipc2/revistas/digitales/api/util/AuthFilter.java
 /home/melvin/Escritorio/Proyecto Final IPC2/RevistasOnline/revistas-digitales-api/src/main/java/com/ipc2/revistas/digitales/api/modelos/anuncios/Anuncio.java
+/home/melvin/Escritorio/Proyecto Final IPC2/RevistasOnline/revistas-digitales-api/src/main/java/com/ipc2/revistas/digitales/api/modelos/reporte/RevistaMantenimiento.java
 /home/melvin/Escritorio/Proyecto Final IPC2/RevistasOnline/revistas-digitales-api/src/main/java/com/ipc2/revistas/digitales/api/controladores/CarteraController.java
 /home/melvin/Escritorio/Proyecto Final IPC2/RevistasOnline/revistas-digitales-api/src/main/java/com/ipc2/revistas/digitales/api/dabase/CarteraDB.java
 /home/melvin/Escritorio/Proyecto Final IPC2/RevistasOnline/revistas-digitales-api/src/main/java/com/ipc2/revistas/digitales/api/dabase/anuncios/AnuncioVideoDB.java
@@ -17,6 +18,7 @@
 /home/melvin/Escritorio/Proyecto Final IPC2/RevistasOnline/revistas-digitales-api/src/main/java/com/ipc2/revistas/digitales/api/modelos/usuarios/Usuario.java
 /home/melvin/Escritorio/Proyecto Final IPC2/RevistasOnline/revistas-digitales-api/src/main/java/com/ipc2/revistas/digitales/api/servicios/RevistaService.java
 /home/melvin/Escritorio/Proyecto Final IPC2/RevistasOnline/revistas-digitales-api/src/main/java/com/ipc2/revistas/digitales/api/util/GeneradorToken.java
+/home/melvin/Escritorio/Proyecto Final IPC2/RevistasOnline/revistas-digitales-api/src/main/java/com/ipc2/revistas/digitales/api/dabase/reportes/ReporteGananciasDB.java
 /home/melvin/Escritorio/Proyecto Final IPC2/RevistasOnline/revistas-digitales-api/src/main/java/com/ipc2/revistas/digitales/api/dabase/anuncios/ValidacionesAnuncioDB.java
 /home/melvin/Escritorio/Proyecto Final IPC2/RevistasOnline/revistas-digitales-api/src/main/java/com/ipc2/revistas/digitales/api/modelos/usuarios/Rol.java
 /home/melvin/Escritorio/Proyecto Final IPC2/RevistasOnline/revistas-digitales-api/src/main/java/com/ipc2/revistas/digitales/api/servicios/AdministradorService.java
@@ -32,6 +34,7 @@
 /home/melvin/Escritorio/Proyecto Final IPC2/RevistasOnline/revistas-digitales-api/src/main/java/com/ipc2/revistas/digitales/api/controladores/RevistaController.java
 /home/melvin/Escritorio/Proyecto Final IPC2/RevistasOnline/revistas-digitales-api/src/main/java/com/ipc2/revistas/digitales/api/controladores/AdministradorController.java
 /home/melvin/Escritorio/Proyecto Final IPC2/RevistasOnline/revistas-digitales-api/src/main/java/com/ipc2/revistas/digitales/api/servicios/ConfiguracionUsuarioService.java
+/home/melvin/Escritorio/Proyecto Final IPC2/RevistasOnline/revistas-digitales-api/src/main/java/com/ipc2/revistas/digitales/api/dabase/reportes/TablaReporteGanancia.java
 /home/melvin/Escritorio/Proyecto Final IPC2/RevistasOnline/revistas-digitales-api/src/main/java/com/ipc2/revistas/digitales/api/dabase/reportes/RevistasTop.java
 /home/melvin/Escritorio/Proyecto Final IPC2/RevistasOnline/revistas-digitales-api/src/main/java/com/ipc2/revistas/digitales/api/dabase/SuscripcionDB.java
 /home/melvin/Escritorio/Proyecto Final IPC2/RevistasOnline/revistas-digitales-api/src/main/java/com/ipc2/revistas/digitales/api/dabase/RevistaDB.java
@@ -56,6 +59,7 @@
 /home/melvin/Escritorio/Proyecto Final IPC2/RevistasOnline/revistas-digitales-api/src/main/java/com/ipc2/revistas/digitales/api/dabase/ComentarioDB.java
 /home/melvin/Escritorio/Proyecto Final IPC2/RevistasOnline/revistas-digitales-api/src/main/java/com/ipc2/revistas/digitales/api/dabase/reportes/RevistasMasGustadas.java
 /home/melvin/Escritorio/Proyecto Final IPC2/RevistasOnline/revistas-digitales-api/src/main/java/com/ipc2/revistas/digitales/api/modelos/response/ExitoResponse.java
+/home/melvin/Escritorio/Proyecto Final IPC2/RevistasOnline/revistas-digitales-api/src/main/java/com/ipc2/revistas/digitales/api/modelos/anuncios/AnuncioComprado.java
 /home/melvin/Escritorio/Proyecto Final IPC2/RevistasOnline/revistas-digitales-api/src/main/java/com/ipc2/revistas/digitales/api/dabase/AdministradorDB.java
 /home/melvin/Escritorio/Proyecto Final IPC2/RevistasOnline/revistas-digitales-api/src/main/java/com/ipc2/revistas/digitales/api/dabase/PublicacionDB.java
 /home/melvin/Escritorio/Proyecto Final IPC2/RevistasOnline/revistas-digitales-api/src/main/java/com/ipc2/revistas/digitales/api/dabase/UsuarioDB.java
